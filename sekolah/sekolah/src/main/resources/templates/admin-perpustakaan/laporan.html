@@ -355,10 +355,10 @@
     </div>
     <ul class="nav">
       <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
-      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="active"><i class="fas fa-book"></i> Data Buku</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Data Buku</a></li>
       <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
       <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Data Pengembalian</a></li>
-      <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
+      <li><a th:href="@{/admin-perpustakaan/laporan}" class="active"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
       <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
 
@@ -366,18 +366,18 @@
 </div>
 
 <div class="content" id="content">
-  <h1>Data Buku</h1>
+  <h1>Laporan</h1>
 
   <div class="search-container">
     <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama Buku">
   </div>
 
   <div class="filter-container">
-    <label for="NamaFilter">Filter :</label>
-    <select id="NamaFilter" onchange="filterByNama()">
+    <label for="KeteranganFilter">Filter Keterangan:</label>
+    <select id="KeteranganFilter" onchange="filterByKeterangan()">
       <option value="">Semua</option>
-      <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-      <option value="Indonesia">Indonesia</option>
+      <option value="Hilang">Hilang</option>
+      <option value="Rusak">Rusak</option>
     </select>
 
     <button onclick="downloadTable()" class="create-button">Download CSV</button>
@@ -391,7 +391,7 @@
       <th>Nama Buku</th>
       <th>Pengarang</th>
       <th>Qty</th>
-      <th>Deskripsi</th>
+      <th>Keterangan</th>
       <th>Foto</th>
       <th>Ubah</th>
     </tr>
@@ -402,7 +402,7 @@
       <td>Bahasa Indonesia</td>
       <td>Anisa</td>
       <td>2</td>
-      <td>Deskripsi singkat buku</td>
+      <td>Hilang</td>
       <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad"></td>
       <td>
         <button class="edit-btn"><i class="fas fa-edit"></i></button>
@@ -414,7 +414,7 @@
       <td>Indonesia</td>
       <td>Anisa</td>
       <td>2</td>
-      <td>Deskripsi singkat buku</td>
+      <td>Rusak</td>
       <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad"></td>
       <td>
         <button class="edit-btn"><i class="fas fa-edit"></i></button>
@@ -426,7 +426,7 @@
       <td>Indonesia</td>
       <td>Anisa</td>
       <td>2</td>
-      <td>Deskripsi singkat buku</td>
+      <td>Rusak</td>
       <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad"></td>
       <td>
         <button class="edit-btn"><i class="fas fa-edit"></i></button>
@@ -440,7 +440,7 @@
     <strong>Total Jumlah Buku: <span id="totalQty">0</span></strong>
   </div>
 
-  <button class="create-button" onclick="window.location.href='/admin-perpustakaan/tambah-buku'">+ Tambah Data Buku</button>
+  <button class="create-button" onclick="window.location.href='/admin-perpustakaan/tambah-laporan'">+ Tambah Laporan</button>
 </div>
 
 <script>
@@ -466,19 +466,20 @@
       }
   }
 
-  // Filter Function
-  function filterByNama() {
-      const filterValue = document.getElementById("NamaFilter").value.toLowerCase();
-      const rows = document.getElementById("guruTable").getElementsByTagName("tr");
+  function filterByKeterangan() {
+    var filter = document.getElementById("KeteranganFilter").value.toUpperCase();
+    var table = document.getElementById("guruTable");
+    var tr = table.getElementsByTagName("tr");
 
-      for (let i = 1; i < rows.length; i++) {
-          const cell = rows[i].getElementsByTagName("td")[1]; // Nama Buku
-          if (cell) {
-              const text = cell.textContent || cell.innerText;
-              rows[i].style.display = text.toLowerCase().includes(filterValue) ? "" : "none";
-          }
+    for (var i = 1; i < tr.length; i++) {
+      var td = tr[i].getElementsByTagName("td")[4]; // Kolom ke-5 = Keterangan
+      if (td) {
+        var txtValue = td.textContent || td.innerText;
+        tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 || filter === "" ? "" : "none";
       }
+    }
   }
+
 // Fungsi download data CSV
 function downloadTable() {
   let table = document.getElementById("guruTable");
