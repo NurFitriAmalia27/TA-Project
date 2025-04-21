@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Peminjaman</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: Arial, sans-serif;
+   }
+
+   body {
+     background-color: #f8f9fa;
+     margin: 0;
+     padding: 0;
+   }
+
+   .navbar {
+     width: 100%;
+     height: 60px;
+     background: #5D2D2A;
+     color: white;
+     display: flex;
+     align-items: center;
+     padding: 0 20px;
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: 1000;
+   }
+
+   .menu-icon {
+     font-size: 24px;
+     cursor: pointer;
+   }
+
+   .right-section {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     margin-left: auto;
+   }
+
+   .navbar i.user-icon {
+     font-size: 30px !important;
+   }
+
+   .navbar img {
+     height: 40px;
+     width: 40px;
+     border-radius: 50%;
+     object-fit: cover;
+   }
+
+   .navbar h1 {
+     font-size: 20px;
+     font-weight: bold;
+   }
+
+   /* Sidebar */
+.sidebar {
+ width: 250px;
+ background: #6A3332;
+ color: white;
+ height: 100vh;
+ padding-top: 80px;
+ position: fixed;
+ top: 0;
+ left: 0;
+ z-index: 999;
+ transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+ overflow-y: auto;
+}
+
+.sidebar-hidden {
+ transform: translateX(-100%); /* Sidebar tersembunyi */
+}
+.admin-profile {
+     text-align: center;
+     margin-bottom: 20px;
+   }
+
+   .admin-image {
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     object-fit: cover;
+     margin-bottom: 10px;
+   }
+
+   .admin-profile::after {
+     content: "";
+     display: block;
+     width: 100%;
+     height: 2px;
+     background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+     margin-top: 10px;
+   }
+
+   .admin-name {
+     font-size: 18px;
+     font-weight: bold;
+     color: #fff;
+   }
+
+   .menu-list li {
+     margin: 8px 0;
+   }
+
+   .menu-list li a {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     padding: 12px 20px;
+     text-decoration: none;
+     color: white;
+     font-size: 16px;
+     font-weight: bold;
+     transition: background 0.3s ease;
+   }
+
+   .menu-list li a:hover,
+   .menu-list li a.active {
+     background-color: rgba(255, 255, 255, 0.2);
+     border-radius: 8px;
+   }
+
+   .menu-list li a i {
+     width: 25px;
+     text-align: center;
+     font-size: 18px;
+   }
+
+   .main-content {
+     padding: 80px 20px 20px 20px;
+     margin-left: 250px;
+     transition: margin-left 0.3s ease-in-out;
+   }
+
+   .main-content.full {
+     margin-left: 0;
+   }
+
+   .page-title {
+     font-size: 24px;
+     font-weight: bold;
+     margin-bottom: 1rem;
+   }
+
+   .form-wrapper {
+     display: flex;
+     justify-content: center;
+     align-items: flex-start;
+     min-height: 100vh;
+     padding-top: 30px;
+   }
+
+   .floating-form {
+ background-color: #fff;
+ padding: 20px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+ border-radius: 10px;
+ width: 100%;
+ max-width: 700px; /* Membuat form lebih lebar */
+ min-height: 400px; /* Menambahkan tinggi minimal */
+ margin-top: 140px;
+ margin-left: 60px; /* Memindahkan form sedikit ke kanan */
+}
+
+
+
+   .floating-form h2 {
+     font-size: 30px;
+     font-weight: 600;
+     color: #333;
+     margin-bottom: 16px;
+     text-align: center;
+   }
+
+   .floating-form label {
+     font-weight: 500;
+     display: block;
+     margin-bottom: 6px;
+   }
+
+   .floating-form input {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 14px;
+     border: 1px solid #ddd;
+     border-radius: 6px;
+     font-size: 15px;
+   }
+
+   .button-container {
+     display: flex;
+     gap: 10px;
+   }
+
+   .btn-simpan, .btn-batal {
+     background-color: #28a745;
+     color: white;
+     padding: 10px;
+     border: none;
+     border-radius: 6px;
+     font-size: 15px;
+     cursor: pointer;
+     flex: 1;
+     transition: background-color 0.3s;
+   }
+
+   .btn-simpan:hover {
+     background-color: #218838;
+   }
+
+   .btn-batal {
+     background-color: #dc3545;
+   }
+
+   .btn-batal:hover {
+     background-color: #c82333;
+   }
+
+
+   @media (max-width: 768px) {
+     .sidebar {
+       width: 200px;
+     }
+
+     .main-content {
+       margin-left: 200px;
+     }
+
+     .main-content.full {
+       margin-left: 0;
+     }
+
+     .floating-form {
+   margin-top: 60px;
+   max-width: 95%; /* Biar lebih lebar */
+   padding: 20px 25px 20px 20px; /* Tambah jarak kanan (25px), kiri (20px) */
+   box-sizing: border-box;
+   margin-left: 5px; /* Geser sedikit ke kiri */
+ }
+
+ .floating-form h2 {
+   font-size: 18px;
+ }
+
+ .floating-form input,
+ .floating-form textarea {
+   font-size: 14px;
+   width: 100%;
+ }
+
+ .button-container {
+   flex-direction: column; /* Menata tombol agar tampil vertikal */
+   gap: 15px; /* Memberikan jarak antar tombol */
+ }
+
+ .btn-simpan, .btn-batal {
+   flex: none;
+   width: 100%; /* Tombol mengisi lebar penuh */
+ }
+
+   }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+  <div class="right-section">
+    <i class="fa fa-user"></i>
+    <h1>ADMIN PERPUSTAKAAN</h1>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <ul class="menu-list">
+    <div class="admin-profile">
+      <img src="https://i.pravatar.cc/80?img=12" alt="Profil Admin" class="admin-image">
+      <p class="admin-name">ANISA AMELIA</p>
+    </div>
+    <ul class="nav">
+      <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Data Buku</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="active"><i class="fas fa-user-check"></i> Peminjam</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Data Pengembalian</a></li>
+      <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
+      <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </ul>
+</div>
+
+<div class="form-wrapper">
+  <form class="floating-form" id="formPeminjam">
+    <h2>Form Tambah Peminjam</h2>
+
+    <label for="namaPeminjam">Nama Peminjam</label>
+    <input type="text" id="namaPeminjam" name="namaPeminjam" required>
+
+    <label for="namaBuku">Nama Buku</label>
+    <input type="text" id="namaBuku" name="namaBuku" required>
+
+    <label for="tglPinjam">Tanggal Peminjaman</label>
+    <input type="date" id="tglPinjam" name="tglPinjam" required>
+
+    <label for="tglKembali">Tanggal Pengembalian</label>
+    <input type="date" id="tglKembali" name="tglKembali" required>
+
+    <div class="button-container">
+      <button type="submit" class="btn-simpan">Simpan</button>
+      <button type="button" class="btn-batal" id="btnBatal">Batal</button>
+    </div>
+  </form>
+</div>
+<script>
+  // Fungsi untuk toggle sidebar
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const content = document.getElementById("content");
+  sidebar.classList.toggle("sidebar-hidden");
+  content.classList.toggle("sidebar-collapsed");
+}
+
+// Toggle submenu
+function toggleSubmenu(event) {
+  event.preventDefault();
+  let submenuContainer = event.target.closest(".has-submenu");
+  let submenu = submenuContainer.querySelector(".submenu");
+  let icon = submenuContainer.querySelector(".submenu-toggle");
+  let isOpen = submenu.style.display === "block";
+
+  document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+  document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+  document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+  if (!isOpen) {
+    submenu.style.display = "block";
+    icon.style.transform = "rotate(90deg)";
+    submenuContainer.classList.add("submenu-open");
+  }
+}
+
+function confirmLogout() {
+    const confirmed = confirm("Yakin ingin logout?");
+    if (confirmed) {
+      window.location.href = "/login";
+    }
+  }
+  // Arahkan ke halaman beranda jika tombol batal diklik
+  document.getElementById('btnBatal').addEventListener('click', function () {
+    window.location.href = '/admin-perpustakaan/perpus-panel'; // Ganti dengan path halaman beranda kamu
+  });
+
+  document.getElementById('formPeminjam').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const namaPeminjam = document.getElementById('namaPeminjam').value.trim();
+    const namaBuku = document.getElementById('namaBuku').value.trim();
+    const tglPinjam = document.getElementById('tglPinjam').value;
+    const tglKembali = document.getElementById('tglKembali').value;
+
+    if (!namaPeminjam || !namaBuku || !tglPinjam || !tglKembali) {
+      alert("Harap isi semua kolom sebelum menyimpan.");
+      return;
+    }
+
+    alert("Data peminjam berhasil disimpan!");
+
+    // Redirect ke halaman tabel data (dalam beranda)
+    window.location.href = '/admin-perpustakaan/perpus-panel'; // Sesuaikan dengan ID atau link tabel data
+  });
+</script>
+
+</body>
+</html>

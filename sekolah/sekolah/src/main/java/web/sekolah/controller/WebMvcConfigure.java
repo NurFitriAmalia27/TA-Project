@@ -1,0 +1,16 @@
+package web.sekolah.controller;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebMvcConfigure implements WebMvcConfigurer {
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/img/guru/**")
+                .addResourceLocations("file:C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/guru")
+                .setCachePeriod(0); // Cache di-disable agar gambar langsung terupdate
+    }
+}
+

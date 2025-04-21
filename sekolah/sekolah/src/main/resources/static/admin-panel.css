@@ -1,0 +1,219 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 60px;
+      background: #5D2D2A;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .navbar i.user-icon {
+      font-size: 30px !important;
+    }
+
+    .navbar img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .navbar h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #6A3332;
+  color: white;
+  height: 100vh;
+  padding-top: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+  overflow-y: auto;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%); /* Sidebar tersembunyi */
+}
+
+/* Konten utama */
+.content {
+  margin-top: 80px;
+  padding-left: 270px; /* Memberi ruang untuk sidebar */
+  padding-right: 20px;
+  overflow-y: auto;
+  transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
+}
+
+.content.sidebar-collapsed {
+  padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
+}
+
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 5px 0;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 12px 15px;
+      transition: background 0.3s;
+      gap: 10px;
+    }
+
+    .sidebar ul li a i {
+      font-size: 20px;
+      width: 30px;
+      text-align: center;
+    }
+
+    .sidebar ul li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    /* Aktif menu */
+    .sidebar ul li a.active {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .submenu {
+      display: none;
+      list-style: none;
+      padding-left: 45px;
+    }
+
+    .submenu li a {
+      font-size: 16px;
+      padding: 8px 20px;
+      display: block;
+    }
+
+    .submenu li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .has-submenu a {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .submenu-toggle {
+      transition: transform 0.3s ease-in-out;
+      font-size: 16px;
+    }
+
+    .submenu-open .submenu-toggle {
+      transform: rotate(90deg);
+    }
+
+    /* Konten utama */
+    .content {
+      margin-top: 80px;  /* Menghindari overlap dengan navbar */
+      padding-left: 270px; /* Memberi ruang untuk sidebar */
+      padding-right: 20px;
+      overflow-y: auto; /* Membuat konten bisa digulir */
+    }
+
+    .content.sidebar-collapsed {
+      padding-left: 20px;
+    }
+
+    .content h1 {
+  font-size: 60px;
+  font-weight: bold;
+  margin: 80px 0 20px 0; /* Ubah margin-top menjadi 100px untuk memindahkan lebih ke atas */
+  text-align: center;
+}
+
+
+    .content p {
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .content img {
+      display: block;
+      margin: 20px auto;
+      width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .sidebar ul li a {
+        font-size: 16px;
+        padding: 10px 12px;
+      }
+
+      .content {
+        margin-top: 100px;
+        padding-left: 220px;
+      }
+
+      .content h1 {
+        font-size: 27px;
+        margin-bottom: 10px;
+      }
+
+      .content p {
+        font-size: 14px;
+      }
+
+      .content img {
+        width: 200px;
+        margin-top: 10px;
+      }
+    }

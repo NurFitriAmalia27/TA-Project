@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Edit Data Guru</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: Arial, sans-serif;
+        }
+
+        body {
+          background-color: #f8f9fa;
+        }
+
+        .navbar {
+          width: 100%;
+          height: 60px;
+          background: #5D2D2A;
+          color: white;
+          display: flex;
+          align-items: center;
+          padding: 0 20px;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 1000;
+        }
+
+        .menu-icon {
+          font-size: 24px;
+          cursor: pointer;
+        }
+
+        .right-section {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-left: auto;
+        }
+        .navbar i.user-icon {
+          font-size: 30px !important; /* Menambah ukuran ikon dengan prioritas lebih tinggi */
+        }
+
+        .navbar h1 {
+          font-size: 20px;
+          font-weight: bold;
+        }
+
+
+             /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #6A3332;
+      color: white;
+      height: 100vh;
+      padding-top: 80px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+      overflow-y: auto;
+    }
+
+    .sidebar-hidden {
+      transform: translateX(-100%); /* Sidebar tersembunyi */
+    }
+
+    /* Konten utama */
+    .content {
+      margin-top: 80px;
+      padding-left: 270px; /* Memberi ruang untuk sidebar */
+      padding-right: 20px;
+      overflow-y: auto;
+      transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
+    }
+
+    .content.sidebar-collapsed {
+      padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
+    }
+    .menu-list a {
+        font-weight: normal; /* Semua menu tidak bold */
+        color: #333;
+        text-decoration: none;
+        display: block;
+        padding: 10px 15px;
+        transition: background 0.3s;
+    }
+
+    .menu-list a:hover {
+        background-color: #f0f0f0;
+    }
+    .menu-list a.active {
+
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            .sidebar ul li {
+                margin: 5px 0;
+            }
+
+            .sidebar ul li a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: white;
+        font-size: 18px;
+        padding: 12px 15px;
+        transition: background 0.3s;
+        font-weight: normal; /* Sudah tidak bold */
+        gap: 10px;
+    }
+
+            .sidebar ul li a i {
+                font-size: 20px;
+                width: 30px;
+                text-align: center;
+            }
+
+            .sidebar ul li a:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+            }
+            .sidebar ul li a.active {
+        font-weight: bold;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+    }
+
+
+        .submenu {
+          display: none;
+          list-style: none;
+          padding-left: 45px;
+        }
+
+        .submenu li a {
+          font-size: 16px;
+          padding: 8px 20px;
+          display: block;
+        }
+
+        .submenu li a:hover {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 8px;
+        }
+
+        .has-submenu a {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .submenu-toggle {
+          transition: transform 0.3s ease-in-out;
+          font-size: 16px;
+        }
+
+        .submenu-open .submenu-toggle {
+          transform: rotate(90deg);
+        }
+
+        .container {
+          background: #fff;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+          width: 90%;
+          max-width: 1000px;
+          margin: 100px auto 30px auto;
+          transform: translateX(60px);
+          position: relative;
+        }
+
+        .container .close-btn {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 24px;
+          cursor: pointer;
+        }
+
+        h2 {
+          text-align: center;
+          margin-bottom: 25px;
+          font-size: 28px;
+        }
+
+        .form-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px;
+          justify-content: space-between;
+        }
+
+        .form-box {
+          flex: 1;
+          min-width: 280px;
+          background: #d3d3d3;
+          padding: 20px;
+          border-radius: 10px;
+        }
+
+        .form-box label {
+          display: block;
+          font-weight: bold;
+          margin-bottom: 5px;
+          font-size: 15px;
+          text-align: left;
+        }
+
+        .form-box input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 15px;
+        }
+
+        .btn-submit {
+          width: 100%;
+          padding: 12px;
+          background: #5b3227;
+          color: white;
+          font-size: 17px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 12px;
+        }
+
+        .btn-submit:hover {
+          background: #44251b;
+        }
+
+        @media (max-width: 768px) {
+          .form-container {
+            flex-direction: column;
+          }
+
+          .form-box {
+            width: 100%;
+          }
+
+          .container {
+            margin-top: 100px;
+            padding: 20px;
+            transform: translateX(0);
+          }
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navbar -->
+<div class="navbar">
+    <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+    <div class="right-section">
+        <i class="fa fa-user"></i>
+        <h1>Admin Sekolah</h1>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <ul class="menu-list">
+        <li><a th:href="@{/admin/admin-panel}"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a th:href="@{/admin/guru/data-guru}" class="active"><i class="fas fa-chalkboard-teacher"></i> Data Guru</a></li>
+        <li class="has-submenu">
+            <a href="#" onclick="toggleSubmenu(event)">
+                <span><i class="fas fa-trophy"></i> Data Prestasi</span>
+                <i class="fas fa-chevron-left submenu-toggle"></i>
+            </a>
+            <ul class="submenu">
+                <li><a th:href="@{/admin/prestasi/dapres-guru}">Prestasi Guru</a></li>
+                <li><a th:href="@{/admin/prestasi/dapres-siswa}">Prestasi Siswa</a></li>
+                <li><a th:href="@{/admin/prestasi/dapres-sekolah}">Prestasi Sekolah</a></li>
+                <li><a th:href="@{/admin/prestasi/dapres-kelas}">Prestasi Kelas</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/admin/eskul/data-eskul}"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
+        <li><a th:href="@{/admin/berita/data-berita}"><i class="fas fa-newspaper"></i> Berita</a></li>
+        <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <span class="close-btn" onclick="window.location.href='/admin/guru/data-guru'">×</span>
+    <h2>EDIT DATA GURU</h2>
+
+    <form action="/admin/guru/save-guru" method="post" enctype="multipart/form-data" th:object="${guru}">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="form-container">
+            <div class="form-box">
+                <label>Nama</label>
+                <input type="text" th:field="*{nama}" placeholder="Nama">
+
+                <label>Pendidikan</label>
+                <input type="text" th:field="*{pendidikan}" placeholder="Pendidikan">
+
+                <label>NIP</label>
+                <input type="text" th:field="*{nip}" placeholder="NIP">
+
+                <label>Tempat, Tanggal Lahir</label>
+                <input type="text" th:field="*{ttl}" placeholder="Tempat, Tanggal Lahir">
+
+                <label>Jenis Kelamin</label>
+                <input type="text" th:field="*{jenisKelamin}" placeholder="Jenis Kelamin">
+
+                <label>Agama</label>
+                <input type="text" th:field="*{agama}" placeholder="Agama">
+            </div>
+
+            <div class="form-box">
+                <label>Pangkat/Gol</label>
+                <input type="text" th:field="*{pangkat}" placeholder="Pangkat/Gol">
+
+                <label>Jabatan</label>
+                <input type="text" th:field="*{jabatan}" placeholder="Jabatan">
+
+                <label>Status</label>
+                <input type="text" th:field="*{status}" placeholder="Status">
+
+                <label>Upload Foto</label>
+                <input type="file" name="foto">
+            </div>
+        </div>
+
+        <button class="btn-submit" type="submit">SIMPAN</button>
+    </form>
+</div>
+
+
+<script>
+    function closeContainer() {
+       window.location.href = '/admin/guru/data-guru';
+   }
+
+   function toggleSubmenu(event) {
+     event.preventDefault();
+     let submenuContainer = event.target.closest(".has-submenu");
+     let submenu = submenuContainer.querySelector(".submenu");
+     let icon = submenuContainer.querySelector(".submenu-toggle");
+     let isOpen = submenu.style.display === "block";
+
+     document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+     document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+     document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+     if (!isOpen) {
+       submenu.style.display = "block";
+       icon.style.transform = "rotate(90deg)";
+       submenuContainer.classList.add("submenu-open");
+     }
+   }
+
+   function toggleSidebar() {
+     const sidebar = document.getElementById("sidebar");
+     const content = document.getElementById("content");
+     sidebar.classList.toggle("sidebar-hidden");
+     if(content) content.classList.toggle("sidebar-collapsed");
+   }
+
+    function confirmLogout() {
+      const confirmed = confirm("Yakin ingin logout?");
+      if (confirmed) {
+        window.location.href = "/login";
+      }
+    }
+</script>
+</body>
+</html>

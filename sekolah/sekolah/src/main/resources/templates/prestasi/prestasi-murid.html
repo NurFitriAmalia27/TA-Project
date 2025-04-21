@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SDN Poris Pelawad 6</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/prestasi-siswa.css">
+</head>
+
+<body>
+<header>
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="/img/Logo.png" alt="Logo SDN Poris Pelawad 6" class="logo-img">
+                <span class="logo-text">SDN PORIS PELAWAD 6</span>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a th:href="@{/}">Beranda</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Profil</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/profil/visi-misi}">Visi & Misi</a>
+                        <a th:href="@{/profil/guru-tendik}">Guru & Tendik</a>
+                        <a th:href="@{/profil/sarana-prasarana}">Sarana & Prasana</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Kesiswaan</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/kesiswaan/tata-tertib}">Tata Tertib</a>
+                        <a th:href="@{/kesiswaan/ekstrakurikuler}">Ekstrakurikuler</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Adiwiyata</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/adiwiyata/ipmlh}">IPMLH</a>
+                        <a th:href="@{/adiwiyata/visi-misi-adiwiyata}">Visi & Misi Adiwiyata</a>
+                        <a th:href="@{/adiwiyata/struktur-adiwiyata}">Struktur Adiwiyata</a>
+                        <a th:href="@{/adiwiyata/program-adiwiyata}">Program Adiwiyata</a>
+                        <a th:href="@{/adiwiyata/dokumentasi-adiwiyata}">Dokumentasi</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Prestasi</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/prestasi/prestasi-sekolah}">Prestasi Sekolah</a>
+                        <a th:href="@{/prestasi/prestasi-guru}">Prestasi Guru</a>
+                        <a th:href="@{/prestasi/prestasi-murid}">Prestasi Murid</a>
+                        <a th:href="@{/prestasi/prestasi-kelas}">Prestasi Kelas</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Informasi</a>
+                    <div class="dropdown-content">
+                        <a th:href="@{/informasi/ppdb}">PPDB</a>
+                        <a th:href="@{/informasi/berita}">Berita</a>
+                        <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </div>
+</header>
+
+    <section class="hero">
+        <h1></h1>
+        <p></p>
+    </section>
+
+    <main>
+        <section class="section">
+            <h2>Prestasi yang diraih Siswa/Siswi SDN Poris Pelawad 6 Tidak hanya dalam bidang akademik melainkan dibidang non-akademik</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Jenis Prestasi</th>
+                            <th>Tahun</th>
+                            <th>Peringkat</th>
+                            <th>Tingkat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Solo Vocal Siswa</td>
+                            <td>2024</td>
+                            <td>-</td>
+                            <td>Korwil Cipondoh</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Catur Putri</td>
+                            <td>2024</td>
+                            <td>2</td>
+                            <td>Kota</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Futsal Kelompok Umur</td>
+                            <td>2024</td>
+                            <td>3</td>
+                            <td>-</td>
+                            
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Futsal</td>
+                            <td>2023</td>
+                            <td>1</td>
+                            <td>Kota</td>
+                        </tr>
+                          <tr>
+                            <td>6</td>
+                            <td>Futsal</td>
+                            <td>2023</td>
+                            <td>2</td>
+                            <td>Sekolah Dasar</td>
+                        </tr>
+                          <tr>
+                            <td>7</td>
+                            <td>Lomba Bertutur</td>
+                            <td>2023</td>
+                            <td>20 Besar</td>
+                            <td>Kota</td>
+                        </tr>
+                         <tr>
+                            <td>8</td>
+                            <td>Melukis (KLSN)</td>
+                            <td>2020</td>
+                            <td>3</td>
+                            <td>Korwil Cipondoh</td>
+                        </tr>
+                         <tr>
+                            <td>9</td>
+                            <td>Tari</td>
+                            <td>2020</td>
+                            <td>20 Besar</td>
+                            <td>Kota</td>
+                        </tr>
+                         <tr>
+                            <td>10</td>
+                            <td>Pramuka</td>
+                            <td>2020</td>
+                            <td>1</td>
+                            <td>-</td>
+                        </tr>
+                         <tr>
+                            <td>11</td>
+                            <td>Catur</td>
+                            <td>2019</td>
+                            <td>2</td>
+                            <td>Kota</td>
+                        </tr>
+                         <tr>
+                            <td>12</td>
+                            <td>Petugas Pembaca Doa</td>
+                            <td>2019</td>
+                            <td>-</td>
+                            <td>Kwarran Cipondoh</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </section>
+    </main>
+    <div class="divider-line"></div>
+    <!-- Bagian Galeri Kegiatan -->
+    <section class="section">
+        <h2>Dokumentasi Prestasi Siswa</h2>
+        <div class="grid-container">
+            <div class="card">
+                <img src="/img/" alt="Solo Vocal">
+                    <div class="card-title">Solo Vocal Siswa</div>
+            </div>
+            <div class="card">
+                <img src="/img/" alt="Catur Putri">
+                <div class="card-title">Catur Putri</div>
+            </div>
+            <div class="card">
+                <img src="/img/" alt="Futsal Kelompok Umur">
+                <div class="card-title">Futsal Kelompok Umur</div>
+            </div>
+            <div class="card">
+                <img src="/img/" alt="Futsal">
+                <div class="card-title">Futsal</div>
+            </div>
+            <div class="card">
+                <img src="/img/" alt="Futsal">
+                <div class="card-title">Futsal</div>
+            </div>
+            <div class="card">
+                <img src="/img/" alt="Lomba Bertutur">
+                <div class="card-title">Lomba Bertutur</div>
+            </div>
+             <div class="card">
+                <img src="/img/Melukis.jpeg" alt="Melukis">
+                <div class="card-title">Melukis (KLSN)</div>
+            </div>
+             <div class="card">
+                <img src="/img/Melukis.jpeg" alt="Tari">
+                <div class="card-title">Tari</div>
+            </div>
+             <div class="card">
+                <img src="/img/Mewarnai.jpeg" alt="Pramuka">
+                <div class="card-title">Pramuka</div>
+            </div>
+             <div class="card">
+                <img src="/img/Caturr.jpeg" alt="Catur">
+                <div class="card-title">Catur</div>
+            </div>
+             <div class="card">
+                <img src="/img/Petugas Doa.jpeg" alt="Petugas">
+                <div class="card-title">Petugas Pembaca Doa</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-media">
+                <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://youtube.com/@sdnpp6channel80?feature=shared" class="social-link"><i class="fab fa-youtube"></i> Youtube</a>
+            </div>
+        <p>&copy; 2024 SDN Poris Pelawad 06. All rights reserved.</p>
+    </footer>
+    <script>
+    let currentImageIndex = 0;
+    const images =  // Tambahkan path gambar lainnya
+
+    // Function untuk mengganti background
+    function changeBackground() {
+        document.querySelector(".hero").style.backgroundImage = `url(${images[currentImageIndex]})`;
+        currentImageIndex = (currentImageIndex + 1) % images.length; // Loop kembali ke gambar pertama
+    }
+
+    // Set interval untuk pergantian background (misal, 5 detik)
+    setInterval(changeBackground, 4000);
+
+    // Hamburger menu toggle
+    function toggleMenu() {
+        const navLinks = document.getElementById("nav-links");
+        navLinks.classList.toggle("active");
+    }
+</script>
+</body>
+</html>

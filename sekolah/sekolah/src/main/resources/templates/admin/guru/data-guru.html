@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Guru</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 60px;
+      background: #5D2D2A;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .navbar i.user-icon {
+      font-size: 30px !important;
+    }
+
+    .navbar img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .navbar h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #6A3332;
+  color: white;
+  height: 100vh;
+  padding-top: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+  overflow-y: auto;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%); /* Sidebar tersembunyi */
+}
+
+/* Konten utama */
+.content {
+  margin-top: 80px;
+  padding-left: 270px; /* Memberi ruang untuk sidebar */
+  padding-right: 20px;
+  overflow-y: auto;
+  transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
+}
+
+.content.sidebar-collapsed {
+  padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
+}
+
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 5px 0;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 12px 15px;
+      transition: background 0.3s;
+      gap: 10px;
+    }
+
+    .sidebar ul li a i {
+      font-size: 20px;
+      width: 30px;
+      text-align: center;
+    }
+
+    .sidebar ul li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    /* Aktif menu */
+    .sidebar ul li a.active {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .submenu {
+      display: none;
+      list-style: none;
+      padding-left: 45px;
+    }
+
+    .submenu li a {
+      font-size: 16px;
+      padding: 8px 20px;
+      display: block;
+    }
+
+    .submenu li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .has-submenu a {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .submenu-toggle {
+      transition: transform 0.3s ease-in-out;
+      font-size: 16px;
+    }
+
+    .submenu-open .submenu-toggle {
+      transform: rotate(90deg);
+    }
+
+    .content {
+    transition: padding-left 0.3s ease-in-out;
+    padding-left: 270px; /* Saat sidebar tampil */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content.sidebar-collapsed {
+    padding-left: 20px; /* Saat sidebar disembunyikan */
+}
+.search-container, .filter-container {
+  margin-bottom: 15px;
+  margin-top: 20px; /* Memberikan jarak ke bawah */
+  margin-left: 0; /* Menghapus jarak kiri agar sejajar dengan konten */
+  display: flex;
+  align-items: center; /* Menyelaraskan elemen secara vertikal */
+  gap: 10px; /* Menambahkan jarak kecil antara elemen */
+  width: 30%; /* Membuat elemen lebar 100% untuk menyesuaikan dengan konten */
+}
+
+.search-container input[type="text"], .filter-container select {
+  width: auto; /* Menyesuaikan lebar input dengan konten */
+  flex-grow: 1; /* Menyesuaikan lebar agar input menggunakan ruang yang ada */
+  height: 40px; /* Meningkatkan tinggi kolom pencarian dan filter */
+}
+
+.filter-container select {
+  max-width: 300px; /* Menentukan lebar maksimal untuk dropdown filter */
+}
+
+    .create-button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      margin: 5px 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .create-button:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 100%;
+      table-layout: auto;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* smooth scroll untuk iOS */
+    }
+
+        .button-container {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .create-button {
+  display: inline-block;
+  background-color: #6A3332;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none; /* Menghilangkan garis bawah */
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #5D2D2A;
+}
+
+        .edit-btn, .delete-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .edit-btn {
+            color: blue;
+        }
+
+        .delete-btn {
+            color: red;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 0 10px;
+            }
+
+            .navbar-right h1 {
+                font-size: 16px;
+            }
+
+            .sidebar {
+                width: 220px;
+                transform: translateX(0); /* defaultnya terlihat */
+            }
+            .sidebar.sidebar-hidden {
+    transform: translateX(-100%); /* sembunyikan pakai transform */
+  }
+            .content.shifted {
+                margin-left: 220px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .navbar-right h1 {
+                font-size: 14px;
+            }
+
+            .menu-icon {
+                font-size: 20px;
+            }
+
+            .sidebar {
+                width: 200px;
+                transform: translateX(0);
+            }
+
+            .content.shifted {
+                margin-left: 200px;
+            }
+            .sidebar.sidebar-hidden {
+    transform: translateX(-100%);
+  }
+            .sidebar ul li a {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+    <div class="right-section">
+        <i class="fa fa-user"></i>
+        <h1>Admin Sekolah</h1>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <ul class="menu-list">
+        <li><a th:href="@{/admin/admin-panel}"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a th:href="@{/admin/guru/data-guru}" class="active"><i class="fas fa-chalkboard-teacher"></i> Data Guru</a></li>
+        <li class="has-submenu">
+            <a href="#" onclick="toggleSubmenu(event)">
+                <span><i class="fas fa-trophy"></i> Data Prestasi</span>
+                <i class="fas fa-chevron-left submenu-toggle"></i>
+            </a>
+            <ul class="submenu">
+                <li><a th:href="@{/admin/prestasi/dapres-guru}">Prestasi Guru</a></li>
+                <li><a th:href="@{/admin/prestasi/dapres-siswa}">Prestasi Siswa</a></li>
+                <li><a th:href="@{/admin/prestasi/dapres-sekolah}">Prestasi Sekolah</a></li>
+                <li><a th:href="@{/admin/prestasi/dapres-kelas}">Prestasi Kelas</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/admin/eskul/data-eskul}"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
+        <li><a th:href="@{/admin/berita/data-berita}"><i class="fas fa-newspaper"></i> Berita</a></li>
+        <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+</div>
+
+<!-- Konten -->
+<div class="content" id="content">
+    <h1>Data Guru</h1>
+
+    <!-- Pencarian dan Filter -->
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+    </div>
+
+    <div class="filter-container">
+        <label for="genderFilter">Filter Jenis Kelamin:</label>
+        <select id="genderFilter" onchange="filterByGender()">
+            <option value="">Semua</option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+
+        <!-- Tombol download CSV -->
+        <button onclick="downloadTable()" class="create-button" title="Download CSV">
+            <i class="fas fa-download"></i>
+        </button>
+    </div>
+
+    <!-- Tabel Data Guru -->
+    <div class="table-responsive">
+    <table id="guruTable">
+        <thead>
+        <tr>
+            <th>NO</th>
+            <th>Nama</th>
+            <th>Pendidikan</th>
+            <th>NIP</th>
+            <th>TTL</th>
+            <th>Jenis Kelamin</th>
+            <th>Agama</th>
+            <th>Pangkat/ Golongan</th>
+            <th>Jabatan</th>
+            <th>Status</th>
+            <th>Foto</th>
+            <th>Ubah</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Iterasi data guru dari list guruList -->
+        <tr th:each="guru, iterStat : ${guruList}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${guru.nama}"></td>
+            <td th:text="${guru.pendidikan}"></td>
+            <td th:text="${guru.nip}"></td>
+            <td th:text="${guru.ttl}"></td>
+            <td th:text="${guru.jenisKelamin}"></td>
+            <td th:text="${guru.agama}"></td>
+            <td th:text="${guru.pangkat}"></td>
+            <td th:text="${guru.jabatan}"></td>
+            <td th:text="${guru.status}"></td>
+            <td>
+                <img th:src="@{/img/guru/{fileName}(fileName=${guru.foto})}" alt="Foto Guru" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+            </td>
+            <td>
+                <a th:href="@{/admin/guru/edit/{id}(id=${guru.id})}" class="edit-btn">✏️</a>
+                <button class="delete-btn" onclick="deleteRow(this)">🗑️</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin/guru/create-guru}" class="create-button">+ Tambah Data</a>
+    </div>
+</div>
+
+<!-- Script -->
+<script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const content = document.getElementById("content");
+      sidebar.classList.toggle("sidebar-hidden");
+      content.classList.toggle("sidebar-collapsed");
+    }
+
+    function toggleSubmenu(event) {
+      event.preventDefault();
+      let submenuContainer = event.target.closest(".has-submenu");
+      let submenu = submenuContainer.querySelector(".submenu");
+      let icon = submenuContainer.querySelector(".submenu-toggle");
+      let isOpen = submenu.style.display === "block";
+
+      document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+      document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+      document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+      if (!isOpen) {
+        submenu.style.display = "block";
+        icon.style.transform = "rotate(90deg)";
+        submenuContainer.classList.add("submenu-open");
+      }
+    }
+
+    function searchTable() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let rows = document.querySelectorAll("#guruTable tbody tr");
+
+      rows.forEach(row => {
+        const nama = row.cells[1].textContent.toLowerCase();
+        const ttl = row.cells[4].textContent.toLowerCase();
+        const match = nama.includes(input) || ttl.includes(input);
+        row.style.display = match ? "" : "none";
+      });
+    }
+
+    function filterByGender() {
+      const gender = document.getElementById("genderFilter").value.toLowerCase();
+      const rows = document.querySelectorAll("#guruTable tbody tr");
+
+      rows.forEach(row => {
+        const cellGender = row.cells[5].textContent.toLowerCase();
+        row.style.display = !gender || cellGender === gender ? "" : "none";
+      });
+    }
+
+    function downloadTable() {
+      const table = document.getElementById("guruTable");
+      const rows = Array.from(table.rows);
+      const csv = rows.map(row =>
+        Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+      ).join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "data_guru.csv";
+      link.click();
+    }
+
+    function confirmLogout() {
+      const confirmed = confirm("Yakin ingin logout?");
+      if (confirmed) {
+        window.location.href = "/login";
+      }
+    }
+
+    function setupEditButtons() {
+      document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const row = this.closest("tr");
+          const nama = row.cells[1].textContent;
+          alert("Edit data untuk: " + nama);
+          // window.location.href = "EditGuru.html?id=...";
+        });
+      });
+    }
+
+    function setupDeleteButtons() {
+      document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const row = this.closest("tr");
+          const nama = row.cells[1].textContent;
+          if (confirm("Yakin ingin menghapus data Guru dari: " + nama + "?")) {
+            row.remove();
+          }
+        });
+      });
+    }
+
+    window.onload = function () {
+      setupEditButtons();
+      setupDeleteButtons();
+    };
+</script>
+
+</body>
+</html>

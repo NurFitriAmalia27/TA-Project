@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tambah Buku</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: Arial, sans-serif;
+   }
+
+   body {
+     background-color: #f8f9fa;
+     margin: 0;
+     padding: 0;
+   }
+
+   .navbar {
+     width: 100%;
+     height: 60px;
+     background: #5D2D2A;
+     color: white;
+     display: flex;
+     align-items: center;
+     padding: 0 20px;
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: 1000;
+   }
+
+   .menu-icon {
+     font-size: 24px;
+     cursor: pointer;
+   }
+
+   .right-section {
+     display: flex;
+     align-items: center;
+     gap: 10px;
+     margin-left: auto;
+   }
+
+   .navbar i.user-icon {
+     font-size: 30px !important;
+   }
+
+   .navbar img {
+     height: 40px;
+     width: 40px;
+     border-radius: 50%;
+     object-fit: cover;
+   }
+
+   .navbar h1 {
+     font-size: 20px;
+     font-weight: bold;
+   }
+
+   /* Sidebar */
+.sidebar {
+ width: 250px;
+ background: #6A3332;
+ color: white;
+ height: 100vh;
+ padding-top: 80px;
+ position: fixed;
+ top: 0;
+ left: 0;
+ z-index: 999;
+ transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+ overflow-y: auto;
+}
+
+.sidebar-hidden {
+ transform: translateX(-100%); /* Sidebar tersembunyi */
+}
+.admin-profile {
+     text-align: center;
+     margin-bottom: 20px;
+   }
+
+   .admin-image {
+     width: 80px;
+     height: 80px;
+     border-radius: 50%;
+     object-fit: cover;
+     margin-bottom: 10px;
+   }
+
+   .admin-profile::after {
+     content: "";
+     display: block;
+     width: 100%;
+     height: 2px;
+     background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+     margin-top: 10px;
+   }
+
+   .admin-name {
+     font-size: 18px;
+     font-weight: bold;
+     color: #fff;
+   }
+
+   .menu-list li {
+     margin: 8px 0;
+   }
+
+   .menu-list li a {
+     display: flex;
+     align-items: center;
+     gap: 12px;
+     padding: 12px 20px;
+     text-decoration: none;
+     color: white;
+     font-size: 16px;
+     font-weight: bold;
+     transition: background 0.3s ease;
+   }
+
+   .menu-list li a:hover,
+   .menu-list li a.active {
+     background-color: rgba(255, 255, 255, 0.2);
+     border-radius: 8px;
+   }
+
+   .menu-list li a i {
+     width: 25px;
+     text-align: center;
+     font-size: 18px;
+   }
+
+   .main-content {
+     padding: 80px 20px 20px 20px;
+     margin-left: 250px;
+     transition: margin-left 0.3s ease-in-out;
+   }
+
+   .main-content.full {
+     margin-left: 0;
+   }
+
+   .page-title {
+     font-size: 24px;
+     font-weight: bold;
+     margin-bottom: 1rem;
+   }
+
+   .floating-form {
+ background-color: #fff;
+ padding: 20px;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+ border-radius: 10px;
+ width: 100%;
+ max-width: 500px; /* Menambah lebar form */
+ margin-top: 130px; /* Menambahkan jarak dari atas */
+}
+
+
+
+   .floating-form h2 {
+     font-size: 30px;
+     font-weight: 600;
+     color: #333;
+     margin-bottom: 16px;
+     text-align: center;
+   }
+
+   .floating-form input,
+   .floating-form textarea {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 12px;
+     border: 1px solid #ddd;
+     border-radius: 6px;
+     font-size: 15px;
+   }
+   .form-wrapper {
+ display: flex;
+ justify-content: center;
+ align-items: flex-start; /* atur ke center jika mau benar2 di tengah vertikal */
+ min-height: calc(100vh - 80px); /* sesuaikan dengan tinggi navbar */
+ padding-top: 20px;
+}
+
+   .button-container {
+     display: flex;
+     gap: 10px;
+   }
+
+   .btn-simpan, .btn-batal {
+     background-color: #28a745;
+     color: white;
+     padding: 10px;
+     border: none;
+     border-radius: 6px;
+     font-size: 15px;
+     cursor: pointer;
+     flex: 1;
+   }
+
+   .btn-simpan:hover {
+     background-color: #218838;
+   }
+
+   .btn-batal {
+     background-color: #dc3545;
+   }
+
+   .btn-batal:hover {
+     background-color: #c82333;
+   }
+
+   @media (max-width: 768px) {
+     .sidebar {
+       width: 200px;
+     }
+
+     .main-content {
+       margin-left: 200px;
+     }
+
+     .main-content.full {
+       margin-left: 0;
+     }
+     .floating-form {
+   margin-top: 80px; /* Mengurangi jarak atas di layar kecil */
+   max-width: 90%; /* Membatasi lebar form untuk perangkat kecil */
+ }
+
+ .floating-form h2 {
+   font-size: 18px; /* Mengurangi ukuran font pada header */
+ }
+
+ .floating-form input,
+ .floating-form textarea {
+   font-size: 14px; /* Menyesuaikan ukuran font input agar nyaman di layar kecil */
+ }
+
+ .button-container {
+   flex-direction: column; /* Menata tombol agar tampil vertikal */
+   gap: 15px; /* Memberikan jarak antar tombol */
+ }
+
+ .btn-simpan, .btn-batal {
+   flex: none;
+   width: 100%; /* Tombol mengisi lebar penuh */
+ }
+
+   }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+  <div class="right-section">
+    <i class="fa fa-user"></i>
+    <h1>ADMIN PERPUSTAKAAN</h1>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <ul class="menu-list">
+    <div class="admin-profile">
+      <img src="https://i.pravatar.cc/80?img=12" alt="Profil Admin" class="admin-image">
+      <p class="admin-name">ANISA AMELIA</p>
+    </div>
+    <ul class="nav">
+      <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="active"><i class="fas fa-book"></i> Data Buku</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Data Pengembalian</a></li>
+      <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
+      <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </ul>
+</div>
+
+<div class="form-wrapper">
+  <div class="floating-form">
+    <h2>Tambah Data Buku</h2>
+    <form id="addBookForm">
+      <label for="namaBuku">Nama Buku:</label>
+      <input type="text" id="namaBuku" name="namaBuku" required>
+
+      <label for="pengarang">Pengarang:</label>
+      <input type="text" id="pengarang" name="pengarang" required>
+
+      <label for="qty">Jumlah Buku:</label>
+      <input type="number" id="qty" name="qty" required>
+
+      <label for="deskripsi">Deskripsi:</label>
+      <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+
+      <label for="foto">Foto Buku:</label>
+      <input type="file" id="foto" name="foto" accept="image/*">
+    </form>
+
+    <div class="button-container">
+      <button class="btn-simpan">Simpan</button>
+      <button class="btn-batal">Batal</button>
+    </div>
+  </div>
+</div>
+<script>
+  // Fungsi untuk toggle sidebar
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const content = document.getElementById("content");
+  sidebar.classList.toggle("sidebar-hidden");
+  content.classList.toggle("sidebar-collapsed");
+}
+
+// Toggle submenu
+function toggleSubmenu(event) {
+  event.preventDefault();
+  let submenuContainer = event.target.closest(".has-submenu");
+  let submenu = submenuContainer.querySelector(".submenu");
+  let icon = submenuContainer.querySelector(".submenu-toggle");
+  let isOpen = submenu.style.display === "block";
+
+  document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+  document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+  document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+  if (!isOpen) {
+    submenu.style.display = "block";
+    icon.style.transform = "rotate(90deg)";
+    submenuContainer.classList.add("submenu-open");
+  }
+}
+
+
+function filterByNama() {
+const selectedNama = document.getElementById("NamaFilter").value.toLowerCase();
+const table = document.getElementById("guruTable");
+const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+for (let i = 0; i < rows.length; i++) {
+  const NamaCell = rows[i].getElementsByTagName("td")[1]; // kolom Nama Buku
+  const NamaText = NamaCell ? NamaCell.textContent.toLowerCase() : "";
+
+  if (selectedNama === "" || NamaText.includes(selectedNama)) {
+    rows[i].style.display = ""; // tampilkan
+  } else {
+    rows[i].style.display = "none"; // sembunyikan
+  }
+}
+}
+
+// Fungsi tombol edit
+function setupEditButtons() {
+  document.querySelectorAll(".edit-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      let row = this.closest("tr");
+      let nama = row.cells[1].textContent;
+      alert("Edit data untuk: " + nama);
+      // Bisa arahkan ke halaman edit misalnya: window.location.href = "Create Prestasi Guru.html?id=1";
+    });
+  });
+}
+
+// Fungsi tombol delete
+function setupDeleteButtons() {
+  document.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", function () {
+      let row = this.closest("tr");
+      let nama = row.cells[1].textContent;
+      if (confirm("Yakin ingin menghapus data prestasi dari: " + nama + "?")) {
+        row.remove();
+      }
+    });
+  });
+}
+
+// Fungsi download data CSV
+function downloadTable() {
+  let table = document.getElementById("guruTable");
+  let rows = Array.from(table.rows);
+  let csv = rows.map(row =>
+    Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+  ).join("\n");
+
+  let blob = new Blob([csv], { type: "text/csv" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "data_prestasi_guru.csv";
+  link.click();
+}
+
+// Aktifkan menu aktif saat klik
+document.querySelectorAll('.menu-list a').forEach(link => {
+  link.addEventListener('click', function (e) {
+    if (this.getAttribute("href") === "#") {
+      e.preventDefault();
+    }
+    document.querySelectorAll('.menu-list a').forEach(el => el.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// Jalankan semua fungsi saat halaman siap
+window.onload = function () {
+  setupEditButtons();
+  setupDeleteButtons();
+};
+function confirmLogout() {
+    const confirmed = confirm("Yakin ingin logout?");
+    if (confirmed) {
+      window.location.href = "/login";
+    }
+  }
+// Fungsi untuk menampilkan form tambah data buku
+function showForm() {
+    const formContainer = document.getElementById("formContainer");
+    formContainer.style.display = "block";
+  }
+
+  // Fungsi untuk menyembunyikan form
+  function hideForm() {
+    const formContainer = document.getElementById("formContainer");
+    formContainer.style.display = "none";
+  }
+
+  // Menambahkan event listener untuk submit form
+  document.getElementById("addBookForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Ambil data dari form
+    const namaBuku = document.getElementById("namaBuku").value;
+    const pengarang = document.getElementById("pengarang").value;
+    const qty = document.getElementById("qty").value;
+    const deskripsi = document.getElementById("deskripsi").value;
+    const foto = document.getElementById("foto").files[0];
+
+    // Tambahkan data buku ke tabel
+    const table = document.getElementById("guruTable").getElementsByTagName("tbody")[0];
+    const newRow = table.insertRow(table.rows.length);
+    newRow.innerHTML = `
+      <td>${table.rows.length + 1}</td>
+      <td>${namaBuku}</td>
+      <td>${pengarang}</td>
+      <td>${qty}</td>
+      <td>${deskripsi}</td>
+      <td><img src="${URL.createObjectURL(foto)}" alt="Foto Buku" style="width: 50px; height: 50px;"></td>
+      <td>
+        <button class="edit-btn"><i class="fas fa-edit"></i></button>
+        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+      </td>
+    `;
+
+    // Reset form
+    document.getElementById("addBookForm").reset();
+    hideForm(); // Sembunyikan form setelah data ditambahkan
+  });
+   // Fungsi untuk menampilkan form
+   function showForm() {
+    document.getElementById('formContainer').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+  }
+
+  // Fungsi untuk menyembunyikan form
+  function hideForm() {
+    document.getElementById('formContainer').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+  }
+
+  // Menambahkan event listener untuk submit form
+  document.getElementById("addBookForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    // Ambil data dari form
+    const namaBuku = document.getElementById("namaBuku").value;
+    const pengarang = document.getElementById("pengarang").value;
+    const qty = document.getElementById("qty").value;
+    const deskripsi = document.getElementById("deskripsi").value;
+
+    // Tampilkan alert (contoh, bisa diganti dengan simpan data ke server)
+    alert(`Data Buku Disimpan: \nNama Buku: ${namaBuku}\nPengarang: ${pengarang}\nJumlah Buku: ${qty}\nDeskripsi: ${deskripsi}`);
+
+    // Sembunyikan form setelah data disubmit
+    hideForm();
+  });
+  // Saat tombol Simpan diklik
+  document.querySelector('.btn-simpan').addEventListener('click', function () {
+    const form = document.getElementById('addBookForm');
+
+    if (form.reportValidity()) {
+      // Ambil data
+      const data = {
+        namaBuku: form.namaBuku.value,
+        pengarang: form.pengarang.value,
+        qty: form.qty.value,
+        deskripsi: form.deskripsi.value,
+        foto: form.foto.files[0] ? form.foto.files[0].name : ''
+      };
+
+      // Simpan ke localStorage (bisa disesuaikan dengan sistem backend jika ada)
+      let bukuList = JSON.parse(localStorage.getItem('dataBuku')) || [];
+      bukuList.push(data);
+      localStorage.setItem('dataBuku', JSON.stringify(bukuList));
+
+      alert('Data buku berhasil disimpan!');
+      window.location.href = '/admin-perpustakaan/data-buku'; // ganti dengan halaman data buku yang sesuai
+    }
+  });
+
+  // Saat tombol Batal diklik
+  document.querySelector('.btn-batal').addEventListener('click', function () {
+    window.location.href = '/admin-perpustakaan/data-buku'; // ganti dengan halaman data buku yang sesuai
+  });
+</script>
+
+</body>
+</html>

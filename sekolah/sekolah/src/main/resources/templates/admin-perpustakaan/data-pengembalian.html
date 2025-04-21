@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Pengembalian</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 60px;
+      background: #5D2D2A;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Memberikan jarak antara ikon dan teks */
+  margin-left: auto; /* Memastikan konten berada di sisi kanan */
+}
+
+.navbar i.user-icon {
+  font-size: 30px; /* Ukuran ikon lebih besar */
+}
+
+.navbar h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0; /* Pastikan tidak ada margin yang mengganggu */
+}
+
+
+    .sidebar {
+      width: 250px;
+      background: #6A3332;
+      color: white;
+      height: 100vh;
+      padding-top: 80px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      overflow-y: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.hide {
+      transform: translateX(-100%);
+    }
+
+    .admin-profile {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .admin-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .admin-profile::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+      margin-top: 10px;
+    }
+
+    .admin-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .menu-list li {
+      margin: 8px 0;
+    }
+
+    .menu-list li a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .menu-list li a:hover,
+    .menu-list li a.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .menu-list li a i {
+      width: 25px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    .main-content {
+      padding: 80px 20px 20px 20px;
+      margin-left: 250px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #5D2D2A;
+      margin-bottom: 20px;
+      font-size: 30px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .button-container button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .refresh-btn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+
+     /* Konten utama */
+  .main-content {
+    padding: 80px 20px 20px 20px;
+    margin-left: 250px;
+    transition: margin-left 0.3s ease, width 0.3s ease; /* Transisi halus saat sidebar disembunyikan */
+  }
+
+  .main-content.full {
+    margin-left: 0; /* Menyesuaikan margin saat sidebar disembunyikan */
+  }
+
+  /* Tabel responsif */
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%; /* Pastikan tabel memenuhi lebar kontainer */
+    transition: width 0.3s ease; /* Transisi halus pada lebar tabel */
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-width: 800px; /* Minimum lebar agar tabel tidak terlalu kecil */
+  }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #6A3332;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+    }
+
+    .back-btn:hover {
+      background-color: #4e2625;
+    }
+
+    .total-denda {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #5D2D2A;
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .main-content {
+        margin-left: 200px;
+      }
+
+      .main-content.full {
+        margin-left: 0;
+      }
+
+      .navbar h1 {
+        font-size: 16px;
+      }
+
+      .menu-icon {
+        margin-right: 10px;
+      }
+
+
+
+      .button-container {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+      .navbar h1 {
+        font-size: 14px;
+      }
+
+      .button-container button {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      th, td {
+        font-size: 12px;
+        padding: 8px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+
+      .back-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+  <div class="right-section">
+    <i class="fa fa-user"></i>
+    <h1>ADMIN PERPUSTAKAAN</h1>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <ul class="menu-list">
+    <div class="admin-profile">
+      <img src="https://i.pravatar.cc/80?img=12" alt="Profil Admin" class="admin-image">
+      <p class="admin-name">ANISA AMELIA</p>
+    </div>
+    <ul class="nav">
+      <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Data Buku</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="active"><i class="fas fa-undo-alt"></i> Data Pengembalian</a></li>
+      <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
+      <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </ul>
+</div>
+
+<div class="main-content" id="content">
+  <h2>Data Pengembalian Buku</h2>
+  <div class="button-container">
+    <button class="refresh-btn" onclick="loadDataPengembalian()">🔄 Muat Ulang Data</button>
+    <button class="delete-btn" onclick="hapusSemua()">🗑 Hapus Semua</button>
+  </div>
+
+  <div class="table-responsive">
+    <table id="tabelPengembalian">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Peminjam</th>
+        <th>Nama Buku</th>
+        <th>Tgl Pinjam</th>
+        <th>Tgl Kembali</th>
+        <th>Tgl Pengembalian</th>
+        <th>Denda</th>
+      </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <p id="totalDenda" class="total-denda">Total Denda: Rp 0</p>
+  <a class="back-btn" href="/admin-perpustakaan/perpus-panel">← Kembali ke Beranda</a>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+    sidebar.classList.toggle("hide");
+    content.classList.toggle("full");
+  }
+  function confirmLogout() {
+    const confirmed = confirm("Yakin ingin logout?");
+    if (confirmed) {
+      window.location.href = "/login";
+    }
+  }
+
+  function formatTanggal(tgl) {
+    const tanggal = new Date(tgl);
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    return tanggal.toLocaleDateString('id-ID', options);
+  }
+
+  function loadDataPengembalian() {
+    const data = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
+    const tbody = document.querySelector('#tabelPengembalian tbody');
+    const totalDendaEl = document.getElementById("totalDenda");
+    tbody.innerHTML = '';
+    let totalDenda = 0;
+
+    data.forEach((item, index) => {
+      const tr = document.createElement('tr');
+      const dendaValue = parseInt(item.denda) || 0;
+      totalDenda += dendaValue;
+
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${item.namaPeminjam}</td>
+        <td>${item.namaBuku}</td>
+        <td>${formatTanggal(item.tglPinjam)}</td>
+        <td>${formatTanggal(item.tglKembali)}</td>
+        <td>${formatTanggal(item.tglPengembalianSebenarnya)}</td>
+        <td>${dendaValue > 0 ? 'Rp ' + dendaValue.toLocaleString('id-ID') : '-'}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    totalDendaEl.textContent = `Total Denda: Rp ${totalDenda.toLocaleString('id-ID')}`;
+  }
+
+  function hapusSemua() {
+    if (confirm("Yakin ingin menghapus semua data pengembalian?")) {
+      localStorage.removeItem("dataPengembalian");
+      loadDataPengembalian();
+    }
+  }
+
+  window.onload = loadDataPengembalian;
+</script>
+</body>
+</html>

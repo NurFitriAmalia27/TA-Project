@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Ekstrakurikuler</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      width: 100%;
+      height: 60px;
+      background: #5D2D2A;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
+
+    .navbar i.user-icon {
+      font-size: 30px !important;
+    }
+
+    .navbar img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .navbar h1 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #6A3332;
+  color: white;
+  height: 100vh;
+  padding-top: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+  overflow-y: auto;
+}
+
+.sidebar-hidden {
+  transform: translateX(-100%); /* Sidebar tersembunyi */
+}
+
+/* Konten utama */
+.content {
+  margin-top: 80px;
+  padding-left: 270px; /* Memberi ruang untuk sidebar */
+  padding-right: 20px;
+  overflow-y: auto;
+  transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
+}
+
+.content.sidebar-collapsed {
+  padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
+}
+
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 5px 0;
+    }
+
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 12px 15px;
+      transition: background 0.3s;
+      gap: 10px;
+    }
+
+    .sidebar ul li a i {
+      font-size: 20px;
+      width: 30px;
+      text-align: center;
+    }
+
+    .sidebar ul li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    /* Aktif menu */
+    .sidebar ul li a.active {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .submenu {
+      display: none;
+      list-style: none;
+      padding-left: 45px;
+    }
+
+    .submenu li a {
+      font-size: 16px;
+      padding: 8px 20px;
+      display: block;
+    }
+
+    .submenu li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .has-submenu a {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .submenu-toggle {
+      transition: transform 0.3s ease-in-out;
+      font-size: 16px;
+    }
+
+    .submenu-open .submenu-toggle {
+      transform: rotate(90deg);
+    }
+
+    .content {
+    transition: padding-left 0.3s ease-in-out;
+    padding-left: 270px; /* Saat sidebar tampil */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.content.sidebar-collapsed {
+    padding-left: 20px; /* Saat sidebar disembunyikan */
+}
+.search-container, .filter-container {
+  margin-bottom: 15px;
+  margin-top: 20px; /* Memberikan jarak ke bawah */
+  margin-left: 0; /* Menghapus jarak kiri agar sejajar dengan konten */
+  display: flex;
+  align-items: center; /* Menyelaraskan elemen secara vertikal */
+  gap: 10px; /* Menambahkan jarak kecil antara elemen */
+  width: 30%; /* Membuat elemen lebar 100% untuk menyesuaikan dengan konten */
+}
+
+.search-container input[type="text"], .filter-container select {
+  width: auto; /* Menyesuaikan lebar input dengan konten */
+  flex-grow: 1; /* Menyesuaikan lebar agar input menggunakan ruang yang ada */
+  height: 40px; /* Meningkatkan tinggi kolom pencarian dan filter */
+}
+
+.filter-container select {
+  max-width: 300px; /* Menentukan lebar maksimal untuk dropdown filter */
+}
+
+
+
+
+    .create-button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      margin: 5px 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .create-button:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      text-align: center;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+
+        .button-container {
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        .create-button {
+  display: inline-block;
+  background-color: #6A3332;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none; /* Menghilangkan garis bawah */
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #5D2D2A;
+}
+
+        .edit-btn, .delete-btn {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .edit-btn {
+            color: blue;
+        }
+
+        .delete-btn {
+            color: red;
+        }
+        @media screen and (max-width: 768px) {
+            .navbar {
+                padding: 0 10px;
+            }
+
+            .navbar-right h1 {
+                font-size: 16px;
+            }
+
+            .sidebar {
+                width: 220px;
+                transform: translateX(0); /* defaultnya terlihat */
+            }
+            .sidebar.sidebar-hidden {
+    transform: translateX(-100%); /* sembunyikan pakai transform */
+  }
+            .content.shifted {
+                margin-left: 220px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .navbar-right h1 {
+                font-size: 14px;
+            }
+
+            .menu-icon {
+                font-size: 20px;
+            }
+
+            .sidebar {
+                width: 200px;
+                transform: translateX(0);
+            }
+
+            .content.shifted {
+                margin-left: 200px;
+            }
+            .sidebar.sidebar-hidden {
+    transform: translateX(-100%);
+  }
+            .sidebar ul li a {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            th, td {
+                font-size: 14px;
+                padding: 5px;
+            }
+        }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+  <div class="right-section">
+    <i class="fa fa-user"></i>
+    <h1>Admin Sekolah</h1>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <ul class="menu-list">
+    <li><a th:href="@{/admin/admin-panel}"><i class="fas fa-home"></i> Dashboard</a></li>
+    <li><a th:href="@{/admin/guru/data-guru}"><i class="fas fa-chalkboard-teacher"></i> Data Guru</a></li>
+    <li class="has-submenu">
+      <a href="#" onclick="toggleSubmenu(event)">
+        <span><i class="fas fa-trophy"></i> Data Prestasi</span>
+        <i class="fas fa-chevron-left submenu-toggle"></i>
+      </a>
+      <ul class="submenu">
+        <li><a th:href="@{/admin/prestasi/dapres-guru}">Prestasi Guru</a></li>
+        <li><a th:href="@{/admin/prestasi/dapres-siswa}">Prestasi Siswa</a></li>
+        <li><a th:href="@{/admin/prestasi/dapres-sekolah}">Prestasi Sekolah</a></li>
+        <li><a th:href="@{/admin/prestasi/dapres-kelas}">Prestasi Kelas</a></li>
+      </ul>
+    </li>
+    <li><a th:href="@{/admin/eskul/data-eskul}"class="active"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
+    <li><a th:href="@{/admin/berita/data-berita}"><i class="fas fa-newspaper"></i> Berita</a></li>
+    <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+  </ul>
+</div>
+
+  <div class="content" id="content">
+    <h1>Ekstrakurikuler</h1>
+
+    <div class="search-container">
+      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+    </div>
+  
+    <div class="filter-container">
+      <label for="judulFilter">Filter Judul:</label>
+<select id="judulFilter" onchange="filterByJudul()">
+  <option value="">Semua</option>
+  <option value="Ahmad Fauzan">Ahmad Fauzan</option>
+  <option value="Rina Handayani">Rina Handayani</option>
+  <option value="Budi Santoso">Budi Santoso</option>
+</select>
+
+   <!-- Tombol Tambah Data -->
+  
+   <!-- Tombol download CSV -->
+   <button onclick="downloadTable()" class="create-button">Download CSV</button>
+    </div>
+  
+    <table id="guruTable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Judul</th>
+          <th>Keterangan</th>
+          <th>Foto</th>
+          <th>Ubah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Ahmad Fauzan</td>
+          <td>S1 Pendidikan</td>
+          <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+          <td>
+            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
+            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Rina Handayani</td>
+          <td>S1 Pendidikan</td>
+          <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+          <td>
+            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
+            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
+          </td>
+        </tr><tr>
+          <td>3</td>
+          <td>Budi Santoso</td>
+          <td>S1 Pendidikan</td>
+          <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
+          <td>
+            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
+            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/admin/eskul/create-eskul}" class="create-button">+ Tambah Data</a>
+  </div>
+</div>
+  <script>
+    // Fungsi untuk toggle sidebar
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+    sidebar.classList.toggle("sidebar-hidden");
+    content.classList.toggle("sidebar-collapsed");
+  }
+
+  // Toggle submenu
+  function toggleSubmenu(event) {
+    event.preventDefault();
+    let submenuContainer = event.target.closest(".has-submenu");
+    let submenu = submenuContainer.querySelector(".submenu");
+    let icon = submenuContainer.querySelector(".submenu-toggle");
+    let isOpen = submenu.style.display === "block";
+
+    document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+    document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+    document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+    if (!isOpen) {
+      submenu.style.display = "block";
+      icon.style.transform = "rotate(90deg)";
+      submenuContainer.classList.add("submenu-open");
+    }
+  }
+
+  function filterByJudul() {
+  const selectedJudul = document.getElementById("judulFilter").value.toLowerCase();
+  const table = document.getElementById("guruTable");
+  const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+  for (let i = 0; i < rows.length; i++) {
+    const judulCell = rows[i].getElementsByTagName("td")[1]; // kolom Judul
+    const judulText = judulCell ? judulCell.textContent.toLowerCase() : "";
+
+    if (selectedJudul === "" || judulText.includes(selectedJudul)) {
+      rows[i].style.display = ""; // tampilkan
+    } else {
+      rows[i].style.display = "none"; // sembunyikan
+    }
+  }
+}
+
+  // Fungsi filter berdasarkan tahun
+  function filterByYear() {
+    let selectedYear = document.getElementById("yearFilter").value;
+    let table = document.getElementById("guruTable");
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+      let yearCell = rows[i].getElementsByTagName("td")[3]; // Kolom tahun
+      if (yearCell) {
+        let yearText = yearCell.textContent || yearCell.innerText;
+        if (selectedYear === "" || yearText === selectedYear) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  // Fungsi tombol edit
+  function setupEditButtons() {
+    document.querySelectorAll(".edit-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        let row = this.closest("tr");
+        let nama = row.cells[1].textContent;
+        alert("Edit data untuk: " + nama);
+        // Bisa arahkan ke halaman edit misalnya: window.location.href = "Create Prestasi Guru.html?id=1";
+      });
+    });
+  }
+
+  // Fungsi tombol delete
+  function setupDeleteButtons() {
+    document.querySelectorAll(".delete-btn").forEach(btn => {
+      btn.addEventListener("click", function () {
+        let row = this.closest("tr");
+        let nama = row.cells[1].textContent;
+        if (confirm("Yakin ingin menghapus data prestasi dari: " + nama + "?")) {
+          row.remove();
+        }
+      });
+    });
+  }
+
+  // Fungsi download data CSV
+  function downloadTable() {
+    let table = document.getElementById("guruTable");
+    let rows = Array.from(table.rows);
+    let csv = rows.map(row =>
+      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+    ).join("\n");
+
+    let blob = new Blob([csv], { type: "text/csv" });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data_prestasi_guru.csv";
+    link.click();
+  }
+
+  // Aktifkan menu aktif saat klik
+  document.querySelectorAll('.menu-list a').forEach(link => {
+    link.addEventListener('click', function (e) {
+      if (this.getAttribute("href") === "#") {
+        e.preventDefault();
+      }
+      document.querySelectorAll('.menu-list a').forEach(el => el.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Jalankan semua fungsi saat halaman siap
+  window.onload = function () {
+    setupEditButtons();
+    setupDeleteButtons();
+  };
+  function confirmLogout() {
+      const confirmed = confirm("Yakin ingin logout?");
+      if (confirmed) {
+        window.location.href = "/login";
+      }
+    }
+
+  </script>
+
+</body>
+</html>
