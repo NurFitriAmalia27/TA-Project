@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +22,7 @@
           flex: 1;
           background: url('img/LAPANGAN.jpg') no-repeat center center;
           background-size: cover;
+          display: none; /* hide on mobile */
         }
         .right {
           flex: 1;
@@ -80,16 +81,25 @@
         }
 
         .error-message {
-              color: red;
-              margin-top: 10px;
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Media Queries untuk tampilan responsif */
+        @media (min-width: 768px) {
+          /* Menampilkan background pada layar besar */
+          .left {
+            display: block;
+            height: 100%;
           }
+        }
 
         @media (max-width: 768px) {
           .login-page {
             flex-direction: column;
           }
           .left {
-            height: 200px;
+            height: 200px; /* Tetap ada area kosong tapi tanpa background */
           }
         }
     </style>
@@ -114,5 +124,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
