@@ -97,14 +97,9 @@
         <img id="detailPhoto" alt="Foto Guru" class="modal-photo">
         <table>
             <tr><th>Nama</th><td id="detailName"></td></tr>
-            <tr><th>Pendidikan</th><td id="detailPendidikan"></td></tr>
-            <tr><th>NIP</th><td id="detailNIP"></td></tr>
-            <tr><th>Tempat, Tgl Lahir</th><td id="detailTTL"></td></tr>
             <tr><th>Jenis Kelamin</th><td id="detailJK"></td></tr>
             <tr><th>Agama</th><td id="detailAgama"></td></tr>
-            <tr><th>Pangkat/Golongan</th><td id="detailPangkat"></td></tr>
             <tr><th>Jabatan</th><td id="detailJabatan"></td></tr>
-            <tr><th>Status</th><td id="detailStatus"></td></tr>
         </table>
     </div>
 </div>
@@ -133,14 +128,9 @@
             .then(data => {
                 document.getElementById("detailPhoto").src = "/img/guru/" + data.foto;
                 document.getElementById("detailName").innerText = data.nama;
-                document.getElementById("detailPendidikan").innerText = data.pendidikan;
-                document.getElementById("detailNIP").innerText = data.nip;
-                document.getElementById("detailTTL").innerText = data.ttl;
                 document.getElementById("detailJK").innerText = data.jenisKelamin;
                 document.getElementById("detailAgama").innerText = data.agama;
-                document.getElementById("detailPangkat").innerText = data.pangkat;
                 document.getElementById("detailJabatan").innerText = data.jabatan;
-                document.getElementById("detailStatus").innerText = data.status;
 
                 document.getElementById("detailModal").style.display = "block";
             })
