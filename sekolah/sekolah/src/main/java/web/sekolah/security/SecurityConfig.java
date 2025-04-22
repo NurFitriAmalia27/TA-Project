@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // Halaman publik
-                        .requestMatchers("/", "/login", "/login?logout=true", "/index", "/confirm-logout", "/profil/visi-misi", "profil/sarana-prasarana", "profil/guru-tendik",
+                        .requestMatchers("/", "/login", "/login?error=true", "/index", "/confirm-logout", "/profil/visi-misi", "profil/sarana-prasarana", "profil/guru-tendik",
                                 "/prestasi/prestasi-guru", "/prestasi/prestasi-kelas", "/prestasi/prestasi-murid", "/prestasi/prestasi-sekolah",
                                 "/adiwiyata/dokumentasi-adiwiyata", "/adiwiyata/ipmlh", "/adiwiyata/program-adiwiyata", "/adiwiyata/struktur-adiwiyata", "/adiwiyata/visi-misi-adiwiyata",
                                 "/informasi/berita", "/informasi/perpustakaan", "/informasi/ppdb", "/informasi/sub-berita",
@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 "/sub-berita.css", "/tata-tertib.css", "/visi-misi.css", "/visi-misi-adiwiyata.css").permitAll()
 
                         // Login dan API publik
-                        .requestMatchers("/admin/guru/api/guru/**").permitAll()
+                        .requestMatchers("/admin/guru/api/guru/**", "/login?error=true").permitAll()
 
                         // Admin
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN_SEKOLAH")
