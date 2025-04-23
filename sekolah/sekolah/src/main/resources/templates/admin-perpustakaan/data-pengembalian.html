@@ -140,6 +140,31 @@
       font-size: 30px;
     }
 
+    .search-container, .filter-container {
+       margin-bottom: 15px;
+       margin-top: 20px;
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       flex-wrap: wrap;
+     }
+
+     .search-container input[type="text"] {
+   flex: none;           /* hilangkan fleksibilitas */
+   width: 300px;         /* batasi lebar */
+   max-width: 200%;      /* batas maksimum lebar */
+   height: 40px;         /* tambahkan tinggi */
+ }
+
+ .button-container {
+   margin: 20px 0; /* atas dan bawah 20px */
+ }
+
+     .filter-container select {
+       max-width: 300px;
+       height: 40px;         /* tambahkan tinggi */
+     }
+
     .button-container {
       display: flex;
       justify-content: center;
@@ -315,8 +340,22 @@
 
 <div class="main-content" id="content">
   <h2>Data Pengembalian Buku</h2>
-  <div class="button-container">
-    <button class="refresh-btn" onclick="loadDataPengembalian()">🔄 Muat Ulang Data</button>
+
+  <div class="search-container">
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama peminjam">
+  </div>
+
+  <div class="filter-container">
+    <label for="TahunFilter">Filter Tahun Pengembalian:</label>
+    <select id="TahunFilter" onchange="filterByTahun()">
+      <option value="">Semua</option>
+      <option value="2023">2023</option>
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+    </select>
+
+    <button onclick="downloadTable()" class="create-button">Download CSV</button>
+    <button class="refresh-btn" onclick="undoPenghapusan()">↩️ Undo</button>
     <button class="delete-btn" onclick="hapusSemua()">🗑 Hapus Semua</button>
   </div>
 
@@ -348,6 +387,52 @@
     sidebar.classList.toggle("hide");
     content.classList.toggle("full");
   }
+
+  // Search Function
+  function searchTable() {
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const rows = document.getElementById("tabelPengembalian").getElementsByTagName("tr");
+
+      for (let i = 1; i < rows.length; i++) {
+          const cell = rows[i].getElementsByTagName("td")[1]; // Nama Buku
+          if (cell) {
+              const text = cell.textContent || cell.innerText;
+              rows[i].style.display = text.toLowerCase().includes(searchInput) ? "" : "none";
+          }
+      }
+  }
+
+ function filterByTahun() {
+  const tahun = document.getElementById("TahunFilter").value;
+  const rows = document.querySelectorAll("#tabelPengembalian tbody tr");
+
+  rows.forEach(row => {
+    const tglPengembalian = row.cells[5].textContent; // Kolom ke-6 (tglPengembalianSebenarnya)
+    const tahunPengembalian = new Date(tglPengembalian).getFullYear().toString();
+
+    if (!tahun || tahunPengembalian === tahun) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}
+
+// Fungsi download data CSV
+function downloadTable() {
+  let table = document.getElementById("tabelPengembalian");
+  let rows = Array.from(table.rows);
+  let csv = rows.map(row =>
+  Array.from(row.cells).map(cell => `${cell.innerText}`).join(",")
+).join("\n");
+
+
+  let blob = new Blob([csv], { type: "text/csv" });
+  let link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "data_pengembalian.csv";
+  link.click();
+}
 
   function confirmLogout() {
       Swal.fire({
@@ -400,11 +485,26 @@
   }
 
   function hapusSemua() {
-    if (confirm("Yakin ingin menghapus semua data pengembalian?")) {
-      localStorage.removeItem("dataPengembalian");
-      loadDataPengembalian();
-    }
+  if (confirm("Yakin ingin menghapus semua data pengembalian?")) {
+    const dataSebelumnya = localStorage.getItem("dataPengembalian");
+    sessionStorage.setItem("backupPengembalian", dataSebelumnya); // Simpan cadangan
+    localStorage.removeItem("dataPengembalian");
+    loadDataPengembalian();
+    alert("Data dihapus. Klik Undo untuk mengembalikan.");
   }
+}
+
+function undoPenghapusan() {
+  const backup = sessionStorage.getItem("backupPengembalian");
+  if (backup) {
+    localStorage.setItem("dataPengembalian", backup);
+    loadDataPengembalian();
+    sessionStorage.removeItem("backupPengembalian");
+    alert("Data berhasil dikembalikan!");
+  } else {
+    alert("Tidak ada data yang bisa dikembalikan.");
+  }
+}
 
   window.onload = loadDataPengembalian;
 </script>
