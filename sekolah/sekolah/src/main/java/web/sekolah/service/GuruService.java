@@ -27,7 +27,7 @@ public class GuruService {
         return guruRepository.findById(id).orElse(null);
     }
 
-    public void hapusGuru(Long id) {
+    public void deleteGuruById(Long id) {
         guruRepository.deleteById(id);
     }
 }

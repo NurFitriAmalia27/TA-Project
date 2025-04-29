@@ -404,7 +404,7 @@
             <th>Jenis Kelamin</th>
             <th>Agama</th>
             <th>Pangkat/ Golongan</th>
-            <th>Jabatan</th>
+            <th>Posisi</th>
             <th>Status</th>
             <th>Foto</th>
             <th>Ubah</th>
@@ -421,7 +421,7 @@
             <td th:text="${guru.jenisKelamin}"></td>
             <td th:text="${guru.agama}"></td>
             <td th:text="${guru.pangkat}"></td>
-            <td th:text="${guru.jabatan}"></td>
+            <td th:text="${guru.posisi}"></td>
             <td th:text="${guru.status}"></td>
             <td>
                 <img th:src="@{/img/guru/{fileName}(fileName=${guru.foto})}" alt="Foto Guru" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">

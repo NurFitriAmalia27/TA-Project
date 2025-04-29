@@ -302,50 +302,52 @@
   </ul>
 </div>
 
-  <div class="container">
-    <span class="close-btn" onclick="closeContainer()">×</span>
-    <h2>TAMBAH DATA GURU</h2>
+<div class="container">
+  <span class="close-btn" onclick="closeContainer()">×</span>
+  <h2>TAMBAH DATA GURU</h2>
+
+  <form th:action="@{/admin/guru/save}" method="post" enctype="multipart/form-data">
     <div class="form-container">
       <div class="form-box">
         <label>Nama</label>
-        <input type="text" name="nama" placeholder="Nama" th:value="${guru.nama}">
+        <input type="text" name="nama" placeholder="Nama" th:value="${guru.nama}" required>
 
         <label>Pendidikan</label>
-        <input type="text" name="pendidikan" placeholder="Pendidikan" th:value="${guru.pendidikan}">
+        <input type="text" name="pendidikan" placeholder="Pendidikan" th:value="${guru.pendidikan}" required>
 
         <label>NIP</label>
-        <input type="text" name="nip" placeholder="NIP" th:value="${guru.nip}">
+        <input type="text" name="nip" placeholder="NIP" th:value="${guru.nip}" required>
 
         <label>Tempat, Tanggal Lahir</label>
-        <input type="text" name="ttl" placeholder="Tempat, Tanggal Lahir" th:value="${guru.ttl}">
+        <input type="text" name="ttl" placeholder="Tempat, Tanggal Lahir" th:value="${guru.ttl}" required>
 
         <label>Jenis Kelamin</label>
-        <input type="text" name="jenisKelamin" placeholder="Jenis Kelamin" th:value="${guru.jenisKelamin}">
+        <input type="text" name="jenisKelamin" placeholder="Jenis Kelamin" th:value="${guru.jenisKelamin}" required>
 
         <label>Agama</label>
-        <input type="text" name="agama" placeholder="Agama" th:value="${guru.agama}">
+        <input type="text" name="agama" placeholder="Agama" th:value="${guru.agama}" required>
       </div>
 
       <div class="form-box">
         <label>Pangkat/Gol</label>
-        <input type="text" name="pangkat" placeholder="Pangkat/Gol" th:value="${guru.pangkat}">
+        <input type="text" name="pangkat" placeholder="Pangkat/Gol" th:value="${guru.pangkat}" required>
 
-        <label>Jabatan</label>
-        <input type="text" name="jabatan" placeholder="Jabatan" th:value="${guru.jabatan}">
+        <label>Posisi</label>
+        <input type="text" name="posisi" placeholder="Posisi" th:value="${guru.posisi}" required>
 
         <label>Status</label>
-        <input type="text" name="status" placeholder="Status" th:value="${guru.status}">
+        <input type="text" name="status" placeholder="Status" th:value="${guru.status}" required>
 
         <label>Upload Foto</label>
-        <input type="file" name="foto">
+        <input type="file" name="foto" />
       </div>
     </div>
 
-    <input type="hidden" name="id" th:value="${guru.id}" />
-    <button class="btn-submit" onclick="simpanData()">SIMPAN</button>
-  </div>
+    <button type="submit" class="btn-submit">SIMPAN</button>
+  </form>
+</div>
 
-  <script>
+<script>
     function closeContainer() {
        window.location.href = '/admin/guru/data-guru';
    }
@@ -391,6 +393,26 @@
         }
       });
     }
+
+  function validateAndSubmit() {
+    // Ambil semua inputan
+    const inputs = document.querySelectorAll('.form-container input[type="text"]');
+
+    let allFilled = true;
+    inputs.forEach(input => {
+        if (input.value.trim() === '') {
+            allFilled = false;
+        }
+    });
+
+    if (allFilled) {
+        // Kalau semua input sudah diisi, submit form
+        document.querySelector('.form-container').closest('form').submit();
+    } else {
+        // Kalau ada yang kosong, tampilkan alert
+        alert('Semua data wajib diisi sebelum menyimpan!');
+    }
+}
   </script>
 </body>
 </html>

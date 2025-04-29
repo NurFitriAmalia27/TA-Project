@@ -81,7 +81,7 @@
             <!-- Informasi Guru -->
             <div class="guru-info">
                 <h3 th:text="${guru.nama}"></h3>
-                <p th:text="${guru.jabatan}"></p>
+                <p th:text="${guru.posisi}"></p>
 
                 <!-- Tombol Detail -->
                 <button class="detail-btn" th:attr="onclick='showDetails(\'' + ${guru.id} + '\')'">Lihat Detail</button>
@@ -99,7 +99,7 @@
             <tr><th>Nama</th><td id="detailName"></td></tr>
             <tr><th>Jenis Kelamin</th><td id="detailJK"></td></tr>
             <tr><th>Agama</th><td id="detailAgama"></td></tr>
-            <tr><th>Jabatan</th><td id="detailJabatan"></td></tr>
+            <tr><th>Posisi</th><td id="detailPosisi"></td></tr>
         </table>
     </div>
 </div>
@@ -130,7 +130,7 @@
                 document.getElementById("detailName").innerText = data.nama;
                 document.getElementById("detailJK").innerText = data.jenisKelamin;
                 document.getElementById("detailAgama").innerText = data.agama;
-                document.getElementById("detailJabatan").innerText = data.jabatan;
+                document.getElementById("detailPosisi").innerText = data.posisi;
 
                 document.getElementById("detailModal").style.display = "block";
             })

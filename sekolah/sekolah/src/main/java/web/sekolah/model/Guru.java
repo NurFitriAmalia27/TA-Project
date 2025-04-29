@@ -16,7 +16,7 @@ public class Guru {
     @Column(name = "nip", unique = true, nullable = false)
     private String nip;
 
-    @Column(name = "pendidikan", unique = true, nullable = false)
+    @Column(name = "pendidikan", nullable = false)
     private String pendidikan;
 
     @Column(name = "ttl", nullable = false)
@@ -31,8 +31,8 @@ public class Guru {
     @Column(name = "pangkat", nullable = false)
     private String pangkat;
 
-    @Column(name = "jabatan", nullable = false)
-    private String jabatan;
+    @Column(name = "posisi", nullable = false)
+    private String posisi;
 
     @Column(name = "status", nullable = false)
     private String status;
@@ -68,8 +68,8 @@ public class Guru {
     public String getPangkat() { return pangkat; }
     public void setPangkat(String pangkat) { this.pangkat = pangkat; }
 
-    public String getJabatan() { return jabatan; }
-    public void setJabatan(String jabatan) { this.jabatan = jabatan; }
+    public String getPosisi() { return posisi; }
+    public void setPosisi(String posisi) { this.posisi = posisi; }
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }

@@ -306,47 +306,50 @@
     <span class="close-btn" onclick="window.location.href='/admin/guru/data-guru'">×</span>
     <h2>EDIT DATA GURU</h2>
 
-    <form action="/admin/guru/save-guru" method="post" enctype="multipart/form-data" th:object="${guru}">
-
-        <input type="hidden" th:field="*{id}">
+    <form th:action="@{/admin/guru/save}" method="post" enctype="multipart/form-data">
+        <!-- ID diperlukan agar update ke data yang tepat -->
+        <input type="hidden" name="id" th:value="${guru.id}" />
 
         <div class="form-container">
             <div class="form-box">
                 <label>Nama</label>
-                <input type="text" th:field="*{nama}" placeholder="Nama">
+                <input type="text" name="nama" placeholder="Nama" th:value="${guru.nama}" required>
 
                 <label>Pendidikan</label>
-                <input type="text" th:field="*{pendidikan}" placeholder="Pendidikan">
+                <input type="text" name="pendidikan" placeholder="Pendidikan" th:value="${guru.pendidikan}" required>
 
                 <label>NIP</label>
-                <input type="text" th:field="*{nip}" placeholder="NIP">
+                <input type="text" name="nip" placeholder="NIP" th:value="${guru.nip}" required>
 
                 <label>Tempat, Tanggal Lahir</label>
-                <input type="text" th:field="*{ttl}" placeholder="Tempat, Tanggal Lahir">
+                <input type="text" name="ttl" placeholder="Tempat, Tanggal Lahir" th:value="${guru.ttl}" required>
 
                 <label>Jenis Kelamin</label>
-                <input type="text" th:field="*{jenisKelamin}" placeholder="Jenis Kelamin">
+                <input type="text" name="jenisKelamin" placeholder="Jenis Kelamin" th:value="${guru.jenisKelamin}" required>
 
                 <label>Agama</label>
-                <input type="text" th:field="*{agama}" placeholder="Agama">
+                <input type="text" name="agama" placeholder="Agama" th:value="${guru.agama}" required>
             </div>
 
             <div class="form-box">
                 <label>Pangkat/Gol</label>
-                <input type="text" th:field="*{pangkat}" placeholder="Pangkat/Gol">
+                <input type="text" name="pangkat" placeholder="Pangkat/Gol" th:value="${guru.pangkat}" required>
 
-                <label>Jabatan</label>
-                <input type="text" th:field="*{jabatan}" placeholder="Jabatan">
+                <label>Posisi</label>
+                <input type="text" name="posisi" placeholder="Posisi" th:value="${guru.posisi}" required>
 
                 <label>Status</label>
-                <input type="text" th:field="*{status}" placeholder="Status">
+                <input type="text" name="status" placeholder="Status" th:value="${guru.status}" required>
 
-                <label>Upload Foto</label>
-                <input type="file" name="foto">
+                <label>Foto Saat Ini</label>
+                <img th:src="@{/img/guru/{fileName}(fileName=${guru.foto})}" alt="Foto Guru" style="width: 100px; height: 100px; object-fit: cover; border-radius: 5px;">
+
+                <label>Ganti Foto (Opsional)</label>
+                <input type="file" name="foto" />
             </div>
         </div>
 
-        <button class="btn-submit" type="submit">SIMPAN</button>
+        <button type="submit" class="btn-submit">SIMPAN PERUBAHAN</button>
     </form>
 </div>
 
