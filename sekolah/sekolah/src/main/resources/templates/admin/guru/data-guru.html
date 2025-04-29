@@ -428,7 +428,7 @@
             </td>
             <td>
                 <a th:href="@{/admin/guru/edit/{id}(id=${guru.id})}" class="edit-btn">✏️</a>
-                <button class="delete-btn" onclick="deleteRow(this)">🗑️</button>
+                <a th:href="@{'/admin/guru/delete/' + ${guru.id}}" class="delete-btn" onclick="return confirm('Yakin ingin menghapus data ini?')">🗑️</a>
             </td>
         </tr>
         </tbody>
