@@ -8,8 +8,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfigure implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Konfigurasi untuk folder guru
         registry.addResourceHandler("/img/guru/**")
                 .addResourceLocations("file:C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/guru")
+                .setCachePeriod(0); // Cache di-disable agar gambar langsung terupdate
+
+        // Konfigurasi untuk folder ekstrakurikuler
+        registry.addResourceHandler("/img/ekstrakurikuler/**")
+                .addResourceLocations("file:C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler")
                 .setCachePeriod(0); // Cache di-disable agar gambar langsung terupdate
     }
 }

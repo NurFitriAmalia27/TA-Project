@@ -196,7 +196,7 @@
   max-width: 300px; /* Menentukan lebar maksimal untuk dropdown filter */
 }
 
-    .create-button {
+    .filter-container button.create-button {
       background-color: #28a745;
       color: white;
       border: none;
@@ -374,11 +374,11 @@
 
     <!-- Pencarian dan Filter -->
     <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama guru">
     </div>
 
     <div class="filter-container">
-        <label for="genderFilter">Filter Jenis Kelamin:</label>
+        <label for="genderFilter">Filter Kategori:</label>
         <select id="genderFilter" onchange="filterByGender()">
             <option value="">Semua</option>
             <option value="Laki-laki">Laki-laki</option>

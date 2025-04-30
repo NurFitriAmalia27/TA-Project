@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Ekstrakurukuler</title>
+  <title>Edit Ekstrakurukuler</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -246,37 +246,45 @@ h2 {
   </ul>
 </div>
 
-  <div class="container">
-    <span class="close-button" onclick="window.location.href='/admin/eskul/data-eskul'">&times;</span>
+<div class="container">
+  <span class="close-button" onclick="window.location.href='/admin/eskul/data-eskul'">&times;</span>
 
-    <h2 style="text-align: center;">CREATE EKSTRAKURIKULER</h2>
-    <form th:action="@{/admin/eskul/save}" method="POST" enctype="multipart/form-data"
-          th:object="${ekstrakurikuler}">
+  <h2 style="text-align: center;">EDIT EKSTRAKURIKULER</h2>
+  <form th:action="@{/admin/eskul/edit/{id}(id=${ekstrakurikuler.id})}" method="post" enctype="multipart/form-data"
+        th:object="${ekstrakurikuler}">
     <div class="form-group">
-        <label for="nama">Nama</label>
-        <input type="text" id="nama" th:field="*{nama}" placeholder="Nama Ekstrakurikuler" required />
-      </div>
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" th:field="*{nama}" placeholder="Nama Ekstrakurikuler" required />
+    </div>
 
-      <div class="form-group">
-        <label for="kategori">Kategori</label>
-        <input type="text" id="kategori" th:field="*{kategori}" placeholder="Kategori Ekstrakurikuler" required />
-      </div>
+    <div class="form-group">
+      <label for="kategori">Kategori</label>
+      <input type="text" id="kategori" th:field="*{kategori}" placeholder="Kategori Ekstrakurikuler" required />
+    </div>
 
-      <div class="form-group">
-        <label for="deskripsi">Deskripsi</label>
-        <textarea id="deskripsi" th:field="*{deskripsi}" placeholder="Deskripsi Ekstrakurikuler" required></textarea>
-      </div>
+    <div class="form-group">
+      <label for="deskripsi">Deskripsi</label>
+      <textarea id="deskripsi" th:field="*{deskripsi}" placeholder="Deskripsi Ekstrakurikuler" required></textarea>
+    </div>
 
-      <div class="form-group">
-        <label for="foto">Foto Ekstrakurikuler</label>
-        <input type="file" id="foto" name="foto" accept="image/*" required />
-      </div>
+    <div class="form-group">
+      <label>Foto Saat Ini</label><br>
+      <img th:if="${ekstrakurikuler.foto != null}"
+           th:src="@{'/img/ekstrakurikuler/' + ${ekstrakurikuler.foto}}"
+           alt="Foto Ekstrakurikuler"
+           style="width: 120px; height: 120px; object-fit: cover; border-radius: 6px; border: 1px solid #ccc;" />
+    </div>
 
-      <button type="submit" class="btn">SIMPAN</button>
-    </form>
+    <div class="form-group">
+      <label>Ganti Foto (Opsional)</label>
+      <input type="file" name="foto" accept="image/*" />
+    </div>
+
+    <button type="submit" class="btn">UPDATE</button>
+  </form>
 </div>
 
-  <script>
+<script>
     function toggleSubmenu(event) {
       event.preventDefault();
       let submenuContainer = event.target.closest(".has-submenu");

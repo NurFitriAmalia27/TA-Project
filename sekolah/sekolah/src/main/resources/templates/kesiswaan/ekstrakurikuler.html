@@ -88,22 +88,18 @@
     </section>
     <div class="divider-line"></div>
 
-<section class="program-section">
-    <!-- Looping data ekstrakurikuler dari database -->
-    <div th:each="ekstrakurikuler : ${ekstrakurikulerList}" class="program-item">
+<section class="program-section" th:each="eskul : ${listEskul}">
+    <div class="program-item">
         <div class="program-text">
-            <h2 th:text="${ekstrakurikuler.nama}">Nama Ekstrakurikuler</h2>
-            <p th:text="${ekstrakurikuler.deskripsi}">Deskripsi Ekstrakurikuler</p>
+            <h2 th:text="${eskul.nama}"></h2>
+            <p th:text="${eskul.deskripsi}"></p>
         </div>
         <div class="program-image">
-            <img th:src="@{'/img/ekstrakurikuler/' + ${ekstrakurikuler.foto}}"
-                 th:if="${ekstrakurikuler.foto != null and not #strings.isEmpty(ekstrakurikuler.foto)}"
-                 alt="Gambar Ekstrakurikuler">
-            <img src="/img/default.jpg" th:unless="${ekstrakurikuler.foto != null and not #strings.isEmpty(ekstrakurikuler.foto)}"
-                 alt="Gambar Default">
+            <img th:src="@{'/img/ekstrakurikuler/' + ${eskul.foto}}" />
         </div>
     </div>
 </section>
+
 
 <footer>
         <div class="social-media">

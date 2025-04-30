@@ -1,6 +1,7 @@
 package web.sekolah.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "ekstrakurikuler")
@@ -10,8 +11,13 @@ public class Ekstrakurikuler {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nama tidak boleh kosong")
     private String nama;
 
+    @NotBlank(message = "Kategori tidak boleh kosong")
+    private String kategori;
+
+    @NotBlank(message = "Deskripsi tidak boleh kosong")
     @Column(columnDefinition = "TEXT")
     private String deskripsi;
 
@@ -22,8 +28,9 @@ public class Ekstrakurikuler {
     }
 
     // Constructor dengan parameter
-    public Ekstrakurikuler(String nama, String deskripsi, String foto) {
+    public Ekstrakurikuler(String nama, String kategori, String deskripsi, String foto) {
         this.nama = nama;
+        this.kategori = kategori;
         this.deskripsi = deskripsi;
         this.foto = foto;
     }
@@ -43,6 +50,14 @@ public class Ekstrakurikuler {
 
     public void setNama(String nama) {
         this.nama = nama;
+    }
+
+    public String getKategori() {
+        return kategori;
+    }
+
+    public void setKategori(String kategori) {
+        this.kategori = kategori;
     }
 
     public String getDeskripsi() {
