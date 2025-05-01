@@ -577,31 +577,6 @@ td img {
     });
   }
 
-// Fungsi tombol edit
-  function setupEditButtons() {
-    document.querySelectorAll(".edit-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        let row = this.closest("tr");
-        let nama = row.cells[1].textContent;
-        alert("Edit data untuk: " + nama);
-        // Bisa arahkan ke halaman edit misalnya: window.location.href = "Create Prestasi Guru.html?id=1";
-      });
-    });
-  }
-
-  // Fungsi tombol delete
-  function setupDeleteButtons() {
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        let row = this.closest("tr");
-        let nama = row.cells[1].textContent;
-        if (confirm("Yakin ingin menghapus data prestasi dari: " + nama + "?")) {
-          row.remove();
-        }
-      });
-    });
-  }
-
   // Fungsi download data CSV
   function downloadTable() {
     let table = document.getElementById("guruTable");

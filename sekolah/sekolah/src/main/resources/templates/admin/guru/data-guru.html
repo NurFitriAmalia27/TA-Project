@@ -517,29 +517,6 @@
       });
     }
 
-    function setupEditButtons() {
-      document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
-          const row = this.closest("tr");
-          const nama = row.cells[1].textContent;
-          alert("Edit data untuk: " + nama);
-          // window.location.href = "EditGuru.html?id=...";
-        });
-      });
-    }
-
-    function setupDeleteButtons() {
-      document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
-          const row = this.closest("tr");
-          const nama = row.cells[1].textContent;
-          if (confirm("Yakin ingin menghapus data Guru dari: " + nama + "?")) {
-            row.remove();
-          }
-        });
-      });
-    }
-
     window.onload = function () {
       setupEditButtons();
       setupDeleteButtons();
