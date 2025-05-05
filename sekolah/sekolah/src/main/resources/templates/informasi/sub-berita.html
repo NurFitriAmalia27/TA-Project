@@ -10,23 +10,25 @@
 
 <body>
 <header>
-    <h1>SDN Poris Pelawad 6 Melaksanakan P5 Bertema "Kebhinekaan Global" di Taman Mini Indonesia Indah</h1>
+    <h1 th:text="${berita.judul}">Judul Berita</h1>
 </header>
 
 <div class="container">
     <div class="konten-berita">
-        <img src="/img/BeritaKunjungan.jpeg" alt="Gambar Workshop Keterampilan Digital">
-        <h2>SDN Poris Pelawad 6 Melaksanakan P5 Bertema "Kebhinekaan Global" di Taman Mini Indonesia Indah</h2>
-        <div class="info-meta">
-            <p><strong>Tanggal:</strong> 16 Desember 2024 | <strong>Penulis:</strong> Anisa Amelia</p>
-        </div>
-        <p>Dalam rangka Pelaksanaan Projek Penguatan Profil Pelajar Pancasila (P5), SDN Poris Pelawad 6 mengadakan kunjungan edukatif ke Taman Mini Indonesia Indah (TMII) pada 16 Desember 2024. Kegiatan ini mengusung tema "Kebhinekaan Global", yang bertujuan untuk memperkenalkan dan memperkuat pemahaman siswa tentang keberagaman budaya di Indonesia sebagai bagian dari kehidupan global.</p>
-        <p>Selama kunjungan, siswa-siswi SDN Poris Pelawad 6 berkesempatan untuk mengeksplorasi anjungan-anjungan daerah yang mewakili berbagai provinsi di Indonesia. Mereka belajar tentang adat istiadat, pakaian tradisional, rumah adat, hingga seni budaya khas setiap daerah. Kegiatan ini tidak hanya menambah wawasan mereka tentang keanekaragaman budaya Indonesia, tetapi juga menumbuhkan rasa bangga sebagai generasi penerus bangsa.</p>
-        <p>Para siswa juga mengikuti kegiatan interaktif, seperti menari tradisional. Semua ini memberikan pengalaman yang menyenangkan sekaligus edukatif.</p>
-        <p>Kepala SDN Poris Pelawad 6, Ibu Juhairiyah, mengungkapkan, “Melalui kegiatan ini, kami berharap siswa dapat memahami pentingnya menghargai keberagaman budaya serta meningkatkan semangat toleransi sebagai pelajar yang berkarakter Pancasila."</p>
-        <!-- Button to go back -->
-        <a th:href="@{/informasi/berita}" class="btn-back">Kembali ke Berita</a>
+        <img th:src="@{'/img/berita/' + ${berita.foto}}" alt="Gambar Berita" style="width: 100%; max-height: 400px; object-fit: cover;">
 
+        <h2 th:text="${berita.judul}">Judul Berita</h2>
+
+        <div class="info-meta">
+            <p>
+                <strong>Tanggal:</strong> <span th:text="${#temporals.format(berita.tanggal, 'dd MMMM yyyy')}">16 Desember 2024</span> |
+                <strong>Penulis:</strong> <span th:text="${berita.penulis}">Sherly Amelia</span>
+            </p>
+        </div>
+
+        <p th:text="${berita.deskripsi}">Isi lengkap berita akan muncul di sini.</p>
+
+        <a th:href="@{/informasi/berita}" class="btn-back">Kembali ke Berita</a>
     </div>
 </div>
 

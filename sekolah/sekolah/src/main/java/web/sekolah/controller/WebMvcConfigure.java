@@ -17,6 +17,11 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         registry.addResourceHandler("/img/ekstrakurikuler/**")
                 .addResourceLocations("file:C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler")
                 .setCachePeriod(0); // Cache di-disable agar gambar langsung terupdate
+
+        // Konfigurasi untuk folder berita
+        registry.addResourceHandler("/img/berita/**")
+                .addResourceLocations("file:C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/berita")
+                .setCachePeriod(0); // Cache di-disable agar gambar langsung terupdate
     }
 }
 

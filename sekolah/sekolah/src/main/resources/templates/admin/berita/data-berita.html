@@ -372,47 +372,54 @@
     </div>
   
     <div class="filter-container">
-      <label for="judulFilter">Filter Judul:</label>
-<select id="judulFilter" onchange="filterByJudul()">
-  <option value="">Semua</option>
-  <option value="Ahmad Fauzan">Ahmad Fauzan</option>
-  <option value="Rina Handayani">Rina Handayani</option>
-  <option value="Budi Santoso">Budi Santoso</option>
-</select>
+        <label for="tahunFilter">Filter Tahun:</label>
+        <select id="tahunFilter" onchange="filterByTahun()">
+            <option value="">Semua</option>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+        </select>
 
-   <!-- Tombol Tambah Data -->
+
+        <!-- Tombol Tambah Data -->
   
    <!-- Tombol download CSV -->
    <button onclick="downloadTable()" class="create-button">Download CSV</button>
     </div>
-  
-    <table id="guruTable">
-      <thead>
-        <tr>
-            <th>NO</th>
-            <th>Judul Berita</th>
-            <th>Isi Berita </th>
-            <th>Tanggal </th>
-            <th>Foto Kegiatan</th>
-            <th>Penulis</th>
-            <th>Ubah</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Ahmad Fauzan</td>
-            <td>123456</td>
-            <td>12 Maret 2025</td>
-            <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;"></td>
-            <td>saya</td>
-            <td>
-                <button class="edit-btn" onclick="editRow(this)">✏️</button>
-                <button class="delete-btn" onclick="deleteRow(this)">🗑️</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+
+      <table id="guruTable">
+          <thead>
+          <tr>
+              <th>NO</th>
+              <th>Judul Berita</th>
+              <th>Isi Berita</th>
+              <th>Tanggal</th>
+              <th>Penulis</th>
+              <th>Foto Kegiatan</th>
+              <th>Ubah</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Menggunakan th:each untuk menampilkan data berita dari server -->
+          <tr th:each="berita, iterStat : ${listBerita}">
+              <td th:text="${iterStat.index + 1}">1</td>
+              <td th:text="${berita.judul}">Judul Berita</td>
+              <td th:text="${berita.deskripsi}">Isi Berita</td>
+              <td th:text="${#temporals.format(berita.tanggal, 'dd MMMM yyyy')}">01 Mei 2025</td>
+              <td th:text="${berita.penulis}">Penulis</td>
+              <td>
+                  <img th:src="@{'/img/berita/' + ${#strings.replace(berita.foto, '/', '')}}" alt="Foto Kegiatan"
+                       style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+              </td>
+              <td>
+                  <!-- Tombol untuk mengubah dan menghapus data berita -->
+                  <a th:href="@{'/admin/berita/edit/' + ${berita.id}}" class="edit-btn">✏️</a>
+                  <a th:href="@{'/admin/berita/delete/' + ${berita.id}}" class="delete-btn" onclick="return confirm('Yakin ingin menghapus data ini?')">🗑️</a>
+              </td>
+          </tr>
+          </tbody>
+      </table>
+
+      <!-- Tombol untuk menambah data berita baru -->
       <a th:href="@{/admin/berita/create-berita}" class="create-button">+ Tambah Data</a>
   </div>
 </div>
@@ -444,48 +451,19 @@
     }
   }
 
+function filterByTahun() {
+    const tahunValue = document.getElementById("tahunFilter").value;  // Mendapatkan nilai dari input filter tahun
+    const rows = document.querySelectorAll("#guruTable tbody tr");  // Menyeleksi semua baris di tabel
 
-  function filterByJudul() {
-  const selectedJudul = document.getElementById("judulFilter").value.toLowerCase();
-  const table = document.getElementById("guruTable");
-  const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+    rows.forEach(row => {
+        const tanggal = row.cells[3].textContent.trim(); // Kolom ke-4 adalah tanggal
+        const tahun = tanggal.split(" ")[2];  // Ambil bagian tahun, karena formatnya "DD bulan YYYY"
 
-  for (let i = 0; i < rows.length; i++) {
-    const judulCell = rows[i].getElementsByTagName("td")[1]; // kolom Judul
-    const judulText = judulCell ? judulCell.textContent.toLowerCase() : "";
+        const cocok = !tahunValue || tahun === tahunValue;  // Cek apakah tahun sesuai dengan filter
 
-    if (selectedJudul === "" || judulText.includes(selectedJudul)) {
-      rows[i].style.display = ""; // tampilkan
-    } else {
-      rows[i].style.display = "none"; // sembunyikan
-    }
-  }
+        row.style.display = cocok ? "" : "none";  // Tampilkan atau sembunyikan baris
+    });
 }
-
-  // Fungsi tombol edit
-  function setupEditButtons() {
-    document.querySelectorAll(".edit-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        let row = this.closest("tr");
-        let nama = row.cells[1].textContent;
-        alert("Edit data untuk: " + nama);
-        // Bisa arahkan ke halaman edit misalnya: window.location.href = "Create Prestasi Guru.html?id=1";
-      });
-    });
-  }
-
-  // Fungsi tombol delete
-  function setupDeleteButtons() {
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        let row = this.closest("tr");
-        let nama = row.cells[1].textContent;
-        if (confirm("Yakin ingin menghapus data prestasi dari: " + nama + "?")) {
-          row.remove();
-        }
-      });
-    });
-  }
 
   // Fungsi download data CSV
   function downloadTable() {
@@ -513,11 +491,6 @@
     });
   });
 
-  // Jalankan semua fungsi saat halaman siap
-  window.onload = function () {
-    setupEditButtons();
-    setupDeleteButtons();
-  };
   function confirmLogout() {
       Swal.fire({
         title: 'Yakin ingin logout?',

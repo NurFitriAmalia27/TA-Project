@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 "/sub-berita.css", "/tata-tertib.css", "/visi-misi.css", "/visi-misi-adiwiyata.css").permitAll()
 
                         // Login dan API publik
-                        .requestMatchers("/admin/guru/api/guru/**").permitAll()
+                        .requestMatchers("/admin/guru/api/guru/**", "/informasi/sub-berita/**").permitAll()
 
                         // Admin
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN_SEKOLAH")

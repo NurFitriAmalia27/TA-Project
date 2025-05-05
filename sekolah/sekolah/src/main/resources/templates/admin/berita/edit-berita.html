@@ -303,29 +303,47 @@
 
 <div class="container">
     <span class="close-button" onclick="window.location.href='/admin/berita/data-berita'">&times;</span>
-    <h2>CREATE BERITA</h2>
-    <form th:action="@{/admin/berita/save}" method="post" enctype="multipart/form-data">
+    <h2>EDIT BERITA</h2>
+
+    <!-- Gunakan method POST ke /admin/berita/update -->
+    <form th:action="@{/admin/berita/edit/{id}(id=${berita.id})}" method="post" enctype="multipart/form-data">
+        <!-- Simpan ID berita (hidden) -->
+        <input type="hidden" name="id" th:value="${berita.id}" />
+
         <div class="form-group">
             <label for="judul">Judul</label>
-            <input type="text" id="judul" name="judul" placeholder="Jenis Berita" required>
+            <input type="text" id="judul" name="judul" placeholder="Judul Berita" th:value="${berita.judul}" required>
         </div>
+
         <div class="form-group">
             <label for="isi">Isi</label>
-            <textarea id="isi" name="deskripsi" placeholder="Isi Berita" required></textarea>
+            <textarea id="isi" name="deskripsi" placeholder="Isi Berita" required
+                      th:text="${berita.deskripsi}"></textarea>
         </div>
+
         <div class="form-group">
             <label for="tanggal">Tanggal</label>
-            <input type="date" id="tanggal" name="tanggal" required>
+            <input type="date" id="tanggal" name="tanggal"
+                   th:value="${berita.tanggal}" required>
         </div>
+
         <div class="form-group">
             <label for="penulis">Penulis</label>
-            <input type="text" id="penulis" name="penulis" placeholder="Penulis" required>
+            <input type="text" id="penulis" name="penulis" placeholder="Penulis" th:value="${berita.penulis}" required>
         </div>
+
         <div class="form-group">
-            <label for="foto">Foto</label>
-            <input type="file" id="foto" name="foto" accept="image/*" required>
+            <label for="foto">Foto Lama:</label><br>
+            <img th:src="@{'/img/berita/' + ${#strings.replace(berita.foto, '/', '')}}" alt="Foto Kegiatan"
+                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+            <input type="hidden" name="fotoLama" th:value="${berita.foto}">
         </div>
-        <!-- Bungkus tombol dalam div agar berada di tengah -->
+
+        <div class="form-group">
+            <label for="foto">Ganti Foto (Opsional):</label>
+            <input type="file" id="foto" name="file" accept="image/*">
+        </div>
+
         <div class="btn-container">
             <button type="submit" class="btn-submit">SIMPAN</button>
         </div>
