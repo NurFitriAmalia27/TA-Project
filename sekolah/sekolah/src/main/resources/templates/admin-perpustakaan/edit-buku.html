@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tambah Buku - Perpustakaan SDN Poris Pelawad 6</title>
+  <title>Edit Buku - Perpustakaan SDN Poris Pelawad 6</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -285,25 +285,27 @@
 
 <div class="form-wrapper">
   <div class="floating-form">
-    <h2>Tambah Data Buku</h2>
-    <form th:action="@{/admin-perpustakaan/simpan-buku}" method="POST" enctype="multipart/form-data">
+    <h2>Edit Data Buku</h2>
+    <form th:action="@{/admin-perpustakaan/update-buku}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" th:value="${buku.id}" name="id">
+
       <label for="namaBuku">Nama Buku:</label>
-      <input type="text" id="namaBuku" name="namaBuku" required>
+      <input type="text" id="namaBuku" name="namaBuku" th:value="${buku.namaBuku}" required>
 
       <label for="pengarang">Pengarang:</label>
-      <input type="text" id="pengarang" name="pengarang" required>
+      <input type="text" id="pengarang" name="pengarang" th:value="${buku.pengarang}" required>
 
       <label for="qty">Jumlah Buku:</label>
-      <input type="number" id="qty" name="qty" required>
+      <input type="number" id="qty" name="qty" th:value="${buku.qty}" required>
 
       <label for="deskripsi">Deskripsi:</label>
-      <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+      <textarea id="deskripsi" name="deskripsi" rows="3" required th:text="${buku.deskripsi}"></textarea>
 
       <label for="foto">Foto Buku:</label>
       <input type="file" id="foto" name="fotoFile" accept="image/*">
 
       <div class="button-container">
-        <button type="submit" class="btn-simpan">Simpan</button>
+        <button type="submit" class="btn-simpan">Update</button>
         <a href="/admin-perpustakaan/data-buku" class="btn-batal">Batal</a>
       </div>
     </form>
