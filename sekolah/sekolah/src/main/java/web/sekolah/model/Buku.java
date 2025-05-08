@@ -19,6 +19,8 @@ public class Buku {
     private String pengarang;
     private Integer qty;
     private String deskripsi;
+
+    @Column(name = "foto")
     private String foto;
 
     // Getters and Setters

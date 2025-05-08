@@ -403,7 +403,7 @@
             <td th:text="${buku.pengarang}"></td>
             <td th:text="${buku.qty}"></td>
             <td th:text="${buku.deskripsi}"></td>
-            <td><img th:src="@{'/uploads/' + ${buku.foto}}" alt="Buku" width="70"></td>
+            <td><img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" alt="Buku" width="100">
             <td>
                 <a th:href="@{'/admin-perpustakaan/edit-buku/' + ${buku.id}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
                 <a th:href="@{'/admin-perpustakaan/hapus-buku/' + ${buku.id}}" class="delete-btn"><i class="fas fa-trash"></i> Hapus</a>

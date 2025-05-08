@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,18 +23,18 @@ public class BukuController {
     @Autowired
     private BukuService bukuService;
 
-    private final String UPLOAD_DIR = "src/main/resources/static/uploads/";
+    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/img/buku";
 
     @GetMapping("/data-buku")
     public String listBuku(Model model) {
         model.addAttribute("listBuku", bukuService.getAllBuku());
-        return "admin-perpustakaan/data-buku";  // Corrected path
+        return "admin-perpustakaan/data-buku";
     }
 
     @GetMapping("/tambah-buku")
     public String showFormTambah(Model model) {
         model.addAttribute("buku", new Buku());
-        return "admin-perpustakaan/tambah-buku";  // Corrected path
+        return "admin-perpustakaan/tambah-buku";
     }
 
     @PostMapping("/simpan-buku")
@@ -41,7 +42,7 @@ public class BukuController {
                              @RequestParam("fotoFile") MultipartFile fotoFile) throws IOException {
 
         if (!fotoFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(fotoFile.getOriginalFilename());
+            String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(fotoFile.getOriginalFilename());
             Path uploadPath = Paths.get(UPLOAD_DIR);
 
             if (!Files.exists(uploadPath)) {
@@ -60,7 +61,7 @@ public class BukuController {
     public String showFormEdit(@PathVariable Long id, Model model) {
         Buku buku = bukuService.getById(id);
         model.addAttribute("buku", buku);
-        return "admin-perpustakaan/edit-buku";  // Corrected path
+        return "admin-perpustakaan/edit-buku";
     }
 
     @PostMapping("/update-buku")
@@ -68,7 +69,7 @@ public class BukuController {
                              @RequestParam("fotoFile") MultipartFile fotoFile) throws IOException {
 
         if (!fotoFile.isEmpty()) {
-            String fileName = StringUtils.cleanPath(fotoFile.getOriginalFilename());
+            String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(fotoFile.getOriginalFilename());
             Path uploadPath = Paths.get(UPLOAD_DIR);
 
             if (!Files.exists(uploadPath)) {
@@ -78,7 +79,6 @@ public class BukuController {
             Files.copy(fotoFile.getInputStream(), uploadPath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
             buku.setFoto(fileName);
         } else {
-            // Foto lama tetap digunakan jika tidak upload baru
             Buku existing = bukuService.getById(buku.getId());
             buku.setFoto(existing.getFoto());
         }
@@ -93,3 +93,4 @@ public class BukuController {
         return "redirect:/admin-perpustakaan/data-buku";
     }
 }
+
