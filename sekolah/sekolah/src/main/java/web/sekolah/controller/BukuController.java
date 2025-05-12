@@ -23,7 +23,7 @@ public class BukuController {
     @Autowired
     private BukuService bukuService;
 
-    private final String UPLOAD_DIR = System.getProperty("user.dir") + "/uploads/img/buku";
+    private final String UPLOAD_DIR = "C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/buku";
 
     @GetMapping("/data-buku")
     public String listBuku(Model model) {

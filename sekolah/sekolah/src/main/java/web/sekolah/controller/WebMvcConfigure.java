@@ -24,9 +24,8 @@ public class WebMvcConfigure implements WebMvcConfigurer {
                 .setCachePeriod(0); // Cache di-disable agar gambar langsung terupdate
 
         // Konfigurasi untuk folder berita
-        // Tambahkan ini untuk gambar buku
         registry.addResourceHandler("/img/buku/**")
-                .addResourceLocations("file:" + System.getProperty("user.dir") + "/uploads/img/buku/")
+                .addResourceLocations("file:C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/buku/")
                 .setCachePeriod(0);
     }
 }
