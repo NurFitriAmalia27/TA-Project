@@ -352,10 +352,10 @@
                 <i class="fas fa-chevron-left submenu-toggle"></i>
             </a>
             <ul class="submenu">
-                <li><a th:href="@{/admin/prestasi/dapres-guru}">Prestasi Guru</a></li>
-                <li><a th:href="@{/admin/prestasi/dapres-siswa}">Prestasi Siswa</a></li>
-                <li><a th:href="@{/admin/prestasi/dapres-sekolah}">Prestasi Sekolah</a></li>
-                <li><a th:href="@{/admin/prestasi/dapres-kelas}">Prestasi Kelas</a></li>
+                <li><a th:href="@{/admin/prestasi/guru/dapres-guru}">Prestasi Guru</a></li>
+                <li><a th:href="@{/admin/prestasi/siswa/dapres-siswa}">Prestasi Siswa</a></li>
+                <li><a th:href="@{/admin/prestasi/sekolah/dapres-sekolah}">Prestasi Sekolah</a></li>
+                <li><a th:href="@{/admin/prestasi/kelas/dapres-kelas}">Prestasi Kelas</a></li>
             </ul>
         </li>
         <li><a th:href="@{/admin/eskul/data-eskul}"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
@@ -392,76 +392,39 @@
             <th>No</th>
             <th>Nama Guru</th>
             <th>Peringkat</th>
+            <th>Tingkat</th>
             <th>Tahun</th>
             <th>Jenis Prestasi</th>
             <th>Deskripsi</th>
-            <th>Aksi</th> <!-- Kolom Aksi -->
+            <th>Foto</th>
+            <th>Aksi</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Andi Wijaya</td>
-            <td>1</td>
-            <td>2023</td>
-            <td>Guru Teladan</td>
-            <td>Juara 1 Guru Teladan tingkat kota</td>
+        <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${prestasi.namaGuru}"></td>
+            <td th:text="${prestasi.peringkat}"></td>
+            <td th:text="${prestasi.tingkat}"></td>
+            <td th:text="${prestasi.tahun}"></td>
+            <td th:text="${prestasi.jenisPrestasi}"></td>
+            <td th:text="${prestasi.deskripsi}"></td>
             <td>
-                <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-                <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
+                <img th:if="${prestasi.foto != null}" th:src="@{'/img/prestasi-guru/' + ${prestasi.foto}}" alt="Foto Prestasi" width="100">
+                <span th:if="${prestasi.foto == null}">-</span>
             </td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Sri Lestari</td>
-            <td>2</td>
-            <td>2024</td>
-            <td>Inovasi Pembelajaran</td>
-            <td>Pengembang media ajar interaktif</td>
             <td>
-                <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-                <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Budi Hartono</td>
-            <td>3</td>
-            <td>2022</td>
-            <td>Pelatihan Nasional</td>
-            <td>Peserta pelatihan nasional bidang STEM</td>
-            <td>
-                <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-                <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-            </td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Dewi Anjani</td>
-            <td>4</td>
-            <td>2023</td>
-            <td>Karya Tulis Ilmiah</td>
-            <td>Pemenang lomba KTI tingkat provinsi</td>
-            <td>
-                <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-                <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-            </td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Rina Marlina</td>
-            <td>5</td>
-            <td>2025</td>
-            <td>Mentor Guru Penggerak</td>
-            <td>Mentor aktif dalam program guru penggerak</td>
-            <td>
-                <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-                <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
+                <a th:href="@{'/admin/prestasi/guru/edit-gupres/' + ${prestasi.id}}">
+                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                </a>
+                <a th:href="@{'/admin/prestasi/guru/hapus/' + ${prestasi.id}}" onclick="return confirm('Yakin ingin menghapus?')">
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </a>
             </td>
         </tr>
         </tbody>
     </table>
-    <a th:href="@{/admin/prestasi/create-gupres}" class="create-button">+ Tambah Data</a>
+    <a th:href="@{/admin/prestasi/guru/create-gupres}" class="create-button">+ Tambah Data</a>
 </div>
 </div>
     <script>
@@ -523,7 +486,7 @@
         let rows = table.getElementsByTagName("tr");
 
         for (let i = 1; i < rows.length; i++) {
-          let yearCell = rows[i].getElementsByTagName("td")[3]; // Kolom tahun
+          let yearCell = rows[i].getElementsByTagName("td")[4]; // Kolom tahun
           if (yearCell) {
             let yearText = yearCell.textContent || yearCell.innerText;
             if (selectedYear === "" || yearText === selectedYear) {
