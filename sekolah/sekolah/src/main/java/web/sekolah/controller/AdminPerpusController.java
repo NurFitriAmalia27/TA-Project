@@ -13,16 +13,6 @@ public class AdminPerpusController {
         return "admin-perpustakaan/perpus-panel";
     }
 
-    @GetMapping("/data-buku")
-    public String DataBuku() {
-        return "admin-perpustakaan/data-buku";
-    }
-
-    @GetMapping("/tambah-buku")
-    public String TambahBuku() {
-        return "admin-perpustakaan/tambah-buku";
-    }
-
     @GetMapping("/data-peminjaman")
     public String DataPeminjaman() {
         return "admin-perpustakaan/data-peminjaman";

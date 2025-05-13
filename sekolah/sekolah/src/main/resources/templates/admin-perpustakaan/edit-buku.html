@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tambah Buku - Perpustakaan SDN Poris Pelawad 6</title>
+  <title>Edit Buku - Perpustakaan SDN Poris Pelawad 6</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -285,8 +285,10 @@
 
 <div class="form-wrapper">
   <div class="floating-form">
-    <h2>Tambah Data Buku</h2>
-    <form th:action="@{/admin-perpustakaan/simpan-buku}" method="POST" enctype="multipart/form-data" th:object="${buku}">
+    <h2>Edit Data Buku</h2>
+    <form th:action="@{/admin-perpustakaan/update-buku}" method="POST" enctype="multipart/form-data" th:object="${buku}">
+      <input type="hidden" th:field="*{id}" />
+
       <label for="namaBuku">Nama Buku:</label>
       <input type="text" id="namaBuku" name="namaBuku" th:field="*{namaBuku}" required>
 
@@ -302,14 +304,18 @@
       <label for="foto">Foto Buku:</label>
       <input type="file" id="foto" name="fotoFile" accept="image/*">
 
+      <div th:if="${buku.foto}">
+        <p>Foto saat ini:</p>
+        <img th:src="@{'/img/buku/' + ${buku.foto}}" alt="Foto Buku" width="120">
+      </div>
+
       <div class="button-container">
-        <button type="submit" class="btn-simpan">Simpan</button>
+        <button type="submit" class="btn-simpan">Update</button>
         <a href="/admin-perpustakaan/data-buku" class="btn-batal">Batal</a>
       </div>
     </form>
   </div>
 </div>
-
 <script>
   // Fungsi untuk toggle sidebar
 function toggleSidebar() {
