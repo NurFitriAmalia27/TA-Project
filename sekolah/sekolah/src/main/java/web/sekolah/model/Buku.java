@@ -13,8 +13,10 @@ public class Buku {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nama_buku")  // Menyesuaikan nama kolom di database
+    @Column(name = "nama_buku")
     private String namaBuku;
+
+    private String kategori;
 
     private String pengarang;
     private Integer qty;
@@ -38,6 +40,14 @@ public class Buku {
 
     public void setNamaBuku(String namaBuku) {
         this.namaBuku = namaBuku;
+    }
+
+    public String getKategori() {
+        return kategori;
+    }
+
+    public void setKategori(String kategori) {
+        this.kategori = kategori;
     }
 
     public String getPengarang() {

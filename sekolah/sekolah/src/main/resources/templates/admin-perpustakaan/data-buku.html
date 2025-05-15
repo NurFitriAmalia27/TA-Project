@@ -374,11 +374,14 @@
     </div>
 
     <div class="filter-container">
-        <label for="NamaFilter">Filter Nama Buku:</label>
+        <label for="NamaFilter">Filter Kategori Buku:</label>
         <select id="NamaFilter" onchange="filterByNama()">
-            <option value="">Semua</option>
-            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-            <option value="Indonesia">Indonesia</option>
+            <option value="Semua" th:selected="${selectedKategori == 'Semua'}">Semua</option>
+            <option th:each="kategori : ${kategoriList}"
+                    th:value="${kategori}"
+                    th:text="${kategori}"
+                    th:selected="${kategori == selectedKategori}">
+            </option>
         </select>
 
         <button onclick="downloadTable()" class="create-button">Download CSV</button>
@@ -389,6 +392,7 @@
         <tr>
             <th>No</th>
             <th>Nama Buku</th>
+            <th>Kategori</th>
             <th>Pengarang</th>
             <th>Qty</th>
             <th>Deskripsi</th>
@@ -400,6 +404,7 @@
         <tr th:each="buku, iterStat : ${listBuku}">
             <td th:text="${iterStat.count}"></td>
             <td th:text="${buku.namaBuku}"></td>
+            <td th:text="${buku.kategori}"></td>
             <td th:text="${buku.pengarang}"></td>
             <td th:text="${buku.qty}"></td>
             <td th:text="${buku.deskripsi}"></td>
@@ -413,7 +418,7 @@
     </table>
 
     <div class="button-container">
-        <strong>Total Jumlah Buku: <span id="totalQty" th:text="${listBuku.size()}"></span></strong>
+        <strong>Total Jumlah Buku: <span id="totalQty" th:text="${totalQty}"></span></strong>
     </div>
 
     <!-- Tombol "Tambah Data Buku" -->
@@ -423,98 +428,79 @@
 </div>
 
 <script>
-  // Toggle Sidebar
-  function toggleSidebar() {
-      var sidebar = document.getElementById("sidebar");
-      var content = document.getElementById("content");
-      sidebar.classList.toggle("sidebar-hidden");
-      content.classList.toggle("sidebar-collapsed");
-  }
+    // Toggle Sidebar
+    function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        var content = document.getElementById("content");
+        sidebar.classList.toggle("sidebar-hidden");
+        content.classList.toggle("sidebar-collapsed");
+    }
 
-  // Search Function
-  function searchTable() {
-      const searchInput = document.getElementById("searchInput").value.toLowerCase();
-      const rows = document.getElementById("guruTable").getElementsByTagName("tr");
+    // Search Function
+    function searchTable() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const table = document.getElementById("guruTable");
+        const trs = table.getElementsByTagName("tr");
 
-      for (let i = 1; i < rows.length; i++) {
-          const cell = rows[i].getElementsByTagName("td")[1]; // Nama Buku
-          if (cell) {
-              const text = cell.textContent || cell.innerText;
-              rows[i].style.display = text.toLowerCase().includes(searchInput) ? "" : "none";
-          }
-      }
-  }
-
-  // Filter Function
-  function filterByNama() {
-      const filterValue = document.getElementById("NamaFilter").value.toLowerCase();
-      const rows = document.getElementById("guruTable").getElementsByTagName("tr");
-
-      for (let i = 1; i < rows.length; i++) {
-          const cell = rows[i].getElementsByTagName("td")[1]; // Nama Buku
-          if (cell) {
-              const text = cell.textContent || cell.innerText;
-              rows[i].style.display = text.toLowerCase().includes(filterValue) ? "" : "none";
-          }
-      }
-  }
-// Fungsi download data CSV
-function downloadTable() {
-  let table = document.getElementById("guruTable");
-  let rows = Array.from(table.rows);
-  let csv = rows.map(row =>
-    Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
-  ).join("\n");
-
-  let blob = new Blob([csv], { type: "text/csv" });
-  let link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "data_buku.csv";
-  link.click();
-}
-  // Delete Row Function
-  function deleteRow(button) {
-      const row = button.closest("tr");
-      row.remove();
-      hitungTotalQty(); // Update Total
-  }
-
-  // Hitung Total Qty
-  function hitungTotalQty() {
-      const table = document.getElementById("guruTable");
-      const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-      let total = 0;
-
-      for (let i = 0; i < rows.length; i++) {
-          let qtyCell = rows[i].getElementsByTagName("td")[3]; // kolom Qty
-          if (qtyCell && !isNaN(parseInt(qtyCell.textContent))) {
-              total += parseInt(qtyCell.textContent);
-          }
-      }
-
-      document.getElementById("totalQty").textContent = total;
-  }
-
-  // Call on load
-  window.onload = function () {
-      hitungTotalQty(); // Update total quantity
-  };
-
-  function confirmLogout() {
-      Swal.fire({
-        title: 'Yakin ingin logout?',
-        text: "Kamu akan keluar dari sistem.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, logout',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/login";
+        for (let i = 1; i < trs.length; i++) {
+            const td = trs[i].getElementsByTagName("td")[1]; // kolom Nama Buku
+            if (td) {
+                const textValue = td.textContent || td.innerText;
+                trs[i].style.display = textValue.toLowerCase().indexOf(input) > -1 ? "" : "none";
+            }
         }
-      });
+    }
+
+    // Filter by Nama Buku/Kategori
+    function filterByNama() {
+        const selected = document.getElementById("NamaFilter").value.toLowerCase();
+        const table = document.getElementById("guruTable");
+        const trs = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < trs.length; i++) {
+            const td = trs[i].getElementsByTagName("td")[2]; // kolom Kategori
+            if (td) {
+                const textValue = td.textContent || td.innerText;
+                trs[i].style.display = (selected === "semua" || textValue.toLowerCase() === selected) ? "" : "none";
+            }
+        }
+    }
+
+    // Download CSV Function
+    function downloadTable() {
+        const table = document.getElementById("guruTable");
+        let csvContent = "data:text/csv;charset=utf-8,";
+        const rows = table.querySelectorAll("tr");
+
+        for (let row of rows) {
+            const cols = row.querySelectorAll("td, th");
+            let rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
+            csvContent += rowData + "\r\n";
+        }
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "data_buku.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Logout confirmation
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Yakin ingin logout?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, logout'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/logout";
+            }
+        });
     }
 </script>
 </body>

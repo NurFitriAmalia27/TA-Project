@@ -30,4 +30,8 @@ public class BukuService {
     public void delete(Long id) {
         bukuRepository.deleteById(id);
     }
+
+    public List<Buku> findByKategori(String kategori) {
+        return bukuRepository.findByKategori(kategori);
+    }
 }

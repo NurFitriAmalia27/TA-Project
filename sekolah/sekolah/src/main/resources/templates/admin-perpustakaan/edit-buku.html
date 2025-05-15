@@ -254,6 +254,34 @@
  }
 
    }
+
+.floating-form label[for="kategori"] {
+  display: block;
+  margin-bottom: 6px; /* jarak label ke dropdown */
+  font-weight: bold;
+  font-size: 15px;
+  color: #333;
+}
+
+.floating-form select#kategori {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  background-color: white;
+  appearance: none; /* optional, supaya dropdown terlihat konsisten di browser */
+}
+
+
+.floating-form label[for="foto"],
+.floating-form input#foto {
+  display: block;
+  margin-top: 16px;   /* Jarak dari elemen sebelumnya (kategori) */
+  margin-bottom: 16px; /* Jarak ke bawah */
+}
   </style>
 </head>
 <body>
@@ -292,6 +320,16 @@
       <label for="namaBuku">Nama Buku:</label>
       <input type="text" id="namaBuku" name="namaBuku" th:field="*{namaBuku}" required>
 
+      <label for="kategori">Kategori:</label>
+      <select id="kategori" name="kategori" th:field="*{kategori}" required>
+        <option value="" disabled th:if="${buku.kategori == null}" selected>Pilih Kategori</option>
+        <option th:each="kat : ${kategoriList}"
+                th:value="${kat}"
+                th:text="${kat}"
+                th:selected="${kat == buku.kategori}">
+        </option>
+      </select>
+
       <label for="pengarang">Pengarang:</label>
       <input type="text" id="pengarang" name="pengarang" th:field="*{pengarang}" required>
 
@@ -301,13 +339,13 @@
       <label for="deskripsi">Deskripsi:</label>
       <textarea id="deskripsi" name="deskripsi" rows="3" th:field="*{deskripsi}" required></textarea>
 
-      <label for="foto">Foto Buku:</label>
-      <input type="file" id="foto" name="fotoFile" accept="image/*">
-
       <div th:if="${buku.foto}">
         <p>Foto saat ini:</p>
         <img th:src="@{'/img/buku/' + ${buku.foto}}" alt="Foto Buku" width="120">
       </div>
+
+      <label for="foto">Foto Buku:</label>
+      <input type="file" id="foto" name="fotoFile" accept="image/*">
 
       <div class="button-container">
         <button type="submit" class="btn-simpan">Update</button>
