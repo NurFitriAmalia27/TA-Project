@@ -201,11 +201,40 @@
      }
 
      .search-container input[type="text"] {
-   flex: none;           /* hilangkan fleksibilitas */
-   width: 300px;         /* batasi lebar */
-   max-width: 200%;      /* batas maksimum lebar */
-   height: 40px;         /* tambahkan tinggi */
- }
+    flex: none;            /* tetap */
+    width: 300px;          /* tetap */
+    max-width: 100%;       /* bisa disesuaikan */
+    height: 40px;          /* tetap */
+    padding-left: 12px;    /* beri jarak dalam dari kiri */
+    border-radius: 5px;    /* opsional: bikin sudut agak membulat */
+    margin-top: 10px;      /* jarak dari atas */
+    margin-bottom: 15px;   /* jarak ke elemen bawah */
+}
+
+.search-container {
+    position: relative;
+    width: 300px;
+    margin: 20px 0;
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    height: 40px;
+    padding: 8px 36px 8px 12px; /* padding kanan lebih besar */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.search-container .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+    pointer-events: none; /* agar tidak mengganggu klik */
+}
 
  .button-container {
    margin: 20px 0; /* atas dan bawah 20px */
@@ -370,7 +399,8 @@
     <h1>Data Buku</h1>
 
     <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama Buku">
+        <input type="text" placeholder="Cari nama Buku">
+        <i class="fas fa-search search-icon"></i>
     </div>
 
     <div class="filter-container">
@@ -410,8 +440,8 @@
             <td th:text="${buku.deskripsi}"></td>
             <td><img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" alt="Buku" width="100">
             <td>
-                <a th:href="@{'/admin-perpustakaan/edit-buku/' + ${buku.id}}" class="edit-btn"><i class="fas fa-edit"></i> Edit</a>
-                <a th:href="@{'/admin-perpustakaan/hapus-buku/' + ${buku.id}}" class="delete-btn"><i class="fas fa-trash"></i> Hapus</a>
+                <a th:href="@{'/admin-perpustakaan/edit-buku/' + ${buku.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
+                <a th:href="@{'/admin-perpustakaan/hapus-buku/' + ${buku.id}}" class="delete-btn"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
