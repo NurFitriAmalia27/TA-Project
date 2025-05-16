@@ -13,11 +13,6 @@ public class AdminPerpusController {
         return "admin-perpustakaan/perpus-panel";
     }
 
-    @GetMapping("/data-pengunjung")
-    public String DataPengunjung() {
-        return "admin-perpustakaan/data-pengunjung";
-    }
-
     @GetMapping("/data-peminjaman")
     public String DataPeminjaman() {
         return "admin-perpustakaan/data-peminjaman";

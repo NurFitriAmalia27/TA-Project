@@ -273,7 +273,7 @@ label {
 <div class="form-wrapper">
   <div class="floating-form">
     <h2>Tambah Data Pengunjung</h2>
-    <form th:action="@{/pengunjung/save}" method="post" th:object="${pengunjung}">
+    <form th:action="@{/admin-perpustakaan/save-pengunjung}" method="post" th:object="${pengunjung}">
 
       <label for="nama">Nama Pengunjung:</label>
       <input type="text" id="nama" name="nama" th:field="*{nama}" required>
@@ -301,7 +301,7 @@ label {
 
       <div class="button-container">
         <button type="submit" class="btn-simpan">Simpan</button>
-        <a th:href="@{/pengunjung/data}" class="btn-batal">Batal</a>
+        <a th:href="@{/admin-perpustakaan/data-pengunjung}" class="btn-batal">Batal</a>
       </div>
 
     </form>

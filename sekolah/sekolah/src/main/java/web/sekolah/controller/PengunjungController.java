@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/pengunjung")
+@RequestMapping("/admin-perpustakaan")
 public class PengunjungController {
 
     private final PengunjungService service;
@@ -19,21 +19,24 @@ public class PengunjungController {
         this.service = service;
     }
 
+    // Tampilkan form tambah pengunjung
     @GetMapping("/tambah-pengunjung")
     public String showForm(Model model) {
         model.addAttribute("pengunjung", new Pengunjung());
         return "admin-perpustakaan/tambah-pengunjung";
     }
 
-    @PostMapping("/save")
+    // Simpan data pengunjung
+    @PostMapping("/save-pengunjung")
     public String save(@ModelAttribute Pengunjung pengunjung) {
         service.save(pengunjung);
         return "redirect:/admin-perpustakaan/data-pengunjung";
     }
 
-    @GetMapping("/data")
+    // Tampilkan semua pengunjung
+    @GetMapping("/data-pengunjung")
     public String showAll(Model model) {
         model.addAttribute("pengunjungList", service.getAll());
-        return "data-pengunjung";
+        return "admin-perpustakaan/data-pengunjung";
     }
 }
