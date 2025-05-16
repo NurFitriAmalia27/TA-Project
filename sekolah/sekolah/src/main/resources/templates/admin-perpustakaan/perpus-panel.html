@@ -3,217 +3,230 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Dashboard Admin Perpustakaan</title>
+    <title>Dashboard Admin - Perpustakaan SDN Poris Pelawad 6</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         * {
-         margin: 0;
-         padding: 0;
-         box-sizing: border-box;
-         font-family: Arial, sans-serif;
-       }
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+       font-family: Arial, sans-serif;
+     }
 
-       body {
-         background-color: #f8f9fa;
-         margin: 0;
-         padding: 0;
-       }
+     body {
+       background-color: #f8f9fa;
+       margin: 0;
+       padding: 0;
+     }
 
-       .navbar {
-         width: 100%;
-         height: 60px;
-         background: #5D2D2A;
-         color: white;
-         display: flex;
-         align-items: center;
-         padding: 0 20px;
-         position: fixed;
-         top: 0;
-         left: 0;
-         z-index: 1000;
-       }
+     .navbar {
+       width: 100%;
+       height: 60px;
+       background: #5D2D2A;
+       color: white;
+       display: flex;
+       align-items: center;
+       padding: 0 20px;
+       position: fixed;
+       top: 0;
+       left: 0;
+       z-index: 1000;
+     }
 
-       .menu-icon {
-         font-size: 24px;
-         cursor: pointer;
-       }
+     .menu-icon {
+       font-size: 24px;
+       cursor: pointer;
+     }
 
-       .right-section {
-         display: flex;
-         align-items: center;
-         gap: 10px;
-         margin-left: auto;
-       }
+     .right-section {
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       margin-left: auto;
+     }
 
-       .navbar i.user-icon {
-         font-size: 30px !important;
-       }
+     .navbar i.user-icon {
+       font-size: 30px !important;
+     }
 
-       .navbar img {
-         height: 40px;
-         width: 40px;
-         border-radius: 50%;
-         object-fit: cover;
-       }
+     .navbar img {
+       height: 40px;
+       width: 40px;
+       border-radius: 50%;
+       object-fit: cover;
+     }
 
-       .navbar h1 {
-         font-size: 20px;
-         font-weight: bold;
-       }
+     .navbar h1 {
+       font-size: 20px;
+       font-weight: bold;
+     }
 
-       /* Sidebar */
-   .sidebar {
-     width: 250px;
-     background: #6A3332;
-     color: white;
-     height: 100vh;
-     padding-top: 80px;
-     position: fixed;
-     top: 0;
-     left: 0;
-     z-index: 999;
-     transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
-     overflow-y: auto;
-   }
+     /* Sidebar */
+     .sidebar {
+       width: 250px;
+       background: #6A3332;
+       color: white;
+       height: 100vh;
+       padding-top: 80px;
+       position: fixed;
+       top: 0;
+       left: 0;
+       z-index: 999;
+       transition: transform 0.3s ease-in-out;
+       overflow-y: auto;
+     }
 
-   .sidebar-hidden {
-     transform: translateX(-100%); /* Sidebar tersembunyi */
-   }
-   .admin-profile {
-         text-align: center;
-         margin-bottom: 20px;
-       }
+     .sidebar-hidden {
+       transform: translateX(-100%);
+     }
 
-       .admin-image {
-         width: 80px;
-         height: 80px;
-         border-radius: 50%;
-         object-fit: cover;
-         margin-bottom: 10px;
-       }
+     .admin-profile {
+       text-align: center;
+       margin-bottom: 20px;
+     }
 
-       .admin-profile::after {
-         content: "";
-         display: block;
-         width: 100%;
-         height: 2px;
-         background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
-         margin-top: 10px;
-       }
+     .admin-image {
+       width: 80px;
+       height: 80px;
+       border-radius: 50%;
+       object-fit: cover;
+       margin-bottom: 10px;
+     }
 
-       .admin-name {
-         font-size: 18px;
-         font-weight: bold;
-         color: #fff;
-       }
+     .admin-profile::after {
+       content: "";
+       display: block;
+       width: 100%;
+       height: 2px;
+       background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+       margin-top: 10px;
+     }
 
-       .menu-list li {
-         margin: 8px 0;
-       }
+     .admin-name {
+       font-size: 18px;
+       font-weight: bold;
+       color: #fff;
+     }
 
-       .menu-list li a {
-         display: flex;
-         align-items: center;
-         gap: 12px;
-         padding: 12px 20px;
-         text-decoration: none;
-         color: white;
-         font-size: 16px;
-         font-weight: bold;
-         transition: background 0.3s ease;
-       }
+     .menu-list li {
+       margin: 8px 0;
+     }
 
-       .menu-list li a:hover,
-       .menu-list li a.active {
-         background-color: rgba(255, 255, 255, 0.2);
-         border-radius: 8px;
-       }
+     .menu-list li a {
+       display: flex;
+       align-items: center;
+       gap: 12px;
+       padding: 12px 20px;
+       text-decoration: none;
+       color: white;
+       font-size: 16px;
+       font-weight: bold;
+       transition: background 0.3s ease;
+     }
 
-       .menu-list li a i {
-         width: 25px;
-         text-align: center;
-         font-size: 18px;
+     .menu-list li a:hover,
+     .menu-list li a.active {
+       background-color: rgba(255, 255, 255, 0.2);
+       border-radius: 8px;
+     }
+
+     .menu-list li a i {
+       width: 25px;
+       text-align: center;
+       font-size: 18px;
+     }
+
+     .main-content {
+       padding: 80px 20px 20px 20px;
+       margin-left: 250px;
+       transition: margin-left 0.3s ease-in-out;
+     }
+
+     .main-content.full {
+       margin-left: 0;
+     }
+
+     .page-title {
+       font-size: 24px;
+       font-weight: bold;
+       margin-bottom: 1rem;
+     }
+
+     .cards {
+       display: flex;
+       gap: 1rem;
+       margin: 1rem 0;
+       flex-wrap: wrap;
+     }
+
+     .card {
+       flex: 1;
+       min-width: 150px;
+       background: #8ee2ec;
+       padding: 1rem;
+       text-align: center;
+       border-radius: 10px;
+     }
+
+     .card img {
+       width: 50px;
+       height: 50px;
+     }
+
+     .table-section {
+       background: white;
+       padding: 1rem;
+       border-radius: 10px;
+       overflow-x: auto;
+     }
+
+     table {
+       width: 100%;
+       border-collapse: collapse;
+       background: white;
+     }
+
+     th, td {
+       text-align: center;
+       padding: 12px;
+       border: 1px solid #ddd;
+     }
+
+     th {
+       background-color: #007bff;
+       color: white;
+     }
+
+     tr:nth-child(even) {
+       background-color: #f2f2f2;
+     }
+
+     .bar-chart-container {
+       width: 100%;
+       max-width: 600px;
+       margin: 2rem auto;
+     }
+
+     .bar-chart {
+       width: 100%;
+       height: 300px;
+     }
+
+     @media (max-width: 768px) {
+       .sidebar {
+         width: 200px;
        }
 
        .main-content {
-         padding: 80px 20px 20px 20px;
-         margin-left: 250px;
-         transition: margin-left 0.3s ease-in-out;
+         margin-left: 200px;
        }
 
        .main-content.full {
          margin-left: 0;
        }
-
-       .page-title {
-         font-size: 24px;
-         font-weight: bold;
-         margin-bottom: 1rem;
-       }
-
-       .cards {
-         display: flex;
-         gap: 1rem;
-         margin: 1rem 0;
-         flex-wrap: wrap;
-       }
-
-       .card {
-         flex: 1;
-         min-width: 150px;
-         background: #8ee2ec;
-         padding: 1rem;
-         text-align: center;
-         border-radius: 10px;
-       }
-
-       .card img {
-         width: 50px;
-         height: 50px;
-       }
-
-       .table-section {
-         background: white;
-         padding: 1rem;
-         border-radius: 10px;
-         overflow-x: auto;
-       }
-
-       table {
-         width: 100%;
-         border-collapse: collapse;
-         background: white;
-       }
-
-       th, td {
-         text-align: center;
-         padding: 12px;
-         border: 1px solid #ddd;
-       }
-
-       th {
-         background-color: #007bff;
-         color: white;
-       }
-
-       tr:nth-child(even) {
-         background-color: #f2f2f2;
-       }
-
-       @media (max-width: 768px) {
-         .sidebar {
-           width: 200px;
-         }
-
-         .main-content {
-           margin-left: 200px;
-         }
-
-         .main-content.full {
-           margin-left: 0;
-         }
-       }
+     }
     </style>
 </head>
 <body>
@@ -233,13 +246,14 @@
             <p class="admin-name">ANISA AMELIA</p>
         </div>
         <ul class="nav">
-            <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="active"><i class="fas fa-home"></i> Beranda</a></li>
+            <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
             <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Data Buku</a></li>
             <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
             <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Data Pengembalian</a></li>
             <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
             <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
+
     </ul>
 </div>
 
@@ -250,16 +264,20 @@
     <section class="cards">
         <div class="card">
             <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" alt="Buku">
-            <p>BUKU<br><strong>0</strong></p>
+            <p>BUKU<br><strong th:text="${jumlahBuku}">0</strong></p>
         </div>
         <div class="card">
             <img src="https://cdn-icons-png.flaticon.com/512/65/65000.png" alt="Peminjam">
-            <p>PEMINJAM<br><strong>0</strong></p>
+            <p>PEMINJAM<br><strong th:text="${jumlahPeminjam}">0</strong></p>
         </div>
         <div class="card">
             <img src="https://cdn-icons-png.flaticon.com/512/2892/2892920.png" alt="Pengembali">
-            <p>PENGEMBALI<br><strong>0</strong></p>
+            <p>PENGEMBALI<br><strong th:text="${jumlahPengembali}">0</strong></p>
         </div>
+    </section>
+
+    <section class="bar-chart-container">
+        <canvas id="barChart" width="400" height="200"></canvas>
     </section>
 
     <section class="table-section">
@@ -276,32 +294,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Ahmad Fauzan</td>
-                <td>S1 Pendidikan</td>
-                <td>12 Januari 2025</td>
-                <td>14 Januari 2025</td>
-                <td>
-                    <input type="checkbox" onchange="selesaikanPengembalian(this)">
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>sasa</td>
-                <td>S1 Pendidikan</td>
-                <td>12 Januari 2025</td>
-                <td>14 Januari 2025</td>
-                <td>
-                    <input type="checkbox" onchange="selesaikanPengembalian(this)">
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>asa</td>
-                <td>S1 Pendidikan</td>
-                <td>19 April 2025</td>
-                <td>20 April 2025</td>
+            <tr th:each="peminjaman, stat : ${daftarPeminjaman}">
+                <td th:text="${stat.index + 1}"></td>
+                <td th:text="${peminjaman.namaPeminjam}"></td>
+                <td th:text="${peminjaman.namaBuku}"></td>
+                <td th:text="${peminjaman.tglPinjam}"></td>
+                <td th:text="${peminjaman.tglKembali}"></td>
                 <td>
                     <input type="checkbox" onchange="selesaikanPengembalian(this)">
                 </td>
@@ -312,154 +310,129 @@
 </main>
 
 <script>
+    // Toggle sidebar
     function toggleSidebar() {
-  const sidebar = document.getElementById("sidebar");
-  const content = document.getElementById("content");
-  sidebar.classList.toggle("sidebar-hidden"); // Ganti 'hide' dengan 'sidebar-hidden'
-  content.classList.toggle("full");
-}
-
-
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-      link.addEventListener('click', function () {
-        navLinks.forEach(nav => nav.classList.remove('active'));
-        this.classList.add('active');
-      });
-    });
-
-    document.getElementById('formPeminjam').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const namaPeminjam = document.getElementById('namaPeminjam').value.trim();
-    const namaBuku = document.getElementById('namaBuku').value.trim();
-    const tglPinjam = document.getElementById('tglPinjam').value;
-    const tglKembali = document.getElementById('tglKembali').value;
-
-    if (!namaPeminjam || !namaBuku || !tglPinjam || !tglKembali) {
-      alert("Harap isi semua kolom sebelum menyimpan.");
-      return;
+      const sidebar = document.getElementById("sidebar");
+      const content = document.getElementById("content");
+      sidebar.classList.toggle("sidebar-hidden");
+      content.classList.toggle("full");
     }
 
-    const peminjaman = {
-      namaPeminjam,
-      namaBuku,
-      tglPinjam,
-      tglKembali
-    };
-
-    let data = JSON.parse(localStorage.getItem('dataPeminjaman')) || [];
-    data.push(peminjaman);
-    localStorage.setItem('dataPeminjaman', JSON.stringify(data));
-
-    window.location.href = "/admin-perpustakaan/perpus-panel"; // Ganti dengan nama file beranda kamu
-  });
-
-  document.querySelector('.btn-batal').addEventListener('click', function() {
-    window.location.href = "/admin-perpustakaan/perpus-panel"; // redirect ke beranda
-  });
-  function loadPeminjaman() {
-    const table = document.getElementById("guruTable").getElementsByTagName('tbody')[0];
-    const data = JSON.parse(localStorage.getItem('dataPeminjaman')) || [];
-    table.innerHTML = "";
-
-    data.forEach((item, index) => {
-      const tr = document.createElement("tr");
-      const today = new Date();
-      const tglKembali = new Date(item.tglKembali);
-      let denda = "-";
-      if (today > tglKembali) denda = "Rp 2000";
-
-      tr.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${item.namaPeminjam}</td>
-        <td>${item.namaBuku}</td>
-        <td>${formatTanggal(item.tglPinjam)}</td>
-        <td>${formatTanggal(item.tglKembali)}</td>
-        <td>
-          <input type="checkbox" onchange="selesaiPinjam(${index})" />
-          <span style="font-size:12px;display:block;margin-top:4px;">${denda}</span>
-        </td>
-      `;
-      table.appendChild(tr);
-    });
-  }
-
-  function selesaiPinjam(index) {
-    let data = JSON.parse(localStorage.getItem('dataPeminjaman')) || [];
-    let pengembalian = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
-
-    const item = data[index];
-    const today = new Date();
-    const tglKembali = new Date(item.tglKembali);
-    const denda = today > tglKembali ? 2000 : 0;
-
-    pengembalian.push({
-      ...item,
-      tglPengembalianSebenarnya: today.toISOString().split('T')[0],
-      denda
-    });
-
-    data.splice(index, 1);
-    localStorage.setItem('dataPeminjaman', JSON.stringify(data));
-    localStorage.setItem('dataPengembalian', JSON.stringify(pengembalian));
-
-    loadPeminjaman(); // refresh table
-  }
-
-  function formatTanggal(tgl) {
-    const tanggal = new Date(tgl);
-    const options = { day: '2-digit', month: 'long', year: 'numeric' };
-    return tanggal.toLocaleDateString('id-ID', options);
-  }
-
-  // Muat data saat halaman selesai dimuat
-  window.onload = loadPeminjaman;
-  function selesaikanPengembalian(checkbox) {
-    const row = checkbox.closest("tr");
-    const namaPeminjam = row.cells[1].textContent;
-    const namaBuku = row.cells[2].textContent;
-    const tglPinjam = new Date(row.cells[3].textContent);
-    const tglKembali = new Date(row.cells[4].textContent);
-    const hariIni = new Date();
-
-    let denda = 0;
-    if (hariIni > tglKembali) {
-      const selisihHari = Math.floor((hariIni - tglKembali) / (1000 * 60 * 60 * 24));
-      denda = selisihHari * 2000;
-    }
-
-    const dataPengembalian = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
-    dataPengembalian.push({
-      namaPeminjam,
-      namaBuku,
-      tglPinjam,
-      tglKembali,
-      tglPengembalianSebenarnya: hariIni,
-      denda
-    });
-    localStorage.setItem('dataPengembalian', JSON.stringify(dataPengembalian));
-
-    // Hapus baris dari tabel
-    row.remove();
-  }
+    // Konfirmasi logout
     function confirmLogout() {
-      Swal.fire({
-        title: 'Yakin ingin logout?',
-        text: "Kamu akan keluar dari sistem.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, logout',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/login";
+      if (confirm("Apakah Anda yakin ingin keluar?")) {
+        window.location.href = "logout.html";
+      }
+    }
+
+    // Ambil data buku dari tabel
+    function getBookData() {
+      const rows = document.querySelectorAll('#guruTable tbody tr');
+      const bookCounts = {};
+
+      rows.forEach(row => {
+        const bookName = row.cells[2]?.textContent.trim();
+        if (bookName) {
+          bookCounts[bookName] = bookCounts[bookName] ? bookCounts[bookName] + 1 : 1;
+        }
+      });
+
+      return bookCounts;
+    }
+
+    // Update jumlah peminjam
+    function updateJumlahPeminjam() {
+      const jumlahPeminjam = document.querySelectorAll('#guruTable tbody tr').length;
+      const jumlahPeminjamEl = document.getElementById('jumlahPeminjam');
+      if (jumlahPeminjamEl) {
+        jumlahPeminjamEl.textContent = jumlahPeminjam;
+      }
+    }
+
+    // Update nomor urut tabel
+    function updateNomorUrut() {
+      const rows = document.querySelectorAll('#guruTable tbody tr');
+      rows.forEach((row, index) => {
+        if (row.cells[0]) {
+          row.cells[0].textContent = index + 1;
         }
       });
     }
 
+    // Fungsi pengembalian buku
+    function selesaikanPengembalian(checkbox) {
+      const row = checkbox.closest("tr");
+      const namaPeminjam = row.cells[1].textContent;
+      const namaBuku = row.cells[2].textContent;
+      const tglPinjam = row.cells[3].textContent;
+      const tglKembali = row.cells[4].textContent;
+      const hariIni = new Date();
+      const kembaliDate = new Date(tglKembali);
+
+      let denda = 0;
+      if (hariIni > kembaliDate) {
+        const selisihHari = Math.floor((hariIni - kembaliDate) / (1000 * 60 * 60 * 24));
+        denda = selisihHari * 2000;
+      }
+
+      const dataPengembalian = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
+      dataPengembalian.push({
+        namaPeminjam,
+        namaBuku,
+        tglPinjam,
+        tglKembali,
+        tglPengembalianSebenarnya: hariIni.toISOString().split('T')[0],
+        denda
+      });
+      localStorage.setItem('dataPengembalian', JSON.stringify(dataPengembalian));
+
+      row.remove();
+      updateJumlahPeminjam();
+      updateNomorUrut();
+
+      alert('Data berhasil dipindahkan ke Data Pengembalian');
+    }
+
+    // Saat halaman dimuat
+    window.addEventListener('DOMContentLoaded', function () {
+      updateJumlahPeminjam();
+      updateNomorUrut();
+
+      const bookData = getBookData();
+      const labels = Object.keys(bookData);
+      const data = Object.values(bookData);
+
+      if (labels.length > 0 && data.length > 0) {
+        const colors = labels.map((_, i) => `hsl(${(i * 360 / labels.length)}, 70%, 60%)`);
+        const chartEl = document.getElementById('barChart');
+
+        if (chartEl) {
+          const ctx = chartEl.getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Jumlah Peminjaman',
+                data: data,
+                backgroundColor: colors,
+                borderColor: colors,
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  precision: 0
+                }
+              }
+            }
+          });
+        }
+      }
+    });
 </script>
 </body>
 </html>
