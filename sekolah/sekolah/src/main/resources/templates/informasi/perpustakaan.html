@@ -362,75 +362,22 @@ footer {
         <label for="filterKategori" class="form-label">🎯 Pilih Kategori Buku:</label>
         <select id="filterKategori" class="form-select" onchange="filterKategori()">
             <option value="semua">Semua Kategori</option>
-            <option value="cerita">Cerita Anak</option>
-            <option value="pendidikan">Pendidikan</option>
-            <option value="ensiklopedia">Ensiklopedia</option>
+            <th:block th:each="kategori : ${kategoriList}">
+                <option th:value="${kategori}" th:text="${#strings.capitalize(kategori)}"></option>
+            </th:block>
         </select>
     </div>
 
     <div class="row" id="kartuBuku">
-        <div class="col kartu-buku" data-kategori="cerita">
-            <div class="card">
-                <img src="https://picsum.photos/id/1011/400/300" class="card-img-top" alt="Petualangan Si Kancil">
+        <div class="col-md-4 mb-4 kartu-buku" th:each="buku : ${listBuku}" th:attr="data-kategori=${buku.kategori}">
+            <div class="card h-100 shadow-sm">
+                <img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" class="card-img-top" th:alt="${buku.namaBuku}" style="height: 250px; object-fit: cover;">
                 <div class="card-body">
-                    <h5 class="card-title">Petualangan Si Kancil</h5>
-                    <p class="card-text"><strong>Pengarang:</strong> Ahmad Zaini</p>
-                    <p class="card-text">Cerita rakyat Indonesia yang mengajarkan kecerdikan dan moral.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col kartu-buku" data-kategori="pendidikan">
-            <div class="card">
-                <img src="https://picsum.photos/id/1015/400/300" class="card-img-top" alt="Pendidikan Karakter">
-                <div class="card-body">
-                    <h5 class="card-title">Pendidikan Karakter</h5>
-                    <p class="card-text"><strong>Pengarang:</strong> Fitriani</p>
-                    <p class="card-text">Buku pengembangan karakter bagi siswa sekolah dasar.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col kartu-buku" data-kategori="ensiklopedia">
-            <div class="card">
-                <img src="https://picsum.photos/id/1025/400/300" class="card-img-top" alt="Ensiklopedia Mini Binatang">
-                <div class="card-body">
-                    <h5 class="card-title">Ensiklopedia Mini Binatang</h5>
-                    <p class="card-text"><strong>Pengarang:</strong> Lestari Budi</p>
-                    <p class="card-text">Mengenalkan berbagai jenis binatang secara edukatif untuk anak-anak.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col kartu-buku" data-kategori="cerita">
-            <div class="card">
-                <img src="https://picsum.photos/id/1044/400/300" class="card-img-top" alt="Dongeng Si Ulat Bulu">
-                <div class="card-body">
-                    <h5 class="card-title">Dongeng Si Ulat Bulu</h5>
-                    <p class="card-text"><strong>Pengarang:</strong> Ratna Ayu</p>
-                    <p class="card-text">Dongeng lucu tentang ulat kecil yang ingin menjadi kupu-kupu.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col kartu-buku" data-kategori="pendidikan">
-            <div class="card">
-                <img src="https://picsum.photos/id/1051/400/300" class="card-img-top" alt="Matematika Seru SD">
-                <div class="card-body">
-                    <h5 class="card-title">Matematika Seru SD</h5>
-                    <p class="card-text"><strong>Pengarang:</strong> Budi Hartono</p>
-                    <p class="card-text">Pembelajaran matematika dasar dengan pendekatan permainan.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col kartu-buku" data-kategori="ensiklopedia">
-            <div class="card">
-                <img src="https://picsum.photos/id/1038/400/300" class="card-img-top" alt="Ensiklopedia Tumbuhan">
-                <div class="card-body">
-                    <h5 class="card-title">Ensiklopedia Tumbuhan</h5>
-                    <p class="card-text"><strong>Pengarang:</strong> Sri Wahyuni</p>
-                    <p class="card-text">Menjelaskan jenis-jenis tumbuhan yang ada di Indonesia.</p>
+                    <h5 class="card-title" th:text="${buku.namaBuku}"></h5>
+                    <p class="card-text"><strong>📚 Kategori:</strong> <span th:text="${buku.kategori}"></span></p>
+                    <p class="card-text"><strong>✍️ Pengarang:</strong> <span th:text="${buku.pengarang}"></span></p>
+                    <p class="card-text"><strong>📦 Stok:</strong> <span th:text="${buku.qty}"></span> buku</p>
+                    <p class="card-text" th:text="${buku.deskripsi}"></p>
                 </div>
             </div>
         </div>
@@ -447,25 +394,40 @@ footer {
 </footer>
 
 <script>
-    // Hamburger menu toggle
     function toggleMenu() {
         const navLinks = document.getElementById("nav-links");
         navLinks.classList.toggle("active");
     }
+
     function filterKategori() {
-const kategoriDipilih = document.getElementById("filterKategori").value;
-const kartuBuku = document.querySelectorAll(".kartu-buku");
+        const kategoriDipilih = document.getElementById("filterKategori").value;
+        const kartuBuku = document.querySelectorAll(".kartu-buku");
 
-kartuBuku.forEach(function(kartu) {
-  const kategori = kartu.getAttribute("data-kategori");
+        kartuBuku.forEach(function(kartu) {
+            const kategori = kartu.getAttribute("data-kategori");
 
-  if (kategoriDipilih === "semua" || kategoriDipilih === kategori) {
-    kartu.style.display = "block";
-  } else {
-    kartu.style.display = "none";
-  }
-});
-}
+            if (kategoriDipilih === "semua" || kategoriDipilih === kategori) {
+                kartu.style.display = "block";
+            } else {
+                kartu.style.display = "none";
+            }
+        });
+    }
+
+    // Fungsi untuk memuat data dari data-buku.html
+    function filterKategori() {
+        const selectedKategori = document.getElementById("filterKategori").value.toLowerCase();
+        const kartuBuku = document.querySelectorAll(".kartu-buku");
+
+        kartuBuku.forEach(card => {
+            const kategori = card.getAttribute("data-kategori").toLowerCase();
+            if (selectedKategori === "semua" || kategori === selectedKategori) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
 </script>
 </body>
 </html>

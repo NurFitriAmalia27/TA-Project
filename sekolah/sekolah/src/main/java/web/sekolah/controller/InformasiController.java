@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import web.sekolah.model.Berita;
+import web.sekolah.model.Buku;
 import web.sekolah.service.BeritaService;
+import web.sekolah.service.BukuService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/informasi")
@@ -18,6 +21,9 @@ public class InformasiController {
 
     @Autowired
     private BeritaService beritaService;
+
+    @Autowired
+    private BukuService bukuService;
 
     @GetMapping("/berita")
     public String showBeritaUntukPengunjung(Model model) {
@@ -39,7 +45,16 @@ public class InformasiController {
     }
 
     @GetMapping("/perpustakaan")
-    public String Perpustakaan() {
+    public String halamanPerpustakaan(Model model) {
+        List<Buku> listBuku = bukuService.getAllBuku();
+        List<String> semuaKategori = listBuku.stream()
+                .map(Buku::getKategori)
+                .distinct()
+                .collect(Collectors.toList());
+
+        model.addAttribute("listBuku", listBuku);
+        model.addAttribute("kategoriList", semuaKategori);
+
         return "informasi/perpustakaan";
     }
 }

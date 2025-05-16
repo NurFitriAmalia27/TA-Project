@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin-perpustakaan")
@@ -45,7 +46,7 @@ public class BukuController {
         int totalQty = listBuku.stream().mapToInt(Buku::getQty).sum();
 
         model.addAttribute("listBuku", listBuku);
-        model.addAttribute("totalQty", totalQty); // <-- ini tambahan
+        model.addAttribute("totalQty", totalQty);
         model.addAttribute("kategoriList", kategoriList());
         model.addAttribute("selectedKategori", kategori != null ? kategori : "Semua");
 
@@ -116,5 +117,3 @@ public class BukuController {
         return "redirect:/admin-perpustakaan/data-buku";
     }
 }
-
-
