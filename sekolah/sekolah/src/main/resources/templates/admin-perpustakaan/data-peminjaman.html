@@ -300,8 +300,8 @@
 </div>
 
 <div class="form-wrapper">
-  <form class="floating-form" id="formPeminjam">
-    <h2>Form Tambah Peminjam</h2>
+  <form class="floating-form" id="formPeminjam" method="POST" action="/admin-perpustakaan/simpan">
+  <h2>Form Tambah Peminjam</h2>
 
     <label for="namaPeminjam">Nama Peminjam</label>
     <input type="text" id="namaPeminjam" name="namaPeminjam" required>
@@ -321,6 +321,7 @@
     </div>
   </form>
 </div>
+
 <script>
   // Fungsi untuk toggle sidebar
 function toggleSidebar() {

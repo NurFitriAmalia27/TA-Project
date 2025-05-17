@@ -282,6 +282,7 @@
 
     <section class="table-section">
         <h4>Peminjaman Terbaru</h4>
+
         <table id="guruTable">
             <thead>
             <tr>
@@ -294,12 +295,15 @@
             </tr>
             </thead>
             <tbody>
+            <tr th:if="${#lists.isEmpty(daftarPeminjaman)}">
+                <td colspan="6" style="text-align: center;">Belum ada data peminjaman.</td>
+            </tr>
             <tr th:each="peminjaman, stat : ${daftarPeminjaman}">
-                <td th:text="${stat.index + 1}"></td>
-                <td th:text="${peminjaman.namaPeminjam}"></td>
-                <td th:text="${peminjaman.namaBuku}"></td>
-                <td th:text="${peminjaman.tglPinjam}"></td>
-                <td th:text="${peminjaman.tglKembali}"></td>
+                <td th:text="${stat.index + 1}">1</td>
+                <td th:text="${peminjaman.namaPeminjam}">Nama</td>
+                <td th:text="${peminjaman.namaBuku}">Buku</td>
+                <td th:text="${peminjaman.tglPinjam}">2024-01-01</td>
+                <td th:text="${peminjaman.tglKembali}">2024-01-10</td>
                 <td>
                     <input type="checkbox" onchange="selesaikanPengembalian(this)">
                 </td>
