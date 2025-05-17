@@ -399,7 +399,7 @@
     <h1>Data Buku</h1>
 
     <div class="search-container">
-        <input type="text" placeholder="Cari nama Buku">
+        <input type="text" id="searchInput" placeholder="Cari nama Buku" onkeyup="searchTable()">
         <i class="fas fa-search search-icon"></i>
     </div>
 
@@ -473,10 +473,10 @@
         const trs = table.getElementsByTagName("tr");
 
         for (let i = 1; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[1]; // kolom Nama Buku
+            const td = trs[i].getElementsByTagName("td")[1]; // Kolom ke-2 = Nama Buku
             if (td) {
                 const textValue = td.textContent || td.innerText;
-                trs[i].style.display = textValue.toLowerCase().indexOf(input) > -1 ? "" : "none";
+                trs[i].style.display = textValue.toLowerCase().includes(input) ? "" : "none";
             }
         }
     }

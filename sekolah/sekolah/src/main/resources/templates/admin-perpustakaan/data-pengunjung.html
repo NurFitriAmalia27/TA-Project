@@ -410,10 +410,9 @@
   <h1>Data Pengunjung Perpustakaan</h1>
 
   <div class="search-container">
-    <input type="text" placeholder="Cari nama Pengunjung">
+    <input type="text" id="searchInput" placeholder="Cari nama Pengunjung" onkeyup="searchTable()">
     <i class="fas fa-search search-icon"></i>
   </div>
-
 
   <div class="filter-container">
     <label for="NamaFilter">Filter Hari Pengunjung:</label>
@@ -467,33 +466,31 @@
     content.classList.toggle("sidebar-collapsed");
   }
 
-  // Search Function (cari nama)
-  function searchTable() {
+ function filterTable() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
-    const rows = document.getElementById("tabelPengunjung").getElementsByTagName("tr");
+    const selectedHari = document.getElementById("NamaFilter").value;
+    const table = document.getElementById("tabelPengunjung");
+    const trs = table.getElementsByTagName("tr");
 
-    for (let i = 1; i < rows.length; i++) {
-      const cell = rows[i].getElementsByTagName("td")[1]; // kolom Nama
-      if (cell) {
-        const text = cell.textContent || cell.innerText;
-        rows[i].style.display = text.toLowerCase().includes(searchInput) ? "" : "none";
+    for (let i = 1; i < trs.length; i++) {
+      const namaTd = trs[i].getElementsByTagName("td")[1]; // Nama
+      const hariTd = trs[i].getElementsByTagName("td")[3]; // Hari
+
+      if (namaTd && hariTd) {
+        const namaText = namaTd.textContent.toLowerCase();
+        const hariText = hariTd.textContent;
+
+        const matchesSearch = namaText.includes(searchInput);
+        const matchesHari = selectedHari === "" || hariText === selectedHari;
+
+        trs[i].style.display = (matchesSearch && matchesHari) ? "" : "none";
       }
     }
   }
 
-  // Filter berdasarkan hari
-  function filterByNama() {
-    const filterValue = document.getElementById("NamaFilter").value.toLowerCase();
-    const rows = document.getElementById("tabelPengunjung").getElementsByTagName("tr");
-
-    for (let i = 1; i < rows.length; i++) {
-      const hariCell = rows[i].getElementsByTagName("td")[3]; // kolom Hari
-      if (hariCell) {
-        const text = hariCell.textContent || hariCell.innerText;
-        rows[i].style.display = (filterValue === "" || text.toLowerCase() === filterValue) ? "" : "none";
-      }
-    }
-  }
+  // Trigger filter saat ketik atau pilih hari
+  document.getElementById("searchInput").addEventListener("keyup", filterTable);
+  document.getElementById("NamaFilter").addEventListener("change", filterTable);
 
   // Download data sebagai CSV
   function downloadTable() {
