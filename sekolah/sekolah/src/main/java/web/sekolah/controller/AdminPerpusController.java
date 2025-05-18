@@ -9,15 +9,12 @@ import java.util.List;
 import web.sekolah.service.PeminjamanService;
 import web.sekolah.model.Peminjaman;
 
-
 @Controller
 @RequestMapping("/admin-perpustakaan")
 public class AdminPerpusController {
 
-    @GetMapping("/data-pengembalian")
-    public String DataPengembalian() {
-        return "admin-perpustakaan/data-pengembalian";
-    }
+    @Autowired
+    private PeminjamanService peminjamanService;
 
     @GetMapping("/laporan")
     public String Laporan() {
@@ -28,9 +25,6 @@ public class AdminPerpusController {
     public String TambahLaporan() {
         return "admin-perpustakaan/tambah-laporan";
     }
-
-    @Autowired
-    private PeminjamanService peminjamanService;
 
     @GetMapping("/perpus-panel")
     public String tampilPanelPerpus(Model model) {

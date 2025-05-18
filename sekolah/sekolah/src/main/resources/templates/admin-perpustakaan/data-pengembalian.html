@@ -309,6 +309,33 @@
         padding: 8px 12px;
       }
     }
+
+    .styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.total-denda {
+  font-weight: bold;
+  margin-top: 15px;
+  text-align: right;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 15px;
+  text-decoration: none;
+  background-color: #eee;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
   </style>
 </head>
 <body>
@@ -361,7 +388,7 @@
   </div>
 
   <div class="table-responsive">
-    <table id="tabelPengembalian">
+    <table id="tabelPengembalian" class="styled-table">
       <thead>
       <tr>
         <th>No</th>
@@ -373,11 +400,24 @@
         <th>Denda</th>
       </tr>
       </thead>
-      <tbody></tbody>
+      <tbody>
+      <tr th:if="${#lists.isEmpty(daftarPengembalian)}">
+        <td colspan="7" style="text-align: center;">Belum ada data pengembalian.</td>
+      </tr>
+      <tr th:each="pengembalian, stat : ${daftarPengembalian}">
+        <td th:text="${stat.index + 1}">1</td>
+        <td th:text="${pengembalian.namaPeminjam}">Nama</td>
+        <td th:text="${pengembalian.namaBuku}">Buku</td>
+        <td th:text="${pengembalian.tglPinjam}">2024-01-01</td>
+        <td th:text="${pengembalian.tglKembali}">2024-01-10</td>
+        <td th:text="${pengembalian.tglPengembalian}">2024-01-11</td>
+        <td th:text="'Rp ' + ${pengembalian.denda}">Rp 0</td>
+      </tr>
+      </tbody>
     </table>
   </div>
 
-  <p id="totalDenda" class="total-denda">Total Denda: Rp 0</p>
+  <p id="totalDenda" class="total-denda">Total Denda: <span th:text="'Rp ' + ${totalDenda}">Rp 0</span></p>
   <a class="back-btn" href="/admin-perpustakaan/perpus-panel">← Kembali ke Beranda</a>
 </div>
 

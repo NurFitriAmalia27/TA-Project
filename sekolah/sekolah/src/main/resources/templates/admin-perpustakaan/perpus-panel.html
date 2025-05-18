@@ -227,6 +227,42 @@
          margin-left: 0;
        }
      }
+        .form-group {
+  margin-bottom: 15px;
+}
+
+input[type="text"], input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  flex: 1;
+  text-align: center;
+}
     </style>
 </head>
 <body>
@@ -282,8 +318,7 @@
 
     <section class="table-section">
         <h4>Peminjaman Terbaru</h4>
-
-        <table id="guruTable">
+        <table id="guruTable" class="styled-table">
             <thead>
             <tr>
                 <th>NO</th>
@@ -305,7 +340,12 @@
                 <td th:text="${peminjaman.tglPinjam}">2024-01-01</td>
                 <td th:text="${peminjaman.tglKembali}">2024-01-10</td>
                 <td>
-                    <input type="checkbox" onchange="selesaikanPengembalian(this)">
+                    <input type="checkbox"
+                           onchange="selesaikanPengembalian(this)"
+                           data-nama="${peminjaman.namaPeminjam}"
+                           data-buku="${peminjaman.namaBuku}"
+                           data-pinjam="${peminjaman.tglPinjam}"
+                           data-kembali="${peminjaman.tglKembali}">
                 </td>
             </tr>
             </tbody>
@@ -437,6 +477,38 @@
         }
       }
     });
+
+    function selesaikanPengembalian(checkbox) {
+    if (checkbox.checked) {
+        const namaPeminjam = checkbox.getAttribute('data-nama');
+        const namaBuku = checkbox.getAttribute('data-buku');
+        const tglPinjam = checkbox.getAttribute('data-pinjam');
+        const tglKembali = checkbox.getAttribute('data-kembali');
+        const tglPengembalian = new Date().toISOString().split('T')[0]; // Tanggal hari ini
+
+        fetch('/admin-perpustakaan/simpan-pengembalian', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `namaPeminjam=${encodeURIComponent(namaPeminjam)}&namaBuku=${encodeURIComponent(namaBuku)}&tglPinjam=${tglPinjam}&tglKembali=${tglKembali}&tglPengembalian=${tglPengembalian}`
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Pengembalian berhasil disimpan!');
+            } else {
+                alert('Gagal menyimpan pengembalian!');
+                checkbox.checked = false;
+            }
+        })
+        .catch(error => {
+            alert('Terjadi kesalahan!');
+            console.error(error);
+            checkbox.checked = false;
+        });
+    }
+}
+
 </script>
 </body>
 </html>
