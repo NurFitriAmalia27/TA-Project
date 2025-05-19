@@ -239,25 +239,54 @@
  .button-container {
    margin: 20px 0; /* atas dan bawah 20px */
  }
-     .filter-container select {
-       max-width: 300px;
-       height: 40px;         /* tambahkan tinggi */
-     }
+     .filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
 
-     .create-button {
-       background-color: #6A3332;
-       color: white;
-       padding: 10px 20px;
-       border: none;
-       border-radius: 5px;
-       font-weight: bold;
-       text-decoration: none;
-       transition: background-color 0.3s ease;
-     }
+.filter-container label {
+  font-weight: 500;
+}
 
-     .create-button:hover {
-       background-color: #5D2D2A;
-     }
+.filter-container select {
+  height: 40px;
+  max-width: 300px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* Tombol hanya ikon */
+.icon-button {
+  width: 40px;
+  height: 40px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.icon-button:hover {
+  background-color: #4CAF50;
+}
+
+/* Responsif untuk mobile */
+@media (max-width: 600px) {
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 
      table {
        width: 100%;
@@ -426,8 +455,13 @@
       <option value="Sabtu">Sabtu</option>
       <option value="Minggu">Minggu</option>
     </select>
-    <button onclick="downloadTable()" class="create-button">Download CSV</button>
+
+    <!-- Tombol ikon download -->
+    <button onclick="downloadTable()" class="icon-button" title="Download CSV">
+      <i class="fas fa-download"></i>
+    </button>
   </div>
+
 
   <div class="button-container">
     <a class="back-btn" th:href="@{/admin-perpustakaan/tambah-pengunjung}">+ Tambah Pengunjung</a>

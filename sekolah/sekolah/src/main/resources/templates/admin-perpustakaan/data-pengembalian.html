@@ -156,39 +156,140 @@
    height: 40px;         /* tambahkan tinggi */
  }
 
- .button-container {
-   margin: 20px 0; /* atas dan bawah 20px */
- }
+ .search-container {
+    position: relative;
+    width: 300px;
+    margin: 20px 0;
+}
 
-     .filter-container select {
-       max-width: 300px;
-       height: 40px;         /* tambahkan tinggi */
-     }
+.search-container input[type="text"] {
+    width: 100%;
+    height: 40px;
+    padding: 8px 36px 8px 12px; /* padding kanan lebih besar */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
 
-    .button-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+.search-container .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+    pointer-events: none; /* agar tidak mengganggu klik */
+}
 
-    .button-container button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
 
-    .refresh-btn {
-      background-color: #007bff;
-      color: white;
-    }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  gap: 10px;
+}
 
-    .delete-btn {
-      background-color: #dc3545;
-      color: white;
-    }
+/* Grup kiri */
+.left-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-container label {
+  font-size: 14px;
+}
+
+.filter-container select,
+.filter-container input[type="text"] {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Tombol icon */
+.icon-button {
+  width: 38px;
+  height: 38px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 0;
+}
+
+.icon-button.download {
+  background-color: #4CAF50;
+}
+
+.icon-button.undo {
+  background-color: #2196F3;
+}
+
+.icon-button.delete {
+  background-color: #f44336;
+}
+
+.icon-button:hover {
+  opacity: 0.85;
+}
+
+/* Grup kanan */
+.right-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* 🔄 Responsive */
+@media (max-width: 600px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .left-group,
+  .right-group {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .filter-container label {
+    margin-bottom: 4px;
+  }
+
+  .filter-container select,
+  .filter-container input {
+    width: 100%;
+  }
+
+  .right-group {
+    justify-content: flex-end;
+  }
+}
 
      /* Konten utama */
   .main-content {
@@ -370,21 +471,36 @@
   <h2>Data Pengembalian Buku</h2>
 
   <div class="search-container">
-    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama peminjam">
+    <input type="text" placeholder="Cari nama Peminjam">
+    <i class="fas fa-search search-icon"></i>
   </div>
 
-  <div class="filter-container">
-    <label for="TahunFilter">Filter Tahun Pengembalian:</label>
-    <select id="TahunFilter" onchange="filterByTahun()">
-      <option value="">Semua</option>
-      <option value="2023">2023</option>
-      <option value="2024">2024</option>
-      <option value="2025">2025</option>
-    </select>
+  <div class="top-bar">
+    <div class="left-group">
+      <div class="filter-container">
+        <label for="filter-tahun">Filter Tahun Pengembalian:</label>
+        <select id="filter-tahun">
+          <option value="semua">Semua</option>
+          <option value="2023">2021</option>
+          <option value="2024">2022</option>
+          <option value="2024">2023</option>
+          <option value="2024">2024</option>
+          <option value="2024">2025</option>
+        </select>
+      </div>
+      <button onclick="downloadTable()" class="icon-button download" title="Download CSV">
+        <i class="fas fa-download"></i>
+      </button>
+    </div>
 
-    <button onclick="downloadTable()" class="create-button">Download CSV</button>
-    <button class="refresh-btn" onclick="undoPenghapusan()">↩️ Undo</button>
-    <button class="delete-btn" onclick="hapusSemua()">🗑 Hapus Semua</button>
+    <div class="right-group">
+      <button onclick="undoPenghapusan()" class="icon-button undo" title="Undo">
+        <i class="fas fa-undo-alt"></i>
+      </button>
+      <button onclick="hapusSemua()" class="icon-button delete" title="Hapus Semua">
+        <i class="fas fa-trash-alt"></i>
+      </button>
+    </div>
   </div>
 
   <div class="table-responsive">
