@@ -7,6 +7,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
+    /* Reset dasar untuk semua elemen */
     * {
       margin: 0;
       padding: 0;
@@ -14,10 +15,12 @@
       font-family: Arial, sans-serif;
     }
 
+    /* Warna latar belakang halaman */
     body {
       background-color: #f8f9fa;
     }
 
+    /* Navigasi atas */
     .navbar {
       width: 100%;
       height: 60px;
@@ -36,24 +39,25 @@
       font-size: 24px;
       cursor: pointer;
     }
+
     .right-section {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Memberikan jarak antara ikon dan teks */
-  margin-left: auto; /* Memastikan konten berada di sisi kanan */
-}
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: auto;
+    }
 
-.navbar i.user-icon {
-  font-size: 30px; /* Ukuran ikon lebih besar */
-}
+    .navbar i.user-icon {
+      font-size: 30px;
+    }
 
-.navbar h1 {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 0; /* Pastikan tidak ada margin yang mengganggu */
-}
+    .navbar h1 {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0;
+    }
 
-
+    /* Sidebar kiri */
     .sidebar {
       width: 250px;
       background: #6A3332;
@@ -72,6 +76,7 @@
       transform: translateX(-100%);
     }
 
+    /* Profil admin di sidebar */
     .admin-profile {
       text-align: center;
       margin-bottom: 20px;
@@ -100,6 +105,7 @@
       color: #fff;
     }
 
+    /* Daftar menu sidebar */
     .menu-list li {
       margin: 8px 0;
     }
@@ -128,11 +134,18 @@
       font-size: 18px;
     }
 
+    /* Konten utama */
     .main-content {
       padding: 80px 20px 20px 20px;
       margin-left: 250px;
+      transition: margin-left 0.3s ease, width 0.3s ease;
     }
 
+    .main-content.full {
+      margin-left: 0;
+    }
+
+    /* Judul halaman */
     h2 {
       text-align: center;
       color: #5D2D2A;
@@ -140,184 +153,115 @@
       font-size: 30px;
     }
 
+    /* Area pencarian dan filter */
     .search-container, .filter-container {
-       margin-bottom: 15px;
-       margin-top: 20px;
-       display: flex;
-       align-items: center;
-       gap: 10px;
-       flex-wrap: wrap;
-     }
+      margin: 20px 0 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-     .search-container input[type="text"] {
-   flex: none;           /* hilangkan fleksibilitas */
-   width: 300px;         /* batasi lebar */
-   max-width: 200%;      /* batas maksimum lebar */
-   height: 40px;         /* tambahkan tinggi */
- }
+    .search-container {
+      position: relative;
+      width: 300px;
+    }
 
- .search-container {
-    position: relative;
-    width: 300px;
-    margin: 20px 0;
-}
+    .search-container input[type="text"] {
+      width: 100%;
+      height: 40px;
+      padding: 8px 36px 8px 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
 
-.search-container input[type="text"] {
-    width: 100%;
-    height: 40px;
-    padding: 8px 36px 8px 12px; /* padding kanan lebih besar */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
+    .search-container .search-icon {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 16px;
+      pointer-events: none;
+    }
 
-.search-container .search-icon {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    color: #888;
-    font-size: 16px;
-    pointer-events: none; /* agar tidak mengganggu klik */
-}
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
 
+    .left-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  gap: 10px;
-}
+    .filter-container label {
+      font-size: 14px;
+    }
 
-/* Grup kiri */
-.left-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
+    .filter-container select,
+    .filter-container input[type="text"] {
+      height: 38px;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      line-height: 1;
+    }
 
-.filter-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    /* Tombol ikon */
+    .icon-button {
+      width: 38px;
+      height: 38px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      padding: 0;
+    }
 
-.filter-container label {
-  font-size: 14px;
-}
+    .icon-button.download { background-color: #4CAF50; }
+    .icon-button.undo { background-color: #2196F3; }
+    .icon-button.delete { background-color: #f44336; }
 
-.filter-container select,
-.filter-container input[type="text"] {
-  height: 38px;
-  padding: 0 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  line-height: 1;
-}
+    .icon-button:hover {
+      opacity: 0.85;
+    }
 
-/* Tombol icon */
-.icon-button {
-  width: 38px;
-  height: 38px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  padding: 0;
-}
+    .right-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-.icon-button.download {
-  background-color: #4CAF50;
-}
+    /* Tabel responsif */
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+      transition: width 0.3s ease;
+    }
 
-.icon-button.undo {
-  background-color: #2196F3;
-}
-
-.icon-button.delete {
-  background-color: #f44336;
-}
-
-.icon-button:hover {
-  opacity: 0.85;
-}
-
-/* Grup kanan */
-.right-group {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-/* 🔄 Responsive */
-@media (max-width: 600px) {
-  .top-bar {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .left-group,
-  .right-group {
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .filter-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    width: 100%;
-  }
-
-  .filter-container label {
-    margin-bottom: 4px;
-  }
-
-  .filter-container select,
-  .filter-container input {
-    width: 100%;
-  }
-
-  .right-group {
-    justify-content: flex-end;
-  }
-}
-
-     /* Konten utama */
-  .main-content {
-    padding: 80px 20px 20px 20px;
-    margin-left: 250px;
-    transition: margin-left 0.3s ease, width 0.3s ease; /* Transisi halus saat sidebar disembunyikan */
-  }
-
-  .main-content.full {
-    margin-left: 0; /* Menyesuaikan margin saat sidebar disembunyikan */
-  }
-
-  /* Tabel responsif */
-  .table-responsive {
-    overflow-x: auto;
-    width: 100%; /* Pastikan tabel memenuhi lebar kontainer */
-    transition: width 0.3s ease; /* Transisi halus pada lebar tabel */
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    min-width: 800px; /* Minimum lebar agar tabel tidak terlalu kecil */
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      min-width: 800px;
+    }
 
     th, td {
       padding: 12px;
@@ -334,6 +278,7 @@
       background-color: #f2f2f2;
     }
 
+    /* Tombol kembali */
     .back-btn {
       display: inline-block;
       margin-top: 20px;
@@ -348,6 +293,7 @@
       background-color: #4e2625;
     }
 
+    /* Total denda */
     .total-denda {
       margin-top: 15px;
       font-size: 18px;
@@ -356,6 +302,7 @@
       text-align: right;
     }
 
+    /* Responsif: tablet */
     @media (max-width: 768px) {
       .sidebar {
         width: 200px;
@@ -377,15 +324,13 @@
         margin-right: 10px;
       }
 
-
-
       .button-container {
         flex-direction: column;
         gap: 10px;
       }
-
     }
 
+    /* Responsif: HP */
     @media (max-width: 480px) {
       .navbar h1 {
         font-size: 14px;
@@ -409,35 +354,40 @@
         font-size: 14px;
         padding: 8px 12px;
       }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .left-group,
+      .right-group {
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .filter-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        width: 100%;
+      }
+
+      .filter-container label {
+        margin-bottom: 4px;
+      }
+
+      .filter-container select,
+      .filter-container input {
+        width: 100%;
+      }
+
+      .right-group {
+        justify-content: flex-end;
+      }
     }
-
-    .styled-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.styled-table th, .styled-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.total-denda {
-  font-weight: bold;
-  margin-top: 15px;
-  text-align: right;
-}
-
-.back-btn {
-  display: inline-block;
-  margin-top: 15px;
-  text-decoration: none;
-  background-color: #eee;
-  padding: 8px 12px;
-  border-radius: 6px;
-}
-
   </style>
+
 </head>
 <body>
 <div class="navbar">
