@@ -342,10 +342,11 @@ input[type="text"], input[type="date"] {
                 <td>
                     <input type="checkbox"
                            onchange="selesaikanPengembalian(this)"
-                           data-nama="${peminjaman.namaPeminjam}"
-                           data-buku="${peminjaman.namaBuku}"
-                           data-pinjam="${peminjaman.tglPinjam}"
-                           data-kembali="${peminjaman.tglKembali}">
+                           th:attr="data-id=${peminjaman.id},
+                            data-nama=${peminjaman.namaPeminjam},
+                            data-buku=${peminjaman.namaBuku},
+                            data-pinjam=${peminjaman.tglPinjam},
+                            data-kembali=${peminjaman.tglKembali}">
                 </td>
             </tr>
             </tbody>

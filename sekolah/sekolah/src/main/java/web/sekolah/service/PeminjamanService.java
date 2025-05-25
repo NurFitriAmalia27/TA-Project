@@ -32,5 +32,3 @@ public class PeminjamanService {
         return peminjamanRepository.findById(id);
     }
 }
-
-
