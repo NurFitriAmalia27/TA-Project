@@ -22,7 +22,7 @@ public class PeminjamanController {
         return "admin-perpustakaan/data-peminjaman";
     }
 
-    @PostMapping(value = "/simpan")
+    @PostMapping("/simpan")
     public String simpanPeminjaman(@ModelAttribute("peminjaman") Peminjaman peminjaman) {
         peminjamanService.simpanPeminjaman(peminjaman);
         return "redirect:/admin-perpustakaan/perpus-panel";

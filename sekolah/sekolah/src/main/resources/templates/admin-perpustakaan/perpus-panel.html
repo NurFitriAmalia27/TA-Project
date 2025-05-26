@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Dashboard Admin - Perpustakaan SDN Poris Pelawad 6</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -355,161 +357,143 @@ input[type="text"], input[type="date"] {
 </main>
 
 <script>
-    // Toggle sidebar
     function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      const content = document.getElementById("content");
-      sidebar.classList.toggle("sidebar-hidden");
-      content.classList.toggle("full");
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
+        sidebar.classList.toggle("sidebar-hidden");
+        content.classList.toggle("full");
     }
 
-    // Konfirmasi logout
     function confirmLogout() {
-      if (confirm("Apakah Anda yakin ingin keluar?")) {
-        window.location.href = "logout.html";
-      }
-    }
-
-    // Ambil data buku dari tabel
-    function getBookData() {
-      const rows = document.querySelectorAll('#guruTable tbody tr');
-      const bookCounts = {};
-
-      rows.forEach(row => {
-        const bookName = row.cells[2]?.textContent.trim();
-        if (bookName) {
-          bookCounts[bookName] = bookCounts[bookName] ? bookCounts[bookName] + 1 : 1;
+        if (confirm("Apakah Anda yakin ingin keluar?")) {
+            window.location.href = "logout.html";
         }
-      });
-
-      return bookCounts;
     }
 
-    // Update jumlah peminjam
-    function updateJumlahPeminjam() {
-      const jumlahPeminjam = document.querySelectorAll('#guruTable tbody tr').length;
-      const jumlahPeminjamEl = document.getElementById('jumlahPeminjam');
-      if (jumlahPeminjamEl) {
-        jumlahPeminjamEl.textContent = jumlahPeminjam;
-      }
-    }
-
-    // Update nomor urut tabel
     function updateNomorUrut() {
-      const rows = document.querySelectorAll('#guruTable tbody tr');
-      rows.forEach((row, index) => {
-        if (row.cells[0]) {
-          row.cells[0].textContent = index + 1;
-        }
-      });
-    }
-
-    // Fungsi pengembalian buku
-    function selesaikanPengembalian(checkbox) {
-      const row = checkbox.closest("tr");
-      const namaPeminjam = row.cells[1].textContent;
-      const namaBuku = row.cells[2].textContent;
-      const tglPinjam = row.cells[3].textContent;
-      const tglKembali = row.cells[4].textContent;
-      const hariIni = new Date();
-      const kembaliDate = new Date(tglKembali);
-
-      let denda = 0;
-      if (hariIni > kembaliDate) {
-        const selisihHari = Math.floor((hariIni - kembaliDate) / (1000 * 60 * 60 * 24));
-        denda = selisihHari * 2000;
-      }
-
-      const dataPengembalian = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
-      dataPengembalian.push({
-        namaPeminjam,
-        namaBuku,
-        tglPinjam,
-        tglKembali,
-        tglPengembalianSebenarnya: hariIni.toISOString().split('T')[0],
-        denda
-      });
-      localStorage.setItem('dataPengembalian', JSON.stringify(dataPengembalian));
-
-      row.remove();
-      updateJumlahPeminjam();
-      updateNomorUrut();
-
-      alert('Data berhasil dipindahkan ke Data Pengembalian');
-    }
-
-    // Saat halaman dimuat
-    window.addEventListener('DOMContentLoaded', function () {
-      updateJumlahPeminjam();
-      updateNomorUrut();
-
-      const bookData = getBookData();
-      const labels = Object.keys(bookData);
-      const data = Object.values(bookData);
-
-      if (labels.length > 0 && data.length > 0) {
-        const colors = labels.map((_, i) => `hsl(${(i * 360 / labels.length)}, 70%, 60%)`);
-        const chartEl = document.getElementById('barChart');
-
-        if (chartEl) {
-          const ctx = chartEl.getContext('2d');
-          new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: labels,
-              datasets: [{
-                label: 'Jumlah Peminjaman',
-                data: data,
-                backgroundColor: colors,
-                borderColor: colors,
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  precision: 0
-                }
-              }
+        const rows = document.querySelectorAll('#guruTable tbody tr');
+        rows.forEach((row, index) => {
+            if (row.cells[0]) {
+                row.cells[0].textContent = index + 1;
             }
-          });
-        }
-      }
-    });
+        });
+    }
 
-    function selesaikanPengembalian(checkbox) {
+function selesaikanPengembalian(checkbox) {
     if (checkbox.checked) {
+        const row = checkbox.closest("tr");
+        const id = checkbox.getAttribute('data-id');
         const namaPeminjam = checkbox.getAttribute('data-nama');
         const namaBuku = checkbox.getAttribute('data-buku');
         const tglPinjam = checkbox.getAttribute('data-pinjam');
         const tglKembali = checkbox.getAttribute('data-kembali');
-        const tglPengembalian = new Date().toISOString().split('T')[0]; // Tanggal hari ini
+        const tglPengembalian = new Date().toISOString().split('T')[0];
+
+        // Ambil token CSRF dari meta tag
+        const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        // Buat body dengan encoding x-www-form-urlencoded
+        const body = `namaPeminjam=${encodeURIComponent(namaPeminjam)}&` +
+                     `namaBuku=${encodeURIComponent(namaBuku)}&` +
+                     `tglPinjam=${encodeURIComponent(tglPinjam)}&` +
+                     `tglKembali=${encodeURIComponent(tglKembali)}&` +
+                     `tglPengembalian=${encodeURIComponent(tglPengembalian)}`;
 
         fetch('/admin-perpustakaan/simpan-pengembalian', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                [header]: token
             },
-            body: `namaPeminjam=${encodeURIComponent(namaPeminjam)}&namaBuku=${encodeURIComponent(namaBuku)}&tglPinjam=${tglPinjam}&tglKembali=${tglKembali}&tglPengembalian=${tglPengembalian}`
+            body: body
         })
         .then(response => {
             if (response.ok) {
-                alert('Pengembalian berhasil disimpan!');
+                // Hapus baris dari tampilan
+                row.remove();
+                updateNomorUrut();
+
+                // Hapus data peminjaman dari backend
+                return fetch(`/admin-perpustakaan/hapus/${id}`, {
+                    method: 'POST',
+                    headers: {
+                        [header]: token
+                    }
+                });
             } else {
-                alert('Gagal menyimpan pengembalian!');
-                checkbox.checked = false;
+                throw new Error('Gagal menyimpan pengembalian!');
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Tampilkan alert sukses dengan SweetAlert2
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Data pengembalian berhasil disimpan.',
+                    icon: 'success',
+                    confirmButtonText: 'Lihat Data Pengembalian'
+                }).then(() => {
+                    window.location.href = '/admin-perpustakaan/data-pengembalian';
+                });
+            } else {
+                throw new Error('Gagal menghapus data peminjaman!');
             }
         })
         .catch(error => {
-            alert('Terjadi kesalahan!');
-            console.error(error);
+            Swal.fire({
+                title: 'Oops!',
+                text: error.message || 'Terjadi kesalahan.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
             checkbox.checked = false;
         });
     }
 }
+    window.addEventListener('DOMContentLoaded', function () {
+        updateNomorUrut();
 
+        const rows = document.querySelectorAll('#guruTable tbody tr');
+        const bookCounts = {};
+
+        rows.forEach(row => {
+            const bookName = row.cells[2]?.textContent.trim();
+            if (bookName) {
+                bookCounts[bookName] = bookCounts[bookName] ? bookCounts[bookName] + 1 : 1;
+            }
+        });
+
+        const labels = Object.keys(bookCounts);
+        const data = Object.values(bookCounts);
+
+        if (labels.length > 0 && data.length > 0) {
+            const colors = labels.map((_, i) => `hsl(${(i * 360 / labels.length)}, 70%, 60%)`);
+            const ctx = document.getElementById('barChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Peminjaman',
+                        data: data,
+                        backgroundColor: colors,
+                        borderColor: colors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            precision: 0
+                        }
+                    }
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>

@@ -25,7 +25,6 @@ public class Buku {
     @Column(name = "foto")
     private String foto;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

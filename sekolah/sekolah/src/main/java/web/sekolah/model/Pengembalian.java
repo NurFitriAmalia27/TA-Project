@@ -1,6 +1,8 @@
 package web.sekolah.model;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 
 @Entity
@@ -13,12 +15,16 @@ public class Pengembalian {
     private String namaPeminjam;
     private String namaBuku;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate tglPinjam;
-    private LocalDate tglKembali;
-    private LocalDate tglPengembalian;
-    private Integer denda;
 
-    // === Getter and Setter ===
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate tglKembali;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate tglPengembalian;
+
+    private Integer denda;
 
     public Long getId() {
         return id;
@@ -76,4 +82,3 @@ public class Pengembalian {
         this.denda = denda;
     }
 }
-

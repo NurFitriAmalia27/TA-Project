@@ -1,6 +1,8 @@
 package web.sekolah.service;
 
+import web.sekolah.model.Buku;
 import web.sekolah.model.Pengembalian;
+import web.sekolah.repository.BukuRepository;
 import web.sekolah.repository.PengembalianRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ public class PengembalianService {
     @Autowired
     private PengembalianRepository repository;
 
+    @Autowired
+    private BukuRepository bukuRepository;
+
     public List<Pengembalian> getAll() {
         return repository.findAll();
     }
@@ -21,6 +26,20 @@ public class PengembalianService {
     public Pengembalian simpan(Pengembalian pengembalian) {
         int denda = hitungDenda(pengembalian);
         pengembalian.setDenda(denda);
+        return repository.save(pengembalian);
+    }
+
+    public Pengembalian simpanDanUpdateStok(Pengembalian pengembalian) {
+        int denda = hitungDenda(pengembalian);
+        pengembalian.setDenda(denda);
+
+        // Tambah stok buku setelah pengembalian
+        Buku buku = bukuRepository.findByNamaBukuIgnoreCase(pengembalian.getNamaBuku());
+        if (buku != null) {
+            buku.setQty(buku.getQty() + 1);
+            bukuRepository.save(buku);
+        }
+
         return repository.save(pengembalian);
     }
 
@@ -36,4 +55,3 @@ public class PengembalianService {
         return 0;
     }
 }
-
