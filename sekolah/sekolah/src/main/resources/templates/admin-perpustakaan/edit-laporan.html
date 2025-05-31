@@ -293,10 +293,11 @@
 <div class="form-wrapper">
   <div class="floating-form">
     <h2>Edit Laporan</h2>
-    <!-- Penting: Tambahkan th:object dan hidden field untuk id -->
-    <form th:action="@{/admin-perpustakaan/update-laporan}" method="post" enctype="multipart/form-data" th:object="${laporan}">
 
-      <!-- Tambahkan ID untuk identifikasi laporan yang akan diupdate -->
+    <!-- Form Edit dengan ID untuk digunakan di JavaScript -->
+    <form id="editFormLaporan" th:action="@{/admin-perpustakaan/update-laporan}" method="post" enctype="multipart/form-data" th:object="${laporan}">
+
+      <!-- ID laporan (hidden) -->
       <input type="hidden" th:field="*{id}" />
 
       <label for="namaBuku">Nama Buku:</label>
@@ -415,6 +416,46 @@
     if (batalBtn) {
       batalBtn.addEventListener('click', function () {
         window.location.href = '/admin-perpustakaan/laporan'; // ganti sesuai rute yang benar
+      });
+    }
+
+    // === PENAMBAHAN SweetAlert pada Form Edit Laporan ===
+    const editForm = document.getElementById("editFormLaporan"); // pastikan id form adalah "editFormLaporan"
+    if (editForm) {
+      editForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // cegah form langsung submit
+
+        const formData = new FormData(editForm);
+
+        // Kirim data menggunakan fetch
+        fetch(editForm.action, {
+          method: "POST",
+          body: formData
+        }).then(response => {
+          if (response.ok) {
+            Swal.fire({
+              title: 'Berhasil!',
+              text: 'Data laporan berhasil diperbarui.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            }).then(() => {
+              window.location.href = "/admin-perpustakaan/laporan"; // redirect ke halaman laporan
+            });
+          } else {
+            Swal.fire({
+              title: 'Gagal!',
+              text: 'Terjadi kesalahan saat memperbarui data.',
+              icon: 'error'
+            });
+          }
+        }).catch(error => {
+          Swal.fire({
+            title: 'Error!',
+            text: 'Terjadi kesalahan jaringan.',
+            icon: 'error'
+          });
+          console.error("Fetch error:", error);
+        });
       });
     }
   };

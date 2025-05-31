@@ -293,7 +293,10 @@
 <div class="form-wrapper">
   <div class="floating-form">
     <h2>Tambah Laporan</h2>
-    <form th:action="@{/admin-perpustakaan/simpan-laporan}" method="post" enctype="multipart/form-data" th:object="${laporan}">
+
+    <!-- Tambahkan id="addBookForm" di form -->
+    <form id="addBookForm" th:action="@{/admin-perpustakaan/simpan-laporan}" method="post" enctype="multipart/form-data" th:object="${laporan}">
+
       <label for="namaBuku">Nama Buku:</label>
       <input type="text" id="namaBuku" name="namaBuku" th:field="*{namaBuku}" required>
 
@@ -316,10 +319,10 @@
         <button type="submit" class="btn-simpan">Simpan</button>
         <button type="button" class="btn-batal" onclick="window.location.href='/admin-perpustakaan/laporan'">Batal</button>
       </div>
+
     </form>
   </div>
 </div>
-
 <script>
   // Toggle sidebar
   function toggleSidebar() {
@@ -390,7 +393,7 @@
     document.getElementById('overlay').style.display = 'none';
   }
 
-  // Tombol batal: kembali ke halaman laporan
+  // Saat DOM siap
   document.addEventListener('DOMContentLoaded', function () {
     const cancelBtn = document.querySelector('.btn-batal');
     if (cancelBtn) {
@@ -403,6 +406,27 @@
     const form = document.getElementById("addBookForm");
     if (form) {
       form.reset();
+
+      // [SWEETALERT SIMPAN] Tambahkan event listener untuk submit form
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); // Hentikan submit default
+
+        Swal.fire({
+          title: 'Simpan Data?',
+          text: "Pastikan data yang diisi sudah benar.",
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ya, simpan',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Kirim form jika pengguna mengkonfirmasi
+            form.submit();
+          }
+        });
+      });
     }
 
     // Placeholder setup fungsi tambahan (jika ada)
