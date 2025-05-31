@@ -464,14 +464,12 @@
       <option value="Rusak">Rusak</option>
     </select>
 
-    <!-- Tombol ikon download -->
     <button onclick="downloadTable()" class="icon-button" title="Download CSV">
       <i class="fas fa-download"></i>
     </button>
   </div>
 
   <table id="guruTable">
-
     <thead>
     <tr>
       <th>No</th>
@@ -484,147 +482,132 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1</td>
-      <td>Bahasa Indonesia</td>
-      <td>Anisa</td>
-      <td>2</td>
-      <td>Hilang</td>
-      <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad"></td>
+    <tr th:each="laporan, iterStat : ${laporanList}">
+      <td th:text="${iterStat.count}">1</td>
+      <td th:text="${laporan.namaBuku}">Contoh Buku</td>
+      <td th:text="${laporan.pengarang}">Contoh Pengarang</td>
+      <td th:text="${laporan.qty}">0</td>
+      <td th:text="${laporan.keterangan}">Hilang</td>
       <td>
-        <button class="edit-btn"><i class="fas fa-edit"></i></button>
-        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+        <img th:if="${laporan.foto != null}" th:src="@{'/img/laporanbuku/' + ${laporan.foto}}" alt="Foto Buku" width="100" />
+        <span th:if="${laporan.foto == null}">Tidak Ada Foto</span>
       </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Indonesia</td>
-      <td>Anisa</td>
-      <td>2</td>
-      <td>Rusak</td>
-      <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad"></td>
       <td>
-        <button class="edit-btn"><i class="fas fa-edit"></i></button>
-        <button class="delete-btn"><i class="fas fa-trash"></i></button>
-      </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Indonesia</td>
-      <td>Anisa</td>
-      <td>2</td>
-      <td>Rusak</td>
-      <td><img src="/img/foto_guru/ahmad_fauzan.jpg" alt="Foto Ahmad"></td>
-      <td>
-        <button class="edit-btn"><i class="fas fa-edit"></i></button>
-        <button class="delete-btn"><i class="fas fa-trash"></i></button>
+        <a th:href="@{'/admin-perpustakaan/laporan/edit/' + ${laporan.id}}" class="edit-btn" title="Edit" style="text-decoration: none;">
+          <i class="fas fa-edit" style="color: blue;"></i>
+        </a>
+        <a th:href="@{'/admin-perpustakaan/laporan/delete/' + ${laporan.id}}" onclick="return confirm('Yakin hapus data ini?')" class="delete-btn" title="Hapus" style="text-decoration: none;">
+          <i class="fas fa-trash" style="color: red;"></i>
+        </a>
       </td>
     </tr>
     </tbody>
   </table>
 
   <div class="button-container">
-    <strong>Total Jumlah Buku: <span id="totalQty">0</span></strong>
+    <strong>Total Jumlah Buku: <span id="totalQty" th:text="${totalQty}">0</span></strong>
   </div>
 
   <button class="create-button" onclick="window.location.href='/admin-perpustakaan/tambah-laporan'">+ Tambah Laporan</button>
 </div>
-
 <script>
   // Toggle Sidebar
   function toggleSidebar() {
-      var sidebar = document.getElementById("sidebar");
-      var content = document.getElementById("content");
-      sidebar.classList.toggle("sidebar-hidden");
-      content.classList.toggle("sidebar-collapsed");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+    sidebar.classList.toggle("sidebar-hidden");
+    content.classList.toggle("sidebar-collapsed");
   }
 
-  // Search Function
+  // Fungsi Pencarian Berdasarkan Nama Buku
   function searchTable() {
-      const searchInput = document.getElementById("searchInput").value.toLowerCase();
-      const rows = document.getElementById("guruTable").getElementsByTagName("tr");
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.getElementById("guruTable").getElementsByTagName("tr");
 
-      for (let i = 1; i < rows.length; i++) {
-          const cell = rows[i].getElementsByTagName("td")[1]; // Nama Buku
-          if (cell) {
-              const text = cell.textContent || cell.innerText;
-              rows[i].style.display = text.toLowerCase().includes(searchInput) ? "" : "none";
-          }
-      }
-  }
-
-  function filterByKeterangan() {
-    var filter = document.getElementById("KeteranganFilter").value.toUpperCase();
-    var table = document.getElementById("guruTable");
-    var tr = table.getElementsByTagName("tr");
-
-    for (var i = 1; i < tr.length; i++) {
-      var td = tr[i].getElementsByTagName("td")[4]; // Kolom ke-5 = Keterangan
-      if (td) {
-        var txtValue = td.textContent || td.innerText;
-        tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 || filter === "" ? "" : "none";
+    for (let i = 1; i < rows.length; i++) {
+      const cell = rows[i].getElementsByTagName("td")[1]; // Nama Buku
+      if (cell) {
+        const text = cell.textContent || cell.innerText;
+        rows[i].style.display = text.toLowerCase().includes(searchInput) ? "" : "none";
       }
     }
   }
 
-// Fungsi download data CSV
-function downloadTable() {
-  let table = document.getElementById("guruTable");
-  let rows = Array.from(table.rows);
-  let csv = rows.map(row =>
-    Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
-  ).join("\n");
+  // Filter Berdasarkan Keterangan
+  function filterByKeterangan() {
+    const filter = document.getElementById("KeteranganFilter").value.toUpperCase();
+    const table = document.getElementById("guruTable");
+    const rows = table.getElementsByTagName("tr");
 
-  let blob = new Blob([csv], { type: "text/csv" });
-  let link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "data_buku.csv";
-  link.click();
-}
-  // Delete Row Function
+    for (let i = 1; i < rows.length; i++) {
+      const cell = rows[i].getElementsByTagName("td")[4]; // Kolom ke-5: Keterangan
+      if (cell) {
+        const txtValue = cell.textContent || cell.innerText;
+        rows[i].style.display = txtValue.toUpperCase().includes(filter) || filter === "" ? "" : "none";
+      }
+    }
+  }
+
+  // Fungsi Download CSV
+  function downloadTable() {
+    const table = document.getElementById("guruTable");
+    const rows = Array.from(table.rows);
+    const csv = rows.map(row =>
+      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+    ).join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data_laporan.csv";
+    link.click();
+  }
+
+  // Fungsi Hapus Baris Manual (Bukan dari database)
   function deleteRow(button) {
-      const row = button.closest("tr");
-      row.remove();
-      hitungTotalQty(); // Update Total
+    const row = button.closest("tr");
+    row.remove();
+    hitungTotalQty(); // Update Total Qty
   }
 
   // Hitung Total Qty
   function hitungTotalQty() {
-      const table = document.getElementById("guruTable");
-      const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-      let total = 0;
+    const table = document.getElementById("guruTable");
+    const rows = table.querySelectorAll("tbody tr");
+    let total = 0;
 
-      for (let i = 0; i < rows.length; i++) {
-          let qtyCell = rows[i].getElementsByTagName("td")[3]; // kolom Qty
-          if (qtyCell && !isNaN(parseInt(qtyCell.textContent))) {
-              total += parseInt(qtyCell.textContent);
-          }
+    rows.forEach(row => {
+      const qtyCell = row.cells[3]; // kolom ke-4: Qty
+      if (qtyCell && !isNaN(parseInt(qtyCell.textContent))) {
+        total += parseInt(qtyCell.textContent);
       }
+    });
 
-      document.getElementById("totalQty").textContent = total;
+    document.getElementById("totalQty").textContent = total;
   }
 
-  // Call on load
-  window.onload = function () {
-      hitungTotalQty(); // Update total quantity
-  };
-
+  // Konfirmasi Logout dengan SweetAlert
   function confirmLogout() {
-      Swal.fire({
-        title: 'Yakin ingin logout?',
-        text: "Kamu akan keluar dari sistem.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, logout',
-        cancelButtonText: 'Batal'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.href = "/login";
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Yakin ingin logout?',
+      text: "Kamu akan keluar dari sistem.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, logout',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/login";
+      }
+    });
+  }
+
+  // Jalankan Saat Halaman Dimuat
+  window.onload = function () {
+    hitungTotalQty();
+  };
 </script>
 </body>
 </html>

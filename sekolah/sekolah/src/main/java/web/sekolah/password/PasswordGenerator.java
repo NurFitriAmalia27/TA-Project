@@ -7,12 +7,12 @@ public class PasswordGenerator {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
         String adminPassword = "adminporis";
-        String perpustakaanPassword = "perpustakaanporis";
+        String perpustakaanPassword = "perpuspp6";
 
         String hashedAdmin = encoder.encode(adminPassword);
         String hashedPerpus = encoder.encode(perpustakaanPassword);
 
         System.out.println("Hashed password for adminporis      : " + hashedAdmin);
-        System.out.println("Hashed password for perpustakaanporis: " + hashedPerpus);
+        System.out.println("Hashed password for perpuspp6: " + hashedPerpus);
     }
 }
