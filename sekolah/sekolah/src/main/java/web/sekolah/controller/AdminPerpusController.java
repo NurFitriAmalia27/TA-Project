@@ -16,16 +16,6 @@ public class AdminPerpusController {
     @Autowired
     private PeminjamanService peminjamanService;
 
-    @GetMapping("/laporan")
-    public String Laporan() {
-        return "admin-perpustakaan/laporan";
-    }
-
-    @GetMapping("/tambah-laporan")
-    public String TambahLaporan() {
-        return "admin-perpustakaan/tambah-laporan";
-    }
-
     @GetMapping("/perpus-panel")
     public String tampilPanelPerpus(Model model) {
         List<Peminjaman> daftar = peminjamanService.getAllPeminjaman();

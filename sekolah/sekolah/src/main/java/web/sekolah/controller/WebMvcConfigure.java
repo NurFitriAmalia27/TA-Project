@@ -40,6 +40,10 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         registry.addResourceHandler("/img/prestasi-sekolah/**")
                 .addResourceLocations("file:C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/prestasi-sekolah/")
                 .setCachePeriod(0);
+
+        registry.addResourceHandler("/img/laporanbuku/**")
+                .addResourceLocations("file:C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/laporanbuku/")
+                .setCachePeriod(0);
     }
 }
 
