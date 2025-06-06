@@ -38,6 +38,10 @@ public class EkstrakurikulerService {
         return repository.findAll();
     }
 
+    public List<Ekstrakurikuler> findAll() {
+        return repository.findAll();
+    }
+
     public Ekstrakurikuler getById(Long id) {
         return repository.findById(id).orElse(null);
     }
@@ -66,4 +70,13 @@ public class EkstrakurikulerService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public long count() {
+        return repository.count();
+    }
+
+    public long countByKategori(String kategori) {
+        return repository.countByKategoriIgnoreCase(kategori);
+    }
+
 }

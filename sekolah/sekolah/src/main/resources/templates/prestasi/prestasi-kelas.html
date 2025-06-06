@@ -419,23 +419,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>1</td>
-          <td>Ahmad Fauzan</td>
-          <td>1A</td>
-          <td class="medal" data-rank="1">1</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Clarissa Niken</td>
-          <td>3B</td>
-          <td class="medal" data-rank="2">2</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Jason Statham</td>
-          <td>6A</td>
-          <td class="medal" data-rank="3">3</td>
+        <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
+          <td th:text="${iterStat.index + 1}"></td>
+          <td th:text="${prestasi.namaSiswa}"></td>
+          <td th:text="${prestasi.Kelas}"></td>
+          <td th:text="${prestasi.peringkat}"></td>
         </tr>
         </tbody>
       </table>

@@ -34,4 +34,8 @@ public class BukuService {
     public List<Buku> findByKategori(String kategori) {
         return bukuRepository.findByKategori(kategori);
     }
+
+    public long count() {
+        return bukuRepository.count();
+    }
 }

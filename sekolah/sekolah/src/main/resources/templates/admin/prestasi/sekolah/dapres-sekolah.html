@@ -352,10 +352,10 @@
         <i class="fas fa-chevron-left submenu-toggle"></i>
       </a>
       <ul class="submenu">
-        <li><a th:href="@{/admin/prestasi/dapres-guru}">Prestasi Guru</a></li>
-        <li><a th:href="@{/admin/prestasi/dapres-siswa}">Prestasi Siswa</a></li>
-        <li><a th:href="@{/admin/prestasi/dapres-sekolah}">Prestasi Sekolah</a></li>
-        <li><a th:href="@{/admin/prestasi/dapres-kelas}">Prestasi Kelas</a></li>
+        <li><a th:href="@{/admin/prestasi/guru/dapres-guru}">Prestasi Guru</a></li>
+        <li><a th:href="@{/admin/prestasi/siswa/dapres-siswa}">Prestasi Siswa</a></li>
+        <li><a th:href="@{/admin/prestasi/sekolah/dapres-sekolah}">Prestasi Sekolah</a></li>
+        <li><a th:href="@{/admin/prestasi/kelas/dapres-kelas}">Prestasi Kelas</a></li>
       </ul>
     </li>
     <li><a th:href="@{/admin/eskul/data-eskul}"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
@@ -390,77 +390,39 @@
       <thead>
         <tr>
           <th>No</th>
+          <th>Prestasi</th>
           <th>Peringkat</th>
           <th>Tahun</th>
-          <th>Jenis Prestasi</th>
+          <th>Tingkat</th>
           <th>Deskripsi</th>
-          <th>Aksi</th> <!-- Kolom Aksi -->
+          <th>Foto</th>
+          <th>Aksi</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          
-          <td>1</td>
-          <td>2023</td>
-          <td>Guru Teladan</td>
-          <td>Juara 1 Guru Teladan tingkat kota</td>
-          <td>
-            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          
-          <td>2</td>
-          <td>2024</td>
-          <td>Inovasi Pembelajaran</td>
-          <td>Pengembang media ajar interaktif</td>
-          <td>
-            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          
-          <td>3</td>
-          <td>2022</td>
-          <td>Pelatihan Nasional</td>
-          <td>Peserta pelatihan nasional bidang STEM</td>
-          <td>
-            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          
-          <td>4</td>
-          <td>2023</td>
-          <td>Karya Tulis Ilmiah</td>
-          <td>Pemenang lomba KTI tingkat provinsi</td>
-          <td>
-            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          
-          <td>5</td>
-          <td>2025</td>
-          <td>Mentor Guru Penggerak</td>
-          <td>Mentor aktif dalam program guru penggerak</td>
-          <td>
-            <button class="edit-btn"><i class="fas fa-edit"></i></button> <!-- Tombol Ubah -->
-            <button class="delete-btn"><i class="fas fa-trash"></i></button> <!-- Tombol Hapus -->
-          </td>
-        </tr>
+      <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
+        <td th:text="${iterStat.index + 1}"></td>
+        <td th:text="${prestasi.Prestasi}"></td>
+        <td th:text="${prestasi.peringkat}"></td>
+        <td th:text="${prestasi.tahun}"></td>
+        <td th:text="${prestasi.tingkat}"></td>
+        <td th:text="${prestasi.deskripsi}"></td>
+        <td>
+          <img th:if="${prestasi.foto != null}" th:src="@{'/img/prestasi-sekolah/' + ${prestasi.foto}}" alt="Foto Prestasi" width="100">
+          <span th:if="${prestasi.foto == null}">-</span>
+        </td>
+        <td>
+          <a th:href="@{'/admin/prestasi/sekolah/edit-sepres/' + ${prestasi.id}}">
+            <button class="edit-btn"><i class="fas fa-edit"></i></button>
+          </a>
+          <a th:href="@{'/admin/prestasi/sekolah/hapus/' + ${prestasi.id}}" onclick="return confirm('Yakin ingin menghapus?')">
+            <button class="delete-btn"><i class="fas fa-trash"></i></button>
+          </a>
+        </td>
+      </tr>
       </tbody>
     </table>
-    <a th:href="@{/admin/prestasi/create-sepres}" class="create-button">+ Tambah Data</a>
+    <a th:href="@{/admin/prestasi/sekolah/create-sepres}" class="create-button">+ Tambah Data</a>
   </div>
 </div>
   <script>
@@ -535,7 +497,6 @@
   }
 
 
-
   // Fungsi tombol edit
   function setupEditButtons() {
     document.querySelectorAll(".edit-btn").forEach(btn => {
@@ -593,47 +554,7 @@
     setupDeleteButtons();
   };
   
-  
-  // Fungsi pencarian nama atau jenis prestasi
-  function searchTable() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let table = document.getElementById("guruTable");
-    let rows = table.getElementsByTagName("tr");
 
-    for (let i = 1; i < rows.length; i++) {
-      let nama = rows[i].getElementsByTagName("td")[1];
-      let jenis = rows[i].getElementsByTagName("td")[4];
-
-      if (nama && jenis) {
-        let namaText = nama.textContent.toLowerCase();
-        let jenisText = jenis.textContent.toLowerCase();
-
-        if (namaText.includes(input) || jenisText.includes(input)) {
-          rows[i].style.display = "";
-        } else {
-          rows[i].style.display = "none";
-        }
-      }
-    }
-  }
-
-  function filterByYear() {
-  const selectedYear = document.getElementById("yearFilter").value;
-  const table = document.getElementById("guruTable");
-  const rows = table.getElementsByTagName("tr");
-
-  for (let i = 1; i < rows.length; i++) {
-    const yearCell = rows[i].getElementsByTagName("td")[2]; // Tahun ada di kolom ke-3 (indeks 2)
-    if (yearCell) {
-      const year = yearCell.textContent || yearCell.innerText;
-      if (selectedYear === "" || year === selectedYear) {
-        rows[i].style.display = "";
-      } else {
-        rows[i].style.display = "none";
-      }
-    }
-  }
-}
 function confirmLogout() {
       Swal.fire({
         title: 'Yakin ingin logout?',

@@ -1,59 +1,61 @@
+/* RESET DAN DASAR */
 * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
 
-    .navbar {
-      width: 100%;
-      height: 60px;
-      background: #5D2D2A;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-    }
+/* NAVBAR */
+.navbar {
+  width: 100%;
+  height: 60px;
+  background: #5D2D2A;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
-    .menu-icon {
-      font-size: 24px;
-      cursor: pointer;
-    }
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
 
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-    }
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
 
-    .navbar i.user-icon {
-      font-size: 30px !important;
-    }
+.navbar i.user-icon {
+  font-size: 30px !important;
+}
 
-    .navbar img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+.navbar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-    .navbar h1 {
-      font-size: 20px;
-      font-weight: bold;
-    }
+.navbar h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-    /* Sidebar */
+/* SIDEBAR */
 .sidebar {
   width: 250px;
   background: #6A3332;
@@ -64,156 +66,334 @@
   top: 0;
   left: 0;
   z-index: 999;
-  transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+  transition: transform 0.3s ease-in-out;
   overflow-y: auto;
 }
 
 .sidebar-hidden {
-  transform: translateX(-100%); /* Sidebar tersembunyi */
+  transform: translateX(-100%);
 }
 
-/* Konten utama */
-.content {
-  margin-top: 80px;
-  padding-left: 270px; /* Memberi ruang untuk sidebar */
-  padding-right: 20px;
-  overflow-y: auto;
-  transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
 }
 
-.content.sidebar-collapsed {
-  padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
+.sidebar ul li {
+  margin: 5px 0;
 }
 
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  padding: 12px 15px;
+  transition: background 0.3s;
+  gap: 10px;
+}
 
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .sidebar ul li {
-      margin: 5px 0;
-    }
-
-    .sidebar ul li a {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: white;
-      font-size: 18px;
-      padding: 12px 15px;
-      transition: background 0.3s;
-      gap: 10px;
-    }
-
-    .sidebar ul li a i {
-      font-size: 20px;
-      width: 30px;
-      text-align: center;
-    }
-
-    .sidebar ul li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    /* Aktif menu */
-    .sidebar ul li a.active {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .submenu {
-      display: none;
-      list-style: none;
-      padding-left: 45px;
-    }
-
-    .submenu li a {
-      font-size: 16px;
-      padding: 8px 20px;
-      display: block;
-    }
-
-    .submenu li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    .has-submenu a {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .submenu-toggle {
-      transition: transform 0.3s ease-in-out;
-      font-size: 16px;
-    }
-
-    .submenu-open .submenu-toggle {
-      transform: rotate(90deg);
-    }
-
-    /* Konten utama */
-    .content {
-      margin-top: 80px;  /* Menghindari overlap dengan navbar */
-      padding-left: 270px; /* Memberi ruang untuk sidebar */
-      padding-right: 20px;
-      overflow-y: auto; /* Membuat konten bisa digulir */
-    }
-
-    .content.sidebar-collapsed {
-      padding-left: 20px;
-    }
-
-    .content h1 {
-  font-size: 60px;
-  font-weight: bold;
-  margin: 80px 0 20px 0; /* Ubah margin-top menjadi 100px untuk memindahkan lebih ke atas */
+.sidebar ul li a i {
+  font-size: 20px;
+  width: 30px;
   text-align: center;
 }
 
+.sidebar ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
 
-    .content p {
-      font-size: 18px;
-      text-align: center;
-    }
+.sidebar ul li a.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-weight: bold;
+}
 
-    .content img {
-      display: block;
-      margin: 20px auto;
-      width: 300px;
-    }
+.submenu {
+  display: none;
+  list-style: none;
+  padding-left: 45px;
+}
 
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 200px;
-      }
+.submenu li a {
+  font-size: 16px;
+  padding: 8px 20px;
+  display: block;
+}
 
-      .sidebar ul li a {
-        font-size: 16px;
-        padding: 10px 12px;
-      }
+.submenu li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
 
-      .content {
-        margin-top: 100px;
-        padding-left: 220px;
-      }
+.has-submenu a {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-      .content h1 {
-        font-size: 27px;
-        margin-bottom: 10px;
-      }
+.submenu-toggle {
+  transition: transform 0.3s ease-in-out;
+  font-size: 16px;
+}
 
-      .content p {
-        font-size: 14px;
-      }
+.submenu-open .submenu-toggle {
+  transform: rotate(90deg);
+}
 
-      .content img {
-        width: 200px;
-        margin-top: 10px;
-      }
-    }
+/* KONTEN UTAMA */
+.content {
+  margin-top: 80px;
+  padding-left: 270px;
+  padding-right: 20px;
+  overflow-y: auto;
+  transition: padding-left 0.3s ease-in-out;
+}
+
+.content.sidebar-collapsed {
+  padding-left: 20px;
+}
+
+.content h1 {
+  font-size: 40px;
+  font-weight: bold;
+  margin: 50px 0 20px 0;
+  text-align: center;
+}
+
+.content p {
+  font-size: 18px;
+  text-align: center;
+}
+
+/* DASHBOARD ROW: Statistik + Berita Populer */
+.dashboard-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-top: 30px;
+}
+
+/* STATISTIK (Jumlah Guru dan Eskul) */
+.stats-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.stat-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 300px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.stat-box p {
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+}
+
+/* BERITA TERPOPULER */
+.popular-berita-box {
+  flex: 1;
+  max-width: 400px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.popular-berita-box h3 {
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.berita-card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.berita-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.berita-card img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.berita-card-content .judul {
+  font-weight: bold;
+  margin: 0;
+}
+
+.berita-card-content .views {
+  font-size: 0.9em;
+  color: #666;
+  margin: 2px 0 0;
+}
+
+/* CHART */
+.chart-container {
+  width: 90%;
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.dashboard-main {
+  display: flex;
+  transition: transform 0.2s;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: flex-start;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.left-column {
+  flex: 1;
+  display: flex;
+  transition: transform 0.2s;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 300px;
+  padding-left: 350px;
+}
+
+.chart-wrapper {
+  width: 45%;
+  min-width: 350px;
+  display: flex;
+  transition: transform 0.2s;
+  flex-direction: column;
+  gap: 20px;
+  padding-right: 100px
+}
+
+.chart-container {
+  background: #fff;
+  transition: transform 0.2s;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .sidebar ul li a {
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  .content {
+    padding-left: 20px !important;
+    padding-right: 20px;
+    margin-top: 80px;
+  }
+
+  .content h1 {
+    font-size: 24px;
+    margin: 30px 0 15px 0;
+    text-align: center;
+  }
+
+  .dashboard-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .stats-container {
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .stat-box {
+    flex: 1 1 45%;
+    max-width: 100%;
+  }
+
+  .popular-berita-box {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .dashboard-main {
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .left-column {
+    padding-left: 0;
+    width: 100%;
+  }
+
+  .chart-wrapper {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .chart-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 20px 0;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .berita-card img {
+    width: 60px;
+    height: 50px;
+  }
+
+  .berita-card-content .judul {
+    font-size: 0.95em;
+  }
+
+  .berita-card-content .views {
+    font-size: 0.8em;
+  }
+}
+

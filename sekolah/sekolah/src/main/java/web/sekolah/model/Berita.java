@@ -28,17 +28,21 @@ public class Berita {
     @NotNull(message = "Tanggal tidak boleh kosong")
     private LocalDate tanggal;
 
+    @NotNull(message = "Views tidak boleh kosong")
+    private int views;
+
     private String foto;
 
     // Constructors
     public Berita() {
     }
 
-    public Berita(String judul, String deskripsi, String penulis, LocalDate tanggal, String foto) {
+    public Berita(String judul, String deskripsi, String penulis, LocalDate tanggal, int views, String foto) {
         this.judul = judul;
         this.deskripsi = deskripsi;
         this.penulis = penulis;
         this.tanggal = tanggal;
+        this.views = views;
         this.foto = foto;
     }
 
@@ -81,6 +85,14 @@ public class Berita {
 
     public void setTanggal(LocalDate tanggal) {
         this.tanggal = tanggal;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
     }
 
     public String getFoto() {

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard Admin - SDN Poris Pelawad 6</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="/admin-panel.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard Admin - SDN Poris Pelawad 6</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/admin-panel.css">
 </head>
 
 <body>
@@ -40,11 +41,62 @@
   </ul>
 </div>
 
-<div class="content" id="content">
-  <h1>Selamat Datang di Dashboard Admin <br> SDN Poris Pelawad 6</h1>
-  <p>Terima kasih telah menjaga sistem informasi sekolah tetap berjalan dengan baik.<br>
-    Mari bersama membangun pendidikan yang lebih berkualitas!</p>
-  <img src="/img/Logoo.png" alt="Logo Sekolah Adiwiyata" class="logo">
+<div class="dashboard-main">
+  <div class="content" id="content">
+    <!-- Statistik Umum -->
+    <h1>Selamat Datang di Dashboard SDN Poris Plawad 6</h1>
+  </div>
+  <!-- Kiri -->
+  <div class="left-column">
+    <div class="stats-container">
+      <a href="/admin/guru/data-guru" class="stat-box">
+        <p>Jumlah Guru</p>
+        <canvas id="guruPieChart" width="250" height="250"></canvas>
+        <h3 th:text="${totalGuru}">0</h3>
+      </a>
+      <a href="/admin/eskul/data-eskul" class="stat-box">
+        <p>Jumlah Ekstrakurikuler</p>
+        <canvas id="eskulChart" width="400" height="300"></canvas>
+        <h3 th:text="${totalEkstrakurikuler}">0</h3>
+      </a>
+    </div>
+
+    <div class="popular-berita-box">
+      <h3>Berita Terpopuler</h3>
+
+      <div class="berita-card-container" th:if="${beritaPopuler != null}">
+        <div class="berita-card" th:each="berita : ${beritaPopuler}">
+          <img th:src="@{/img/berita/{img}(img=${berita.foto})}" alt="Foto Berita" />
+          <div class="berita-card-content">
+            <p class="judul" th:text="${berita.judul}">Judul Berita</p>
+            <p class="views" th:text="'👁 ' + ${berita.views} + ' kali dibaca'">0 kali dibaca</p>
+          </div>
+        </div>
+      </div>
+
+      <div th:if="${beritaPopuler == null}">
+        <p>Belum ada berita populer</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kanan -->
+  <div class="chart-wrapper">
+    <div class="chart-container">
+      <h2>Prestasi Siswa per Tahun</h2>
+      <canvas id="siswaChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2>Prestasi Guru per Tahun</h2>
+      <canvas id="guruChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2>Prestasi Sekolah per Tahun</h2>
+      <canvas id="sekolahChart"></canvas>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -105,6 +157,168 @@
     });
   });
 
+//pie bar
+  const totalLaki = [[${totalGuruLaki}]];
+  const totalPerempuan = [[${totalGuruPerempuan}]];
+
+  const ctx = document.getElementById('guruPieChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Laki-laki', 'Perempuan'],
+      datasets: [{
+        data: [totalLaki, totalPerempuan],
+        backgroundColor: ['#4e73df', '#e83e8c'],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              let label = context.label || '';
+              let value = context.parsed || 0;
+              return `${label}: ${value} guru`;
+            }
+          }
+        }
+      }
+    }
+  });
+
+  //chart eskul
+  const totalWajib = [[${totalWajib}]];
+  const totalPilihan = [[${totalPilihan}]];
+
+  new Chart(document.getElementById('eskulChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Wajib', 'Pilihan'],
+      datasets: [{
+        label: 'Jumlah Ekstrakurikuler',
+        data: [totalWajib, totalPilihan],
+        backgroundColor: ['#36b9cc', '#e74a3b']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: 'Jumlah Ekstrakurikuler Berdasarkan Kategori'
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          precision: 0
+        }
+      }
+    }
+  });
+
+//chart prestasi
+  const tahunLabels = [[${tahunLabels}]];
+  const dataGuru = [[${dataGuru}]];
+  const dataSiswa = [[${dataSiswa}]];
+  const dataSekolah = [[${dataSekolah}]];
+
+  // Grafik Guru
+  new Chart(document.getElementById('guruChart'), {
+  type: 'line',
+  data: {
+    labels: tahunLabels,
+    datasets: [{
+      label: 'Prestasi Guru',
+      data: dataGuru,
+      borderColor: '#4e73df',
+      backgroundColor: 'transparent',
+      tension: 0.3,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Prestasi Guru per Tahun'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0
+      }
+    }
+  }
+});
+
+  // Grafik Siswa (Line Chart)
+new Chart(document.getElementById('siswaChart'), {
+  type: 'line',
+  data: {
+    labels: tahunLabels,
+    datasets: [{
+      label: 'Prestasi Siswa',
+      data: dataSiswa,
+      borderColor: '#1cc88a',
+      backgroundColor: 'transparent',
+      tension: 0.3,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Prestasi Siswa per Tahun'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0
+      }
+    }
+  }
+});
+
+// Grafik Sekolah (Line Chart)
+new Chart(document.getElementById('sekolahChart'), {
+  type: 'line',
+  data: {
+    labels: tahunLabels,
+    datasets: [{
+      label: 'Prestasi Sekolah',
+      data: dataSekolah,
+      borderColor: '#f6c23e',
+      backgroundColor: 'transparent',
+      tension: 0.3,
+      fill: false
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Prestasi Sekolah per Tahun'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        precision: 0
+      }
+    }
+  }
+});
 </script>
 </body>
 </html>

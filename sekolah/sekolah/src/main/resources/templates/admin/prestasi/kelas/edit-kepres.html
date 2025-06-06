@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Prestasi Siswa</title>
+  <title>Edit Prestasi Kelas</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -150,26 +150,44 @@
       box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
       width: 450px;
       text-align: center;
-      margin: 100px auto 40px auto;
-      padding-top: 10px;
+      margin: 150px auto 40px auto;
+      padding-top: 30px;
       transform: translateX(25px);
     }
+    select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border 0.3s ease;
+}
 
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #131212;
-      cursor: pointer;
-      transition: color 0.3s ease;
-      z-index: 10;
-    }
+select:focus {
+  border-color: #642727;
+  outline: none;
+}
 
-    .close-btn:hover {
-      color: #000000;
-    }
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 26px;
+  font-weight: bold;
+  color: #333;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  transition: color 0.3s;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
 
     h2 {
       margin-bottom: 25px;
@@ -272,32 +290,24 @@
   </ul>
 </div>
 
-  <div class="container">
-    <span class="close-btn" onclick="window.location.href='/admin/prestasi/dapres-siswa'">&times;</span>
-    <h2>CREATE PRESTASI SISWA</h2>
+  <div class="container" id="formContainer">
+    <button class="close-btn" onclick="closeForm()"><i class="fas fa-times"></i></button>
+    <h2>Edit Prestasi Kelas</h2>
+    <form th:action="@{/admin/prestasi/kelas/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiKelas}">
+      <!-- Hidden ID agar edit bisa dikenali -->
+      <input type="hidden" th:field="*{id}" />
 
-    <form th:action="@{/admin/prestasi/siswa/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiSiswa}">
-
-    <label for="namaSiswa">Nama Siswa</label>
+      <label for="namaSiswa">Nama Siswa</label>
       <input type="text" id="namaSiswa" th:field="*{namaSiswa}" placeholder="Nama Siswa" />
 
-      <label for="Prestasi">Prestasi</label>
-      <input type="text" id="Prestasi" th:field="*{Prestasi}" placeholder="Prestasi" />
+      <label for="Kelas">Kelas</label>
+      <input type="text" id="Kelas" th:field="*{Kelas}" placeholder="Kelas" />
 
       <label for="peringkat">Peringkat</label>
       <input type="number" id="peringkat" th:field="*{peringkat}" placeholder="Peringkat" />
 
-      <label for="tingkat">Tingkat</label>
-      <input type="text" id="tingkat" th:field="*{tingkat}" placeholder="Tingkat" />
-
-      <label for="tahun">Tahun</label>
-      <input type="text" id="tahun" th:field="*{tahun}" placeholder="Tahun" />
-
-      <label for="deskripsi">Deskripsi</label>
-      <input type="text" id="deskripsi" th:field="*{deskripsi}" placeholder="Deskripsi" />
-
-      <label for="foto">Upload Foto</label>
-      <input type="file" id="foto" name="file" accept="image/*">
+      <label for="periode">periode</label>
+      <input type="text" id="periode" th:field="*{periode}" placeholder="2024/2025" />
 
       <button type="submit" class="btn">SIMPAN</button>
     </form>
@@ -341,6 +351,9 @@
           window.location.href = "/login";
         }
       });
+    }
+    function closeForm() {
+      window.location.href = "/admin/prestasi/dapres-kelas";
     }
 
   </script>

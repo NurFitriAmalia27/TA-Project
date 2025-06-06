@@ -35,6 +35,10 @@ public class InformasiController {
     @GetMapping("/sub-berita/{id}")
     public String detailBerita(@PathVariable Long id, Model model) {
         Berita berita = beritaService.getById(id);
+
+        berita.setViews(berita.getViews() + 1);
+        beritaService.save(berita);
+
         model.addAttribute("berita", berita);
         return "informasi/sub-berita";
     }

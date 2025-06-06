@@ -394,33 +394,29 @@
             <th>Nama Siswa</th>
             <th>Kelas </th>
             <th>Peringkat </th>
-            <th>Ubah</th>
+            <th>Periode </th>
+            <th>Aksi</th>
         </tr>
     </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Ahmad Fauzan</td>
-            <td>1a</td>
-            <td>12 Maret 2025</td>
+        <tbody>
+        <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${prestasi.namaSiswa}"></td>
+            <td th:text="${prestasi.Kelas}"></td>
+            <td th:text="${prestasi.peringkat}"></td>
+            <td th:text="${prestasi.periode}"></td>
             <td>
-                <button class="edit-btn" onclick="editRow(this)">✏️</button>
-                <button class="delete-btn" onclick="deleteRow(this)">🗑️</button>
+                <a th:href="@{'/admin/prestasi/kelas/edit-kepres/' + ${prestasi.id}}">
+                    <button class="edit-btn"><i class="fas fa-edit"></i></button>
+                </a>
+                <a th:href="@{'/admin/prestasi/kelas/hapus/' + ${prestasi.id}}" onclick="return confirm('Yakin ingin menghapus?')">
+                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                </a>
             </td>
         </tr>
-        <tr>
-          <td>1</td>
-          <td>Ahmad Fauzan</td>
-          <td>1b</td>
-          <td>12 Maret 2025</td>
-          <td>
-              <button class="edit-btn" onclick="editRow(this)">✏️</button>
-              <button class="delete-btn" onclick="deleteRow(this)">🗑️</button>
-          </td>
-      </tr>
-    </tbody>
-</table>
-      <a th:href="@{/admin/prestasi/create-kepres}" class="create-button">+ Tambah Data</a>
+        </tbody>
+    </table>
+      <a th:href="@{/admin/prestasi/kelas/create-kepres}" class="create-button">+ Tambah Data</a>
   </div>
 </div>
   <script>
@@ -458,7 +454,7 @@
   const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
   for (let i = 0; i < rows.length; i++) {
-    const kelasCell = rows[i].getElementsByTagName("td")[2]; // kolom Kelas
+    const kelasCell = rows[i].getElementsByTagName("td")[4];
     const kelasText = kelasCell ? kelasCell.textContent.toLowerCase() : "";
 
     if (selectedKelas === "" || kelasText.includes(selectedKelas)) {

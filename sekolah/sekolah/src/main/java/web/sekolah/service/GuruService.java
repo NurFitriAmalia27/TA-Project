@@ -30,4 +30,13 @@ public class GuruService {
     public void deleteGuruById(Long id) {
         guruRepository.deleteById(id);
     }
+
+    public long count() {
+        return guruRepository.count();
+    }
+
+    public long countByJenisKelamin(String jenisKelamin) {
+        return guruRepository.countByJenisKelamin(jenisKelamin);
+    }
+
 }

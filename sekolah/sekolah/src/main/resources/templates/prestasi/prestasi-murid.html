@@ -82,151 +82,41 @@
             <div class="table-responsive">
                 <table>
                     <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Jenis Prestasi</th>
-                            <th>Tahun</th>
-                            <th>Peringkat</th>
-                            <th>Tingkat</th>
-                        </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Prestasi</th>
+                        <th>Tahun</th>
+                        <th>Peringkat</th>
+                        <th>Tingkat</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Solo Vocal Siswa</td>
-                            <td>2024</td>
-                            <td>-</td>
-                            <td>Korwil Cipondoh</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Catur Putri</td>
-                            <td>2024</td>
-                            <td>2</td>
-                            <td>Kota</td>
-                            
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Futsal Kelompok Umur</td>
-                            <td>2024</td>
-                            <td>3</td>
-                            <td>-</td>
-                            
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Futsal</td>
-                            <td>2023</td>
-                            <td>1</td>
-                            <td>Kota</td>
-                        </tr>
-                          <tr>
-                            <td>6</td>
-                            <td>Futsal</td>
-                            <td>2023</td>
-                            <td>2</td>
-                            <td>Sekolah Dasar</td>
-                        </tr>
-                          <tr>
-                            <td>7</td>
-                            <td>Lomba Bertutur</td>
-                            <td>2023</td>
-                            <td>20 Besar</td>
-                            <td>Kota</td>
-                        </tr>
-                         <tr>
-                            <td>8</td>
-                            <td>Melukis (KLSN)</td>
-                            <td>2020</td>
-                            <td>3</td>
-                            <td>Korwil Cipondoh</td>
-                        </tr>
-                         <tr>
-                            <td>9</td>
-                            <td>Tari</td>
-                            <td>2020</td>
-                            <td>20 Besar</td>
-                            <td>Kota</td>
-                        </tr>
-                         <tr>
-                            <td>10</td>
-                            <td>Pramuka</td>
-                            <td>2020</td>
-                            <td>1</td>
-                            <td>-</td>
-                        </tr>
-                         <tr>
-                            <td>11</td>
-                            <td>Catur</td>
-                            <td>2019</td>
-                            <td>2</td>
-                            <td>Kota</td>
-                        </tr>
-                         <tr>
-                            <td>12</td>
-                            <td>Petugas Pembaca Doa</td>
-                            <td>2019</td>
-                            <td>-</td>
-                            <td>Kwarran Cipondoh</td>
-                        </tr>
+                    <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
+                        <td th:text="${iterStat.index + 1}">1</td>
+                        <td th:text="${prestasi.namaSiswa}">Sherly Amelia</td>
+                        <td th:text="${prestasi.Prestasi}">Guru Teladan</td>
+                        <td th:text="${prestasi.tahun}">2023</td>
+                        <td th:text="${prestasi.peringkat}">1</td>
+                        <td th:text="${prestasi.tingkat}">Kota</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-            
+
         </section>
     </main>
-    <div class="divider-line"></div>
-    <!-- Bagian Galeri Kegiatan -->
-    <section class="section">
-        <h2>Dokumentasi Prestasi Siswa</h2>
-        <div class="grid-container">
-            <div class="card">
-                <img src="/img/" alt="Solo Vocal">
-                    <div class="card-title">Solo Vocal Siswa</div>
-            </div>
-            <div class="card">
-                <img src="/img/" alt="Catur Putri">
-                <div class="card-title">Catur Putri</div>
-            </div>
-            <div class="card">
-                <img src="/img/" alt="Futsal Kelompok Umur">
-                <div class="card-title">Futsal Kelompok Umur</div>
-            </div>
-            <div class="card">
-                <img src="/img/" alt="Futsal">
-                <div class="card-title">Futsal</div>
-            </div>
-            <div class="card">
-                <img src="/img/" alt="Futsal">
-                <div class="card-title">Futsal</div>
-            </div>
-            <div class="card">
-                <img src="/img/" alt="Lomba Bertutur">
-                <div class="card-title">Lomba Bertutur</div>
-            </div>
-             <div class="card">
-                <img src="/img/Melukis.jpeg" alt="Melukis">
-                <div class="card-title">Melukis (KLSN)</div>
-            </div>
-             <div class="card">
-                <img src="/img/Melukis.jpeg" alt="Tari">
-                <div class="card-title">Tari</div>
-            </div>
-             <div class="card">
-                <img src="/img/Mewarnai.jpeg" alt="Pramuka">
-                <div class="card-title">Pramuka</div>
-            </div>
-             <div class="card">
-                <img src="/img/Caturr.jpeg" alt="Catur">
-                <div class="card-title">Catur</div>
-            </div>
-             <div class="card">
-                <img src="/img/Petugas Doa.jpeg" alt="Petugas">
-                <div class="card-title">Petugas Pembaca Doa</div>
-            </div>
+<div class="divider-line"></div>
+<!-- Bagian Galeri Kegiatan -->
+<section class="section">
+    <h2>Dokumentasi Prestasi Siswa</h2>
+    <div class="grid-container">
+        <div class="card" th:each="prestasi : ${daftarPrestasi}">
+            <img th:src="@{'/img/prestasi-siswa/' + ${prestasi.foto}}" alt="Dokumentasi">
+            <div class="card-title" th:text="${prestasi.Prestasi}">Prestasi</div>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer>
         <div class="social-media">

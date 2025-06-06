@@ -177,41 +177,73 @@
     padding-left: 20px; /* Saat sidebar disembunyikan */
 }
 .search-container, .filter-container {
-  margin-bottom: 15px;
-  margin-top: 20px; /* Memberikan jarak ke bawah */
-  margin-left: 0; /* Menghapus jarak kiri agar sejajar dengan konten */
-  display: flex;
-  align-items: center; /* Menyelaraskan elemen secara vertikal */
-  gap: 10px; /* Menambahkan jarak kecil antara elemen */
-  width: 30%; /* Membuat elemen lebar 100% untuk menyesuaikan dengan konten */
+       margin-bottom: 15px;
+       margin-top: 20px;
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       flex-wrap: wrap;
+     }
+
+     .search-container input[type="text"] {
+    flex: none;            /* tetap */
+    width: 300px;          /* tetap */
+    max-width: 100%;       /* bisa disesuaikan */
+    height: 40px;          /* tetap */
+    padding-left: 12px;    /* beri jarak dalam dari kiri */
+    border-radius: 5px;    /* opsional: bikin sudut agak membulat */
+    margin-top: 10px;      /* jarak dari atas */
+    margin-bottom: 15px;   /* jarak ke elemen bawah */
 }
 
-.search-container input[type="text"], .filter-container select {
-  width: auto; /* Menyesuaikan lebar input dengan konten */
-  flex-grow: 1; /* Menyesuaikan lebar agar input menggunakan ruang yang ada */
-  height: 40px; /* Meningkatkan tinggi kolom pencarian dan filter */
+.search-container {
+    position: relative;
+    width: 300px;
+    margin: 20px 0;
 }
 
-.filter-container select {
-  max-width: 300px; /* Menentukan lebar maksimal untuk dropdown filter */
+.search-container input[type="text"] {
+    width: 100%;
+    height: 40px;
+    padding: 8px 36px 8px 12px; /* padding kanan lebih besar */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
 }
 
+.search-container .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+    pointer-events: none; /* agar tidak mengganggu klik */
+}
 
+ .button-container {
+   margin: 20px 0; /* atas dan bawah 20px */
+ }
 
+     .filter-container select {
+       max-width: 300px;
+       height: 40px;         /* tambahkan tinggi */
+     }
 
-    .create-button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      margin: 5px 0;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+     .create-button {
+       background-color: #6A3332;
+       color: white;
+       padding: 10px 20px;
+       border: none;
+       border-radius: 5px;
+       font-weight: bold;
+       text-decoration: none;
+       transition: background-color 0.3s ease;
+     }
 
-    .create-button:hover {
-      background-color: #218838;
-    }
+     .create-button:hover {
+       background-color: #5D2D2A;
+     }
 
     table {
       width: 100%;
@@ -352,10 +384,10 @@
                 <i class="fas fa-chevron-left submenu-toggle"></i>
             </a>
             <ul class="submenu">
-                <li><a th:href="@{/admin/prestasi/dapres-guru}">Prestasi Guru</a></li>
-                <li><a th:href="@{/admin/prestasi/dapres-siswa}">Prestasi Siswa</a></li>
-                <li><a th:href="@{/admin/prestasi/dapres-sekolah}">Prestasi Sekolah</a></li>
-                <li><a th:href="@{/admin/prestasi/dapres-kelas}">Prestasi Kelas</a></li>
+                <li><a th:href="@{/admin/prestasi/guru/dapres-guru}">Prestasi Guru</a></li>
+                <li><a th:href="@{/admin/prestasi/siswa/dapres-siswa}">Prestasi Siswa</a></li>
+                <li><a th:href="@{/admin/prestasi/sekolah/dapres-sekolah}">Prestasi Sekolah</a></li>
+                <li><a th:href="@{/admin/prestasi/kelas/dapres-kelas}">Prestasi Kelas</a></li>
             </ul>
         </li>
         <li><a th:href="@{/admin/eskul/data-eskul}"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
@@ -368,7 +400,8 @@
     <h1>Berita</h1>
 
     <div class="search-container">
-      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+        <i class="fas fa-search search-icon"></i>
     </div>
   
     <div class="filter-container">
@@ -383,7 +416,9 @@
         <!-- Tombol Tambah Data -->
   
    <!-- Tombol download CSV -->
-   <button onclick="downloadTable()" class="create-button">Download CSV</button>
+        <button onclick="downloadTable()" class="create-button" title="Download CSV">
+            <i class="fas fa-download"></i>
+        </button>
     </div>
 
       <table id="guruTable">
@@ -450,6 +485,18 @@
       submenuContainer.classList.add("submenu-open");
     }
   }
+
+  function searchTable() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let rows = document.querySelectorAll("#guruTable tbody tr");
+
+      rows.forEach(row => {
+        const nama = row.cells[1].textContent.toLowerCase();
+        const ttl = row.cells[4].textContent.toLowerCase();
+        const match = nama.includes(input) || ttl.includes(input);
+        row.style.display = match ? "" : "none";
+      });
+    }
 
 function filterByTahun() {
     const tahunValue = document.getElementById("tahunFilter").value;  // Mendapatkan nilai dari input filter tahun

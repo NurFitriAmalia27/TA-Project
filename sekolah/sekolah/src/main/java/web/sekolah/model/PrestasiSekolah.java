@@ -3,16 +3,15 @@ package web.sekolah.model;
 import jakarta.persistence.*;
 
 @Entity
-public class PrestasiGuru {
+public class PrestasiSekolah {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String namaGuru;
     private int peringkat;
     private String tahun;
-    private String jenisPrestasi;
+    private String Prestasi;
     private String tingkat;
 
     @Column(length = 1000)
@@ -29,13 +28,6 @@ public class PrestasiGuru {
         this.id = id;
     }
 
-    public String getNamaGuru() {
-        return namaGuru;
-    }
-
-    public void setNamaGuru(String namaGuru) {
-        this.namaGuru = namaGuru;
-    }
 
     public int getPeringkat() {
         return peringkat;
@@ -53,12 +45,12 @@ public class PrestasiGuru {
         this.tahun = tahun;
     }
 
-    public String getJenisPrestasi() {
-        return jenisPrestasi;
+    public String getPrestasi() {
+        return Prestasi;
     }
 
-    public void setJenisPrestasi(String jenisPrestasi) {
-        this.jenisPrestasi = jenisPrestasi;
+    public void setPrestasi(String Prestasi) {
+        this.Prestasi = Prestasi;
     }
 
     public String getDeskripsi() {

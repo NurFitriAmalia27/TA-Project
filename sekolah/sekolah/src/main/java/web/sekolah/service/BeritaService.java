@@ -43,4 +43,8 @@ public class BeritaService {
     public Berita findById(Long id) {
         return beritaRepository.findById(id).orElse(null);
     }
+
+    public long count() {
+        return beritaRepository.count();
+    }
 }

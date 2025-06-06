@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Prestasi Siswa</title>
+  <title>Edit Prestasi Sekolah</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -151,7 +151,7 @@
       width: 450px;
       text-align: center;
       margin: 100px auto 40px auto;
-      padding-top: 10px;
+      padding-top: 30px;
       transform: translateX(25px);
     }
 
@@ -271,15 +271,14 @@
     <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   </ul>
 </div>
-
+  
   <div class="container">
-    <span class="close-btn" onclick="window.location.href='/admin/prestasi/dapres-siswa'">&times;</span>
-    <h2>CREATE PRESTASI SISWA</h2>
+    <span class="close-btn" onclick="window.location.href='/admin/prestasi/dapres-sekolah'">&times;</span>
+    <h2>EDIT PRESTASI SEKOLAH</h2>
 
-    <form th:action="@{/admin/prestasi/siswa/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiSiswa}">
-
-    <label for="namaSiswa">Nama Siswa</label>
-      <input type="text" id="namaSiswa" th:field="*{namaSiswa}" placeholder="Nama Siswa" />
+    <form th:action="@{/admin/prestasi/sekolah/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiSekolah}">
+      <!-- Hidden ID agar edit bisa dikenali -->
+      <input type="hidden" th:field="*{id}" />
 
       <label for="Prestasi">Prestasi</label>
       <input type="text" id="Prestasi" th:field="*{Prestasi}" placeholder="Prestasi" />
@@ -287,17 +286,22 @@
       <label for="peringkat">Peringkat</label>
       <input type="number" id="peringkat" th:field="*{peringkat}" placeholder="Peringkat" />
 
-      <label for="tingkat">Tingkat</label>
-      <input type="text" id="tingkat" th:field="*{tingkat}" placeholder="Tingkat" />
-
       <label for="tahun">Tahun</label>
       <input type="text" id="tahun" th:field="*{tahun}" placeholder="Tahun" />
+
+      <label for="tingkat">Tingkat</label>
+      <input type="text" id="tingkat" th:field="*{tingkat}" placeholder="Tingkat" />
 
       <label for="deskripsi">Deskripsi</label>
       <input type="text" id="deskripsi" th:field="*{deskripsi}" placeholder="Deskripsi" />
 
-      <label for="foto">Upload Foto</label>
-      <input type="file" id="foto" name="file" accept="image/*">
+      <div th:if="${prestasiSekolah.foto != null}">
+        <label>Foto Saat Ini:</label>
+        <img th:src="@{'/img/prestasi-sekolah/' + ${prestasiSekolah.foto}}" alt="Foto Prestasi" width="200">
+      </div>
+
+      <label for="foto">Upload Foto Baru</label>
+      <input type="file" id="foto" name="file" accept="image/*" />
 
       <button type="submit" class="btn">SIMPAN</button>
     </form>
@@ -327,6 +331,12 @@
       sidebar.classList.toggle("sidebar-hidden");
     }
     function confirmLogout() {
+      const confirmed = confirm("Yakin ingin logout?");
+      if (confirmed) {
+        window.location.href = "logout.html";
+      }
+    }
+    function confirmLogout() {
       Swal.fire({
         title: 'Yakin ingin logout?',
         text: "Kamu akan keluar dari sistem.",
@@ -342,7 +352,6 @@
         }
       });
     }
-
   </script>
 </body>
 </html>

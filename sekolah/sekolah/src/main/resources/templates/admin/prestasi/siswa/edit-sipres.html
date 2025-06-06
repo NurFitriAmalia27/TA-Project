@@ -274,11 +274,14 @@
 
   <div class="container">
     <span class="close-btn" onclick="window.location.href='/admin/prestasi/dapres-siswa'">&times;</span>
-    <h2>CREATE PRESTASI SISWA</h2>
+    <h2>EDIT PRESTASI SISWA</h2>
 
     <form th:action="@{/admin/prestasi/siswa/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiSiswa}">
 
-    <label for="namaSiswa">Nama Siswa</label>
+    <!-- Hidden ID agar edit bisa dikenali -->
+      <input type="hidden" th:field="*{id}" />
+
+      <label for="namaSiswa">Nama Siswa</label>
       <input type="text" id="namaSiswa" th:field="*{namaSiswa}" placeholder="Nama Siswa" />
 
       <label for="Prestasi">Prestasi</label>
@@ -296,8 +299,13 @@
       <label for="deskripsi">Deskripsi</label>
       <input type="text" id="deskripsi" th:field="*{deskripsi}" placeholder="Deskripsi" />
 
-      <label for="foto">Upload Foto</label>
-      <input type="file" id="foto" name="file" accept="image/*">
+      <div th:if="${prestasiSiswa.foto != null}">
+        <label>Foto Saat Ini:</label>
+        <img th:src="@{'/img/prestasi-siswa/' + ${prestasiSiswa.foto}}" alt="Foto Prestasi" width="200">
+      </div>
+
+      <label for="foto">Upload Foto Baru</label>
+      <input type="file" id="foto" name="file" accept="image/*" />
 
       <button type="submit" class="btn">SIMPAN</button>
     </form>

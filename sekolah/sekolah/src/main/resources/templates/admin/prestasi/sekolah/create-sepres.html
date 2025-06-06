@@ -275,23 +275,27 @@
   <div class="container">
     <span class="close-btn" onclick="window.location.href='/admin/prestasi/dapres-sekolah'">&times;</span>
     <h2>CREATE PRESTASI SEKOLAH</h2>
-    <form>
-      <label for="jenis">Nama Guru</label>
-      <input type="text" id="jenis" placeholder="Nama Guru">
-      
-    
+
+    <form th:action="@{/admin/prestasi/sekolah/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiSekolah}">
+
+      <label for="Prestasi">Prestasi</label>
+      <input type="text" id="Prestasi" th:field="*{Prestasi}" placeholder="Prestasi" />
+
       <label for="peringkat">Peringkat</label>
-      <input type="text" id="peringkat" placeholder="Peringkat">
-      
+      <input type="number" id="peringkat" th:field="*{peringkat}" placeholder="Peringkat" />
+
+      <label for="tahun">Tahun</label>
+      <input type="text" id="tahun" th:field="*{tahun}" placeholder="Tahun" />
+
       <label for="tingkat">Tingkat</label>
-      <input type="text" id="tingkat" placeholder="Tingkat">
-      
-      <label for="tingkat">Jenis Prestasi</label>
-      <input type="text" id="prestasi" placeholder="Jenis Prestasi">
-      
-      <label for="tingkat">Deskripsi</label>
-      <input type="text" id="deskripsi" placeholder="Deskripsi">
-      
+      <input type="text" id="tingkat" th:field="*{tingkat}" placeholder="Tingkat" />
+
+      <label for="deskripsi">Deskripsi</label>
+      <input type="text" id="deskripsi" th:field="*{deskripsi}" placeholder="Deskripsi" />
+
+      <label for="foto">Upload Foto</label>
+      <input type="file" id="foto" name="file" accept="image/*">
+
       <button type="submit" class="btn">SIMPAN</button>
     </form>
   </div>
