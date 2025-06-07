@@ -442,13 +442,12 @@
               <td th:text="${#temporals.format(berita.tanggal, 'dd MMMM yyyy')}">01 Mei 2025</td>
               <td th:text="${berita.penulis}">Penulis</td>
               <td>
-                  <img th:src="@{'/img/berita/' + ${#strings.replace(berita.foto, '/', '')}}" alt="Foto Kegiatan"
-                       style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
+                  <img th:src="@{'/img/berita/' + ${berita.foto}}" alt="Foto Kegiatan"
+                  style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
               </td>
               <td>
-                  <!-- Tombol untuk mengubah dan menghapus data berita -->
-                  <a th:href="@{'/admin/berita/edit/' + ${berita.id}}" class="edit-btn">✏️</a>
-                  <a th:href="@{'/admin/berita/delete/' + ${berita.id}}" class="delete-btn" onclick="return confirm('Yakin ingin menghapus data ini?')">🗑️</a>
+                  <a th:href="@{'/admin/berita/edit/' + ${berita.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
+                  <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${berita.id}"><i class="fas fa-trash" ></i></a>
               </td>
           </tr>
           </tbody>
@@ -555,6 +554,30 @@ function filterByTahun() {
       });
     }
 
+    //function delet
+    document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        const beritaId = this.getAttribute('data-id');
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: "Data akan dihapus secara permanen!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, hapus',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `/admin/berita/delete/${beritaId}`;
+          }
+        });
+      });
+    });
+  });
   </script>
 
 </body>

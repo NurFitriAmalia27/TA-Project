@@ -413,12 +413,8 @@
           <span th:if="${prestasi.foto == null}">-</span>
         </td>
         <td>
-          <a th:href="@{'/admin/prestasi/siswa/edit-sipres/' + ${prestasi.id}}">
-            <button class="edit-btn"><i class="fas fa-edit"></i></button>
-          </a>
-          <a th:href="@{'/admin/prestasi/siswa/hapus/' + ${prestasi.id}}" onclick="return confirm('Yakin ingin menghapus?')">
-            <button class="delete-btn"><i class="fas fa-trash"></i></button>
-          </a>
+          <a th:href="@{'/admin/prestasi/siswa/edit-sipres/' + ${prestasi.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
+          <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${prestasi.id}"><i class="fas fa-trash" ></i></a>
         </td>
       </tr>
       </tbody>
@@ -453,7 +449,6 @@
       submenuContainer.classList.add("submenu-open");
     }
   }
-
 
   // Fungsi pencarian nama atau jenis prestasi
   function searchTable() {
@@ -497,33 +492,6 @@
     }
   }
 
-
-
-  // Fungsi tombol edit
-  function setupEditButtons() {
-    document.querySelectorAll(".edit-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        let row = this.closest("tr");
-        let nama = row.cells[1].textContent;
-        alert("Edit data untuk: " + nama);
-        // Bisa arahkan ke halaman edit misalnya: window.location.href = "Create Prestasi Siswa.html?id=1";
-      });
-    });
-  }
-
-  // Fungsi tombol delete
-  function setupDeleteButtons() {
-    document.querySelectorAll(".delete-btn").forEach(btn => {
-      btn.addEventListener("click", function () {
-        let row = this.closest("tr");
-        let nama = row.cells[1].textContent;
-        if (confirm("Yakin ingin menghapus data prestasi dari: " + nama + "?")) {
-          row.remove();
-        }
-      });
-    });
-  }
-
   // Fungsi download data CSV
   function downloadTable() {
     let table = document.getElementById("guruTable");
@@ -550,11 +518,6 @@
     });
   });
 
-  // Jalankan semua fungsi saat halaman siap
-  window.onload = function () {
-    setupEditButtons();
-    setupDeleteButtons();
-  };
   function confirmLogout() {
       Swal.fire({
         title: 'Yakin ingin logout?',
@@ -571,6 +534,31 @@
         }
       });
     }
+
+    //function delet
+    document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        const prestasiId = this.getAttribute('data-id');
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: "Data akan dihapus secara permanen!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, hapus',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `/admin/prestasi/siswa/hapus/${prestasiId}`;
+          }
+        });
+      });
+    });
+  });
 
   </script>
 

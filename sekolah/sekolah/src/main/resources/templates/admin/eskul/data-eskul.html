@@ -546,8 +546,8 @@ td img {
                style="width: 100px; height: 100px; object-fit: cover;">
         </td>
         <td>
-          <a th:href="@{'/admin/eskul/edit/' + ${eskul.id}}" class="edit-btn">✏️</a>
-          <a th:href="@{'/admin/eskul/delete/' + ${eskul.id}}" class="delete-btn" onclick="return confirm('Yakin ingin menghapus data ini?')">🗑️</a>
+          <a th:href="@{'/admin/eskul/edit/' + ${eskul.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
+          <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${eskul.id}"><i class="fas fa-trash" ></i></a>
         </td>
       </tr>
       </tbody>
@@ -637,11 +637,6 @@ td img {
     });
   });
 
-  // Jalankan semua fungsi saat halaman siap
-  window.onload = function () {
-    setupEditButtons();
-    setupDeleteButtons();
-  };
   function confirmLogout() {
       Swal.fire({
         title: 'Yakin ingin logout?',
@@ -658,6 +653,31 @@ td img {
         }
       });
     }
+
+    //function delet
+    document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        const eskulId = this.getAttribute('data-id');
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: "Data akan dihapus secara permanen!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, hapus',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `/admin/eskul/delete/${eskulId}`;
+          }
+        });
+      });
+    });
+  });
 
   </script>
 

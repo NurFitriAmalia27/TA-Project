@@ -72,7 +72,7 @@ public class BeritaController {
             String fileName = System.currentTimeMillis() + "_" + fotoFile.getOriginalFilename();
             Path path = Paths.get("C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/berita/" + fileName);
             Files.write(path, fotoFile.getBytes());
-            berita.setFoto("img/berita/" + fileName); // Set nama file (path relatif) ke field foto
+            berita.setFoto(fileName);
         } else {
             // Jika tidak ada foto baru, gunakan foto lama jika ada
             if (berita.getId() != null) {

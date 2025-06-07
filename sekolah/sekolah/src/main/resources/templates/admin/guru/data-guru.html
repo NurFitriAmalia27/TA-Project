@@ -464,8 +464,8 @@
                 <img th:src="@{/img/guru/{fileName}(fileName=${guru.foto})}" alt="Foto Guru" style="width: 60px; height: 60px; object-fit: cover; border-radius: 5px;">
             </td>
             <td>
-                <a th:href="@{/admin/guru/edit/{id}(id=${guru.id})}" class="edit-btn">✏️</a>
-                <a th:href="@{'/admin/guru/delete/' + ${guru.id}}" class="delete-btn" onclick="return confirm('Yakin ingin menghapus data ini?')">🗑️</a>
+                <a th:href="@{/admin/guru/edit/{id}(id=${guru.id})}" class="edit-btn"><i class="fas fa-edit"></i></a>
+                <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${guru.id}"><i class="fas fa-trash" ></i></a>
             </td>
         </tr>
         </tbody>
@@ -554,10 +554,30 @@
       });
     }
 
-    window.onload = function () {
-      setupEditButtons();
-      setupDeleteButtons();
-    };
+    //function delet
+    document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+
+    deleteButtons.forEach(btn => {
+      btn.addEventListener('click', function () {
+        const guruId = this.getAttribute('data-id');
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: "Data akan dihapus secara permanen!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Ya, hapus',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `/admin/guru/delete/${guruId}`;
+          }
+        });
+      });
+    });
+  });
 </script>
 
 </body>
