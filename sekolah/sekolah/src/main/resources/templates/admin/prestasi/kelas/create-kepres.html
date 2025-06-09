@@ -48,13 +48,6 @@
       font-size: 30px !important;
     }
 
-    .navbar img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
     .navbar h1 {
       font-size: 20px;
       font-weight: bold;
@@ -142,117 +135,154 @@
       transform: rotate(90deg);
     }
 
+    /* Container form */
     .container {
+      max-width: 800px;
+      width: 95%;
+      background-color: #ddd;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin: 160px auto 40px auto;
       position: relative;
-      background-color: #d3d3d3;
-      padding: 60px 40px;
-      border-radius: 15px;
-      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-      width: 450px;
-      text-align: center;
-      margin: 150px auto 40px auto;
-      padding-top: 30px;
-      transform: translateX(25px);
+      transform: translateX(30px);
+      z-index: 1;
     }
-    select {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  box-sizing: border-box;
-  transition: border 0.3s ease;
-}
-
-select:focus {
-  border-color: #642727;
-  outline: none;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 26px;
-  font-weight: bold;
-  color: #333;
-  background: none;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-  transition: color 0.3s;
-}
-
-.close-btn:hover {
-  color: #000;
-}
-
 
     h2 {
-      margin-bottom: 25px;
       text-align: center;
+      margin-bottom: 20px;
       font-size: 24px;
-      color: #000000;
-      padding-top: 20px;
+    }
+
+    /* Form */
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
     }
 
     label {
-      display: block;
-      text-align: left;
+      flex: 1;
       font-weight: bold;
-      margin-bottom: 10px;
-      font-size: 16px;
-      color: #333;
     }
 
-    input {
+    input,
+    textarea {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
+      flex: 3;
+      padding: 8px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 16px;
-      box-sizing: border-box;
-      transition: border 0.3s ease;
+      font-size: 14px;
     }
 
-    input:focus {
-      border-color: #642727;
-      outline: none;
+    input[type="file"] {
+      flex: 3;
     }
 
-    .btn {
-      box-sizing: border-box;
-      background-color: #642727;
+    .btn-container {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-simpan,
+    .btn-batal {
+      background-color: #28a745;
       color: white;
+      padding: 10px;
       border: none;
-      padding: 12px;
-      width: 100%;
       border-radius: 10px;
-      font-size: 18px;
+      font-size: 15px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    .btn:hover {
-      background-color: #4e1e1e;
+    .btn-simpan:hover {
+      background-color: #218838;
     }
 
-    @media (max-width: 600px) {
+    .btn-batal {
+      background-color: #dc3545;
+    }
+
+    .btn-batal:hover {
+      background-color: #c82333;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 768px) {
+      .navbar h1 {
+        font-size: 16px;
+      }
+
+      .sidebar {
+        width: 200px;
+      }
+
+      .sidebar ul li a {
+        font-size: 16px;
+        padding: 10px 12px;
+      }
+
       .container {
-        width: 85%;
-        margin: 100px auto 40px 5%;
+        transform: none;
+        margin-top: 120px;
         padding: 20px;
       }
 
       .form-group {
         flex-direction: column;
+        align-items: flex-start;
       }
 
-      .left, .right {
+      .btn-container {
+        flex-direction: column;
+      }
+
+      .btn-simpan,
+      .btn-batal {
         width: 100%;
-        margin-bottom: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 0 10px;
+      }
+
+      .menu-icon {
+        font-size: 20px;
+      }
+
+      .right-section {
+        gap: 5px;
+      }
+
+      .container {
+        padding: 15px;
+        margin-top: 100px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .btn-simpan,
+      .btn-batal {
+        font-size: 14px;
+        padding: 8px;
       }
     }
   </style>
@@ -291,23 +321,33 @@ select:focus {
 </div>
 
   <div class="container" id="formContainer">
-    <button class="close-btn" onclick="closeForm()"><i class="fas fa-times"></i></button>
     <h2>Create Prestasi Kelas</h2>
     <form th:action="@{/admin/prestasi/kelas/simpan}" method="post" enctype="multipart/form-data" th:object="${prestasiKelas}">
 
+      <div class="form-group">
       <label for="namaSiswa">Nama Siswa</label>
       <input type="text" id="namaSiswa" th:field="*{namaSiswa}" placeholder="Nama Siswa" />
+      </div>
 
+      <div class="form-group">
       <label for="Kelas">Kelas</label>
       <input type="text" id="Kelas" th:field="*{Kelas}" placeholder="Kelas" />
+      </div>
 
+      <div class="form-group">
       <label for="peringkat">Peringkat</label>
       <input type="number" id="peringkat" th:field="*{peringkat}" placeholder="Peringkat" />
+      </div>
 
+      <div class="form-group">
       <label for="periode">periode</label>
       <input type="text" id="periode" th:field="*{periode}" placeholder="2024/2025" />
+      </div>
 
-      <button type="submit" class="btn">SIMPAN</button>
+      <div class="btn-container">
+        <button type="submit" class="btn-simpan">SIMPAN</button>
+        <a href="/admin/prestasi/kelas/dapres-kelas" class="btn-batal">BATAL</a>
+      </div>
     </form>
   </div>
 
@@ -349,9 +389,6 @@ select:focus {
           window.location.href = "/login";
         }
       });
-    }
-    function closeForm() {
-      window.location.href = "/admin/prestasi/dapres-kelas";
     }
 
   </script>

@@ -8,209 +8,292 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
 
-    body {
-      background-color: #f8f9fa;
-    }
+  body {
+    background-color: #f8f9fa;
+  }
 
-    .navbar {
+  .navbar {
+    width: 100%;
+    height: 60px;
+    background: #5D2D2A;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+  }
+
+  .menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .right-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .navbar i.user-icon {
+    font-size: 30px !important;
+  }
+
+  .navbar h1 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .sidebar {
+    width: 250px;
+    background: #6A3332;
+    color: white;
+    height: 100vh;
+    padding-top: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar-hidden {
+    transform: translateX(-100%);
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .sidebar ul li {
+    margin: 5px 0;
+  }
+
+  .sidebar ul li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 12px 15px;
+    transition: background 0.3s;
+    font-weight: bold;
+    gap: 10px;
+  }
+
+  .sidebar ul li a i {
+    font-size: 20px;
+    width: 30px;
+    text-align: center;
+  }
+
+  .sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  .submenu {
+    display: none;
+    list-style: none;
+    padding-left: 45px;
+  }
+
+  .submenu li a {
+    font-size: 16px;
+    padding: 8px 20px;
+    display: block;
+  }
+
+  .submenu li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+
+  .has-submenu a {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .submenu-toggle {
+    transition: transform 0.3s ease-in-out;
+    font-size: 16px;
+  }
+
+  .submenu-open .submenu-toggle {
+    transform: rotate(90deg);
+  }
+
+  /* Container form */
+  .container {
+    max-width: 800px;
+    width: 95%;
+    background-color: #ddd;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 160px auto 40px auto;
+    position: relative;
+    transform: translateX(30px);
+    z-index: 1;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+
+  /* Form */
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+
+  label {
+    flex: 1;
+    font-weight: bold;
+  }
+
+  input {
       width: 100%;
-      height: 60px;
-      background: #5D2D2A;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
+      flex: 3;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
-    .menu-icon {
-      font-size: 24px;
-      cursor: pointer;
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      flex: 3;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
     }
 
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-    }
-    .navbar i.user-icon {
-      font-size: 30px !important; /* Menambah ukuran ikon dengan prioritas lebih tinggi */
+  input[type="file"] {
+    flex: 3;
+  }
+
+  .btn-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn-simpan,
+  .btn-batal {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .btn-simpan:hover {
+    background-color: #218838;
+  }
+
+  .btn-batal {
+    background-color: #dc3545;
+  }
+
+  .btn-batal:hover {
+    background-color: #c82333;
+  }
+
+  a {
+      text-decoration: none;
     }
 
+  /* RESPONSIVE BREAKPOINTS */
+  @media (max-width: 768px) {
     .navbar h1 {
-      font-size: 20px;
-      font-weight: bold;
+      font-size: 16px;
     }
 
     .sidebar {
-      width: 250px;
-      background: #6A3332;
-      color: white;
-      height: 100vh;
-      padding-top: 80px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .sidebar-hidden {
-      transform: translateX(-100%);
-    }
-
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .sidebar ul li {
-      margin: 5px 0;
+      width: 200px;
     }
 
     .sidebar ul li a {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: white;
-      font-size: 18px;
-      padding: 12px 15px;
-      transition: background 0.3s;
-      font-weight: bold;
-      gap: 10px;
-    }
-
-    .sidebar ul li a i {
-      font-size: 20px;
-      width: 30px;
-      text-align: center;
-    }
-
-    .sidebar ul li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    .submenu {
-      display: none;
-      list-style: none;
-      padding-left: 45px;
-    }
-
-    .submenu li a {
       font-size: 16px;
-      padding: 8px 20px;
-      display: block;
+      padding: 10px 12px;
     }
-
-    .submenu li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    .has-submenu a {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .submenu-toggle {
-      transition: transform 0.3s ease-in-out;
-      font-size: 16px;
-    }
-
-    .submenu-open .submenu-toggle {
-      transform: rotate(90deg);
-    }
-    .close-button {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 28px;
-  color: #333;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.close-button:hover {
-  color: #000;
-}
 
     .container {
-  background-color: #ddd;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 500px;
-  margin: 160px auto 40px auto;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transform: translateX(25px);
-}
-h2 {
-      margin-bottom: 25px;
-      text-align: center;
-      font-size: 24px;
-      color: #000000;
-      padding-top: 20px;
+      transform: none;
+      margin-top: 120px;
+      padding: 20px;
     }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-        input, textarea {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin: 0 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: block;
-        }
-        textarea {
-            height: 100px;
-            resize: none;
-        }
-        .btn {
-            background-color: #643f3f;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            width: calc(100% - 20px);
-            margin: 0 auto;
-        }
-        .btn:hover {
-            background-color: #512e2e;
-        }
 
+    .form-group {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
-        @media (max-width: 600px) {
-            .form-group {
-                flex-direction: column;
-            }
+    .btn-container {
+      flex-direction: column;
+    }
 
-            .left, .right {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-        }
+    .btn-simpan,
+    .btn-batal {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .navbar {
+      padding: 0 10px;
+    }
+
+    .menu-icon {
+      font-size: 20px;
+    }
+
+    .right-section {
+      gap: 5px;
+    }
+
+    .container {
+      padding: 15px;
+      margin-top: 100px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    .btn-simpan,
+    .btn-batal {
+      font-size: 14px;
+      padding: 8px;
+    }
+  }
   </style>
 </head>
 <body>
@@ -247,8 +330,6 @@ h2 {
 </div>
 
 <div class="container">
-  <span class="close-button" onclick="window.location.href='/admin/eskul/data-eskul'">&times;</span>
-
   <h2 style="text-align: center;">EDIT EKSTRAKURIKULER</h2>
   <form th:action="@{/admin/eskul/edit/{id}(id=${ekstrakurikuler.id})}" method="post" enctype="multipart/form-data"
         th:object="${ekstrakurikuler}">
@@ -271,8 +352,7 @@ h2 {
       <label>Foto Saat Ini</label><br>
       <img th:if="${ekstrakurikuler.foto != null}"
            th:src="@{'/img/ekstrakurikuler/' + ${ekstrakurikuler.foto}}"
-           alt="Foto Ekstrakurikuler"
-           style="width: 120px; height: 120px; object-fit: cover; border-radius: 6px; border: 1px solid #ccc;" />
+           alt="Foto Ekstrakurikuler" width="200"/>
     </div>
 
     <div class="form-group">
@@ -280,7 +360,10 @@ h2 {
       <input type="file" name="foto" accept="image/*" />
     </div>
 
-    <button type="submit" class="btn">UPDATE</button>
+    <div class="btn-container">
+      <button type="submit" class="btn-simpan">SIMPAN</button>
+    <a href="/admin/eskul/data-eskul" class="btn-batal">BATAL</a>
+    </div>
   </form>
 </div>
 
