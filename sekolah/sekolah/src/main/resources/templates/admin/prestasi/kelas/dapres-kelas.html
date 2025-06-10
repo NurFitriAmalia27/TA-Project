@@ -23,7 +23,7 @@
     .navbar {
       width: 100%;
       height: 60px;
-      background: #5D2D2A;
+      background: #1E2A38;
       color: white;
       display: flex;
       align-items: center;
@@ -65,7 +65,7 @@
     /* Sidebar */
 .sidebar {
   width: 250px;
-  background: #6A3332;
+  background: #2F4050;
   color: white;
   height: 100vh;
   padding-top: 80px;
@@ -176,38 +176,84 @@
 .content.sidebar-collapsed {
     padding-left: 20px; /* Saat sidebar disembunyikan */
 }
-.search-container, .filter-container {
-  margin-bottom: 15px;
-  margin-top: 20px; /* Memberikan jarak ke bawah */
-  margin-left: 0; /* Menghapus jarak kiri agar sejajar dengan konten */
-  display: flex;
-  align-items: center; /* Menyelaraskan elemen secara vertikal */
-  gap: 10px; /* Menambahkan jarak kecil antara elemen */
-  width: 30%; /* Membuat elemen lebar 100% untuk menyesuaikan dengan konten */
-}
+/* Pencarian */
+        .search-container {
+          position: relative;
+          width: 300px;
+          margin: 20px 0;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
 
-.search-container input[type="text"], .filter-container select {
-  width: auto; /* Menyesuaikan lebar input dengan konten */
-  flex-grow: 1; /* Menyesuaikan lebar agar input menggunakan ruang yang ada */
-  height: 40px; /* Meningkatkan tinggi kolom pencarian dan filter */
-}
+        .search-container input[type="text"] {
+          width: 100%;
+          height: 40px;
+          padding: 8px 36px 8px 12px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
 
-.filter-container select {
-  max-width: 300px; /* Menentukan lebar maksimal untuk dropdown filter */
-}
+        .search-container .search-icon {
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+          color: #888;
+          font-size: 16px;
+          pointer-events: none;
+        }
 
+        /* Filter */
+        .filter-container {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin: 20px 0;
+          flex-wrap: wrap;
+        }
 
+        .filter-container label {
+          font-weight: 500;
+        }
 
+        .filter-container select {
+          height: 40px;
+          max-width: 300px;
+          padding: 5px 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
 
     .create-button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      margin: 5px 0;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+       display: inline-block;
+       background: #2F4050;
+       color: white;
+       padding: 10px 20px;
+       border: none;
+       border-radius: 5px;
+       font-weight: bold;
+       text-decoration: none;
+       transition: background-color 0.3s ease;
+     }
+
+     .icon-button {
+          width: 40px;
+          height: 40px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
 
     .create-button:hover {
       background-color: #218838;
@@ -219,16 +265,28 @@
       background: white;
     }
 
-    th, td {
-      text-align: center;
-      padding: 12px;
-      border: 1px solid #ddd;
-    }
-
     th {
-      background-color: #007bff;
-      color: white;
-    }
+       text-align: center;
+       background-color: #007bff;
+       color: white;
+       padding: 12px;
+       border: 1px solid #ddd;
+     }
+
+     td {
+       text-align: justify;
+       padding: 12px;
+       border: 1px solid #ddd;
+     }
+
+     td:nth-child(1),
+     td:nth-child(3),
+     td:nth-child(4),
+     td:nth-child(5),
+     td:nth-child(6){
+       text-align: center;
+       vertical-align: middle;
+     }
 
     tr:nth-child(even) {
       background-color: #f2f2f2;
@@ -240,20 +298,10 @@
             text-align: left;
         }
 
-        .create-button {
-  display: inline-block;
-  background-color: #6A3332;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none; /* Menghilangkan garis bawah */
-  transition: background-color 0.3s ease;
-}
-
-.create-button:hover {
-  background-color: #5D2D2A;
+.top-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
 
         .edit-btn, .delete-btn {
@@ -380,13 +428,13 @@
   <!-- Tambahkan opsi kelas lain sesuai kebutuhan -->
 </select>
 
-
-   <!-- Tombol Tambah Data -->
-  
-   <!-- Tombol download CSV -->
-   <button onclick="downloadTable()" class="create-button">Download CSV</button>
+        <button onclick="downloadTable()" class="icon-button" title="Download CSV">
+            <i class="fas fa-download"></i>
+        </button>
     </div>
-  
+      <div class="top-actions">
+          <a th:href="@{/admin/prestasi/kelas/create-kepres}" class="create-button">+ Tambah Data</a>
+      </div>
     <table id="guruTable">
       <thead>
         <tr>
@@ -406,13 +454,15 @@
             <td th:text="${prestasi.peringkat}"></td>
             <td th:text="${prestasi.periode}"></td>
             <td>
+                <div class="action-buttons">
                 <a th:href="@{'/admin/prestasi/kelas/edit-kepres/' + ${prestasi.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
                 <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${prestasi.id}"><i class="fas fa-trash" ></i></a>
+                </div>
             </td>
         </tr>
         </tbody>
     </table>
-      <a th:href="@{/admin/prestasi/kelas/create-kepres}" class="create-button">+ Tambah Data</a>
+
   </div>
 </div>
   <script>

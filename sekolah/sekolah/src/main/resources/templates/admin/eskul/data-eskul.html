@@ -7,65 +7,67 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+    /* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-    body {
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
 
-    .navbar {
-      width: 100%;
-      height: 60px;
-      background: #5D2D2A;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-    }
+/* Navbar */
+.navbar {
+  width: 100%;
+  height: 60px;
+  background: #1E2A38;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
 
-    .menu-icon {
-      font-size: 24px;
-      cursor: pointer;
-    }
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
 
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-    }
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
 
-    .navbar i.user-icon {
-      font-size: 30px !important;
-    }
+.navbar i.user-icon {
+  font-size: 30px !important;
+}
 
-    .navbar img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
+.navbar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
-    .navbar h1 {
-      font-size: 20px;
-      font-weight: bold;
-    }
+.navbar h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
 
-    /* Sidebar */
+/* Sidebar */
 .sidebar {
   width: 250px;
-  background: #6A3332;
+  background: #2F4050;
   color: white;
   height: 100vh;
   padding-top: 80px;
@@ -73,166 +75,167 @@
   top: 0;
   left: 0;
   z-index: 999;
-  transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+  transition: transform 0.3s ease-in-out;
   overflow-y: auto;
 }
 
 .sidebar-hidden {
-  transform: translateX(-100%); /* Sidebar tersembunyi */
+  transform: translateX(-100%);
 }
 
-/* Konten utama */
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 5px 0;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  padding: 12px 15px;
+  transition: background 0.3s;
+  gap: 10px;
+}
+
+.sidebar ul li a i {
+  font-size: 20px;
+  width: 30px;
+  text-align: center;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.sidebar ul li a.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.has-submenu a {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submenu-toggle {
+  transition: transform 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+.submenu-open .submenu-toggle {
+  transform: rotate(90deg);
+}
+
+.submenu {
+  display: none;
+  list-style: none;
+  padding-left: 45px;
+}
+
+.submenu li a {
+  font-size: 16px;
+  padding: 8px 20px;
+  display: block;
+}
+
+.submenu li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* Main Content */
 .content {
   margin-top: 80px;
-  padding-left: 270px; /* Memberi ruang untuk sidebar */
+  padding-left: 270px;
   padding-right: 20px;
   overflow-y: auto;
-  transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
+  transition: padding-left 0.3s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .content.sidebar-collapsed {
-  padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
+  padding-left: 20px;
 }
 
+/* Search & Filter */
+/* Pencarian */
+        .search-container {
+          position: relative;
+          width: 300px;
+          margin: 20px 0;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
 
-    .sidebar ul {
-      list-style: none;
-      padding: 0;
-    }
+        .search-container input[type="text"] {
+          width: 100%;
+          height: 40px;
+          padding: 8px 36px 8px 12px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
 
-    .sidebar ul li {
-      margin: 5px 0;
-    }
+        .search-container .search-icon {
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+          color: #888;
+          font-size: 16px;
+          pointer-events: none;
+        }
 
-    .sidebar ul li a {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      color: white;
-      font-size: 18px;
-      padding: 12px 15px;
-      transition: background 0.3s;
-      gap: 10px;
-    }
+        /* Filter */
+        .filter-container {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin: 20px 0;
+          flex-wrap: wrap;
+        }
 
-    .sidebar ul li a i {
-      font-size: 20px;
-      width: 30px;
-      text-align: center;
-    }
+        .filter-container label {
+          font-weight: 500;
+        }
 
-    .sidebar ul li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
+        .filter-container select {
+          height: 40px;
+          max-width: 300px;
+          padding: 5px 10px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
 
-    /* Aktif menu */
-    .sidebar ul li a.active {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .submenu {
-      display: none;
-      list-style: none;
-      padding-left: 45px;
-    }
-
-    .submenu li a {
-      font-size: 16px;
-      padding: 8px 20px;
-      display: block;
-    }
-
-    .submenu li a:hover {
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    .has-submenu a {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .submenu-toggle {
-      transition: transform 0.3s ease-in-out;
-      font-size: 16px;
-    }
-
-    .submenu-open .submenu-toggle {
-      transform: rotate(90deg);
-    }
-
-    .content {
-    transition: padding-left 0.3s ease-in-out;
-    padding-left: 270px; /* Saat sidebar tampil */
-    width: 100%;
-    box-sizing: border-box;
+/* Buttons */
+.button-container {
+  margin: 20px 0;
+  text-align: left;
 }
 
-.content.sidebar-collapsed {
-    padding-left: 20px; /* Saat sidebar disembunyikan */
+.top-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
 }
 
-.search-container, .filter-container {
-       margin-bottom: 15px;
-       margin-top: 20px;
-       display: flex;
-       align-items: center;
-       gap: 10px;
-       flex-wrap: wrap;
-     }
-
-     .search-container input[type="text"] {
-    flex: none;            /* tetap */
-    width: 300px;          /* tetap */
-    max-width: 100%;       /* bisa disesuaikan */
-    height: 40px;          /* tetap */
-    padding-left: 12px;    /* beri jarak dalam dari kiri */
-    border-radius: 5px;    /* opsional: bikin sudut agak membulat */
-    margin-top: 10px;      /* jarak dari atas */
-    margin-bottom: 15px;   /* jarak ke elemen bawah */
-}
-
-.search-container {
-    position: relative;
-    width: 300px;
-    margin: 20px 0;
-}
-
-.search-container input[type="text"] {
-    width: 100%;
-    height: 40px;
-    padding: 8px 36px 8px 12px; /* padding kanan lebih besar */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-}
-
-.search-container .search-icon {
-    position: absolute;
-    top: 50%;
-    right: 12px;
-    transform: translateY(-50%);
-    color: #888;
-    font-size: 16px;
-    pointer-events: none; /* agar tidak mengganggu klik */
-}
-
- .button-container {
-   margin: 20px 0; /* atas dan bawah 20px */
- }
-
-     .filter-container select {
-       max-width: 300px;
-       height: 40px;         /* tambahkan tinggi */
-     }
-
-     .create-button {
-       background-color: #6A3332;
+.create-button {
+       display: inline-block;
+       background: #2F4050;
        color: white;
        padding: 10px 20px;
        border: none;
@@ -242,159 +245,85 @@
        transition: background-color 0.3s ease;
      }
 
-     .create-button:hover {
-       background-color: #5D2D2A;
-     }
-
-    table {
-      width: 100%;
-      table-layout: auto;
-      border-collapse: collapse;
-      background: white;
-    }
-
-    th, td {
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #007bff;
-      color: white;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-.table-responsive {
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* smooth scroll untuk iOS */
-    }
-
-        .button-container {
-            margin-top: 10px;
-            text-align: left;
+     .icon-button {
+          width: 40px;
+          height: 40px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 6px;
+          font-size: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
         }
-
-        .create-button {
-  display: inline-block;
-  background-color: #6A3332;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-decoration: none; /* Menghilangkan garis bawah */
-  transition: background-color 0.3s ease;
-}
 
 .create-button:hover {
   background-color: #5D2D2A;
 }
 
-        .edit-btn, .delete-btn {
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            margin: 0 5px;
-        }
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px; /* spasi antar ikon */
+}
 
-        .edit-btn {
-            color: blue;
-        }
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0 5px;
+  color: inherit;
+  text-decoration: none;
+}
 
-        .delete-btn {
-            color: red;
-        }
-        @media screen and (max-width: 768px) {
-            .navbar {
-                padding: 0 10px;
-            }
+.edit-btn {
+  color: blue;
+}
 
-            .navbar-right h1 {
-                font-size: 16px;
-            }
+.delete-btn {
+  color: red;
+}
 
-            .sidebar {
-                width: 220px;
-                transform: translateX(0); /* defaultnya terlihat */
-            }
-            .sidebar.sidebar-hidden {
-    transform: translateX(-100%); /* sembunyikan pakai transform */
-  }
-            .content.shifted {
-                margin-left: 220px;
-            }
-
-            table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-        }
-
-        @media screen and (max-width: 480px) {
-            .navbar-right h1 {
-                font-size: 14px;
-            }
-
-            .menu-icon {
-                font-size: 20px;
-            }
-
-            .sidebar {
-                width: 200px;
-                transform: translateX(0);
-            }
-
-            .content.shifted {
-                margin-left: 200px;
-            }
-            .sidebar.sidebar-hidden {
-    transform: translateX(-100%);
-  }
-            .sidebar ul li a {
-                font-size: 16px;
-                padding: 10px;
-            }
-
-            th, td {
-                font-size: 14px;
-                padding: 5px;
-            }
-        }
-
-    /* Tabel Data Ekstrakurikuler */
+/* Table Styles */
 table {
-      width: 100%;
-      table-layout: auto;
-      border-collapse: collapse;
-      background: white;
-    }
-
-th, td {
-  text-align: center;
-  padding: 12px;
-  border: 1px solid #ddd;
-  vertical-align: middle;
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+  background: white;
 }
 
 th {
+  text-align: center;
   background-color: #007bff;
   color: white;
-  font-weight: bold;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+td {
+  text-align: justify;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+td:nth-child(1),
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(5),
+td:nth-child(6) {
+  text-align: center;
+  vertical-align: middle;
 }
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
-/* Gambar Eskul */
 td img {
   border-radius: 5px;
   width: 60px;
@@ -403,52 +332,35 @@ td img {
   border: 2px solid #ddd;
 }
 
-/* Tombol Edit dan Delete */
-.edit-btn,
-.delete-btn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  margin: 0 5px;
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.edit-btn {
-  color: #007bff;
-}
-
-.edit-btn:hover {
-  color: #0056b3;
-}
-
-.delete-btn {
-  color: #dc3545;
-}
-
-.delete-btn:hover {
-  color: #a71d2a;
-}
-
-/* Tombol Tambah */
-.create-button {
-  background-color: #6A3332;
-  color: white;
-  padding: 10px 16px;
-  font-size: 15px;
-  font-weight: bold;
-  border-radius: 6px;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.create-button:hover {
-  background-color: #5D2D2A;
-}
-
-/* Responsive Table */
+/* Responsive */
 @media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 10px;
+  }
+
+  .navbar-right h1 {
+    font-size: 16px;
+  }
+
+  .sidebar {
+    width: 220px;
+    transform: translateX(0);
+  }
+
+  .sidebar.sidebar-hidden {
+    transform: translateX(-100%);
+  }
+
+  .content.shifted {
+    margin-left: 220px;
+  }
+
   table {
     display: block;
     overflow-x: auto;
@@ -466,6 +378,37 @@ td img {
   }
 }
 
+@media screen and (max-width: 480px) {
+  .navbar-right h1 {
+    font-size: 14px;
+  }
+
+  .menu-icon {
+    font-size: 20px;
+  }
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .content.shifted {
+    margin-left: 200px;
+  }
+
+  .sidebar.sidebar-hidden {
+    transform: translateX(-100%);
+  }
+
+  .sidebar ul li a {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 5px;
+  }
+}
   </style>
 </head>
 <body>
@@ -519,11 +462,13 @@ td img {
       </select>
 
 
-      <button onclick="downloadTable()" class="create-button" title="Download CSV">
+      <button onclick="downloadTable()" class="icon-button" title="Download CSV">
         <i class="fas fa-download"></i>
       </button>
     </div>
-
+    <div class="top-actions">
+      <a th:href="@{/admin/eskul/create-eskul}" class="create-button">+ Tambah Data</a>
+    </div>
     <table id="guruTable">
       <thead>
         <tr>
@@ -546,13 +491,15 @@ td img {
                style="width: 100px; height: 100px; object-fit: cover;">
         </td>
         <td>
+          <div class="action-buttons">
           <a th:href="@{'/admin/eskul/edit/' + ${eskul.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
           <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${eskul.id}"><i class="fas fa-trash" ></i></a>
+          </div>
         </td>
       </tr>
       </tbody>
     </table>
-    <a th:href="@{/admin/eskul/create-eskul}" class="create-button">+ Tambah Data</a>
+
   </div>
 </div>
   <script>
