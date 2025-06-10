@@ -153,20 +153,12 @@ body {
   transition: padding-left 0.3s ease-in-out;
 }
 
-.content.sidebar-collapsed {
-  padding-left: 20px;
-}
-
 .content h1 {
   font-size: 40px;
   font-weight: bold;
   margin: 50px 0 20px 0;
   text-align: center;
-}
 
-.content p {
-  font-size: 18px;
-  text-align: center;
 }
 
 /* DASHBOARD ROW: Statistik + Berita Populer */
@@ -282,6 +274,8 @@ h2 {
   align-items: flex-start;
   margin-top: 30px;
   flex-wrap: wrap;
+  overflow-y: auto;
+  transition: padding-left 0.3s ease-in-out;
 }
 
 .left-column {

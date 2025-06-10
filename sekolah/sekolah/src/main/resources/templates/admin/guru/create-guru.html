@@ -43,8 +43,9 @@
       gap: 10px;
       margin-left: auto;
     }
+
     .navbar i.user-icon {
-      font-size: 30px !important; /* Menambah ukuran ikon dengan prioritas lebih tinggi */
+      font-size: 30px !important;
     }
 
     .navbar h1 {
@@ -52,97 +53,54 @@
       font-weight: bold;
     }
 
+    .sidebar {
+      width: 250px;
+      background: #6A3332;
+      color: white;
+      height: 100vh;
+      padding-top: 80px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      transition: transform 0.3s ease-in-out;
+    }
 
-         /* Sidebar */
-.sidebar {
-  width: 250px;
-  background: #6A3332;
-  color: white;
-  height: 100vh;
-  padding-top: 80px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
-  overflow-y: auto;
-}
+    .sidebar-hidden {
+      transform: translateX(-100%);
+    }
 
-.sidebar-hidden {
-  transform: translateX(-100%); /* Sidebar tersembunyi */
-}
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
 
-/* Konten utama */
-.content {
-  margin-top: 80px;
-  padding-left: 270px; /* Memberi ruang untuk sidebar */
-  padding-right: 20px;
-  overflow-y: auto;
-  transition: padding-left 0.3s ease-in-out; /* Transisi untuk konten */
-}
+    .sidebar ul li {
+      margin: 5px 0;
+    }
 
-.content.sidebar-collapsed {
-  padding-left: 20px; /* Ruang lebih kecil saat sidebar disembunyikan */
-}
-.menu-list a {
-    font-weight: normal; /* Semua menu tidak bold */
-    color: #333;
-    text-decoration: none;
-    display: block;
-    padding: 10px 15px;
-    transition: background 0.3s;
-}
+    .sidebar ul li a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      padding: 12px 15px;
+      transition: background 0.3s;
+      font-weight: bold;
+      gap: 10px;
+    }
 
-.menu-list a:hover {
-    background-color: #f0f0f0;
-}
-.menu-list a.active {
+    .sidebar ul li a i {
+      font-size: 20px;
+      width: 30px;
+      text-align: center;
+    }
 
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-}
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin: 5px 0;
-        }
-
-        .sidebar ul li a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    padding: 12px 15px;
-    transition: background 0.3s;
-    font-weight: normal; /* Sudah tidak bold */
-    gap: 10px;
-}
-
-        .sidebar ul li a i {
-            font-size: 20px;
-            width: 30px;
-            text-align: center;
-        }
-
-        .sidebar ul li a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-        }
-        .sidebar ul li a.active {
-    font-weight: bold;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-}
-
+    .sidebar ul li a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
 
     .submenu {
       display: none;
@@ -177,93 +135,163 @@
       transform: rotate(90deg);
     }
 
+    /* Container form */
     .container {
-      background: #fff;
+      max-width: 800px;
+      width: 95%;
+      background-color: #ddd;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-      width: 90%;
-      max-width: 1000px;
-      margin: 100px auto 30px auto;
-      transform: translateX(60px);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin: 160px auto 40px auto;
       position: relative;
-    }
-
-    .container .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 24px;
-      cursor: pointer;
+      transform: translateX(30px);
+      z-index: 1;
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 25px;
-      font-size: 28px;
+      margin-bottom: 20px;
+      font-size: 24px;
     }
 
-    .form-container {
+    /* Form */
+    .form-group {
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
       justify-content: space-between;
-    }
-
-    .form-box {
-      flex: 1;
-      min-width: 280px;
-      background: #d3d3d3;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    .form-box label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 5px;
-      font-size: 15px;
-      text-align: left;
-    }
-
-    .form-box input {
-      width: 100%;
-      padding: 10px;
+      align-items: center;
       margin-bottom: 15px;
+    }
+
+    label {
+      flex: 1;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      flex: 3;
+      padding: 8px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
-    .btn-submit {
+    textarea {
       width: 100%;
-      padding: 12px;
-      background: #5b3227;
-      color: white;
-      font-size: 17px;
-      border: none;
+      min-height: 120px;
+      flex: 3;
+      padding: 8px;
+      border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 14px;
+    }
+
+    input[type="file"] {
+      flex: 3;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn-simpan,
+    .btn-batal {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
       cursor: pointer;
-      margin-top: 12px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    .btn-submit:hover {
-      background: #44251b;
+    .btn-simpan:hover {
+      background-color: #218838;
     }
 
+    .btn-batal {
+      background-color: #dc3545;
+    }
+
+    .btn-batal:hover {
+      background-color: #c82333;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
     @media (max-width: 768px) {
-      .form-container {
-        flex-direction: column;
+      .navbar h1 {
+        font-size: 16px;
       }
 
-      .form-box {
-        width: 100%;
+      .sidebar {
+        width: 200px;
+      }
+
+      .sidebar ul li a {
+        font-size: 16px;
+        padding: 10px 12px;
       }
 
       .container {
-        margin-top: 100px;
+        transform: none;
+        margin-top: 120px;
         padding: 20px;
-        transform: translateX(0);
+      }
+
+      .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-container {
+        flex-direction: column;
+      }
+
+      .btn-simpan,
+      .btn-batal {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar {
+        padding: 0 10px;
+      }
+
+      .menu-icon {
+        font-size: 20px;
+      }
+
+      .right-section {
+        gap: 5px;
+      }
+
+      .container {
+        padding: 15px;
+        margin-top: 100px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .btn-simpan,
+      .btn-batal {
+        font-size: 14px;
+        padding: 8px;
       }
     }
   </style>
@@ -303,47 +331,64 @@
 </div>
 
 <div class="container">
-  <span class="close-btn" onclick="closeContainer()">×</span>
   <h2>TAMBAH DATA GURU</h2>
 
   <form th:action="@{/admin/guru/save}" method="post" enctype="multipart/form-data">
-    <div class="form-container">
-      <div class="form-box">
-        <label>Nama</label>
-        <input type="text" name="nama" placeholder="Nama" th:value="${guru.nama}" required>
 
-        <label>Pendidikan</label>
-        <input type="text" name="pendidikan" placeholder="Pendidikan" th:value="${guru.pendidikan}" required>
-
-        <label>NIP</label>
-        <input type="text" name="nip" placeholder="NIP" th:value="${guru.nip}" required>
-
-        <label>Tempat, Tanggal Lahir</label>
-        <input type="text" name="ttl" placeholder="Tempat, Tanggal Lahir" th:value="${guru.ttl}" required>
-
-        <label>Jenis Kelamin</label>
-        <input type="text" name="jenisKelamin" placeholder="Jenis Kelamin" th:value="${guru.jenisKelamin}" required>
-
-        <label>Agama</label>
-        <input type="text" name="agama" placeholder="Agama" th:value="${guru.agama}" required>
+      <div class="form-group">
+        <label for="nama">Nama</label>
+        <input type="text" id="nama" name="nama" placeholder="Nama" required/>
       </div>
 
-      <div class="form-box">
-        <label>Pangkat/Gol</label>
-        <input type="text" name="pangkat" placeholder="Pangkat/Gol" th:value="${guru.pangkat}" required>
-
-        <label>Posisi</label>
-        <input type="text" name="posisi" placeholder="Posisi" th:value="${guru.posisi}" required>
-
-        <label>Status</label>
-        <input type="text" name="status" placeholder="Status" th:value="${guru.status}" required>
-
-        <label>Upload Foto</label>
-        <input type="file" name="foto" />
+      <div class="form-group">
+        <label for="pendidikan">Pendidikan</label>
+        <input type="text" id="pendidikan" name="pendidikan" placeholder="Pendidikan" required/>
       </div>
+
+      <div class="form-group">
+        <label for="nip">NIP</label>
+        <input type="text" id="nip" name="nip" placeholder="NIP" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="ttl">Tempat, Tanggal Lahir</label>
+        <input type="text" id="ttl" name="ttl" placeholder="Tempat, Tanggal Lahir" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="jenisKelamin">Jenis Kelamin</label>
+        <input type="text" id="jenisKelamin" name="jenisKelamin" placeholder="Jenis Kelamin" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="agama">Agama</label>
+        <input type="text" id="agama" name="agama" placeholder="Agama" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="pangkat">Pangkat/Gol</label>
+        <input type="text" id="pangkat" name="pangkat" placeholder="Pangkat/Gol" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="posisi">Posisi</label>
+        <input type="text" id="posisi" name="posisi" placeholder="Posisi" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <input type="text" id="status" name="status" placeholder="Status" required/>
+      </div>
+
+      <div class="form-group">
+        <label for="foto">Upload Foto</label>
+        <input type="file" name="foto" id="foto" />
+      </div>
+
+    <div class="btn-container">
+        <a href="/admin/guru/data-guru" class="btn-batal">BATAL</a>
+        <button type="submit" class="btn-simpan">SIMPAN</button>
     </div>
-
-    <button type="submit" class="btn-submit">SIMPAN</button>
   </form>
 </div>
 
