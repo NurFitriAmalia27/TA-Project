@@ -12,3 +12,5 @@ public interface BukuRepository extends JpaRepository<Buku, Long> {
     Buku findByNamaBukuIgnoreCase(String namaBuku);
 }
 
+
+

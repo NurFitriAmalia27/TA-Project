@@ -23,6 +23,11 @@ public class PengembalianService {
         return repository.findAll();
     }
 
+    public int getJumlahPengembali() {
+        return repository.findAll().size();
+    }
+
+
     public Pengembalian simpan(Pengembalian pengembalian) {
         int denda = hitungDenda(pengembalian);
         pengembalian.setDenda(denda);

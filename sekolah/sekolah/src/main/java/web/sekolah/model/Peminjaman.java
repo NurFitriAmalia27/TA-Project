@@ -15,6 +15,9 @@ public class Peminjaman {
     private LocalDate tglPinjam;
     private LocalDate tglKembali;
 
+    // Tambahkan field status
+    private String status;
+
     // Getter & Setter
     public Long getId() {
         return id;
@@ -54,5 +57,14 @@ public class Peminjaman {
 
     public void setTglKembali(LocalDate tglKembali) {
         this.tglKembali = tglKembali;
+    }
+
+    // Getter & Setter untuk status
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

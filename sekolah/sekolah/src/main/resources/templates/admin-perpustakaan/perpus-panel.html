@@ -9,20 +9,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Reset dasar dan font global */
+        /* === RESET & FONT === */
         * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
-          font-family: Arial, sans-serif;
+          font-family: 'Poppins', sans-serif;
         }
 
         body {
           background-color: #f8f9fa;
         }
 
-        /* ===== NAVBAR ===== */
+        /* === NAVBAR === */
         .navbar {
           width: 100%;
           height: 60px;
@@ -65,7 +66,7 @@
           font-weight: bold;
         }
 
-        /* ===== SIDEBAR ===== */
+        /* === SIDEBAR === */
         .sidebar {
           width: 250px;
           background: #2F4050;
@@ -124,7 +125,7 @@
           text-decoration: none;
           color: white;
           font-size: 16px;
-          font-weight: bold;
+          font-weight: 600;
           transition: background 0.3s ease;
         }
 
@@ -140,7 +141,7 @@
           font-size: 18px;
         }
 
-        /* ===== MAIN CONTENT ===== */
+        /* === MAIN CONTENT === */
         .main-content {
           padding: 80px 20px 20px 20px;
           margin-left: 250px;
@@ -152,13 +153,13 @@
         }
 
         .page-title {
-          font-size: 24px;
-          font-weight: bold;
-          color: #2980B9;
+          font-size: 26px;
+          font-weight: 600;
+          color: #2c3e50;
           margin-bottom: 1rem;
         }
 
-        /* ===== KARTU (CARDS) ===== */
+        /* === KARTU (CARDS) === */
         .cards {
           display: flex;
           gap: 20px;
@@ -173,6 +174,7 @@
           padding: 1rem;
           text-align: center;
           border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
         .card img {
@@ -180,12 +182,14 @@
           height: 50px;
         }
 
-        /* ===== TABEL ===== */
+        /* === TABEL === */
         .table-section {
           background: white;
           padding: 1rem;
           border-radius: 10px;
           overflow-x: auto;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+          margin-top: 2rem;
         }
 
         table,
@@ -211,7 +215,7 @@
           background-color: #f2f2f2;
         }
 
-        /* ===== FORM ===== */
+        /* === FORM === */
         .form-group {
           margin-bottom: 15px;
         }
@@ -229,19 +233,71 @@
           justify-content: flex-end;
         }
 
-        /* ===== CHART ===== */
+        /* === GRAFIK CHART === */
+
+        /* Bagian atas untuk chart peminjaman bulan ini */
         .bar-chart-container {
           width: 100%;
-          max-width: 600px;
+          max-width: 100%;
           margin: 2rem auto;
+          background: #ffffff;
+          padding: 1rem 2rem;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          text-align: center;
         }
 
-        .bar-chart {
+        .bar-chart-container h3 {
+          font-size: 20px;
+          font-weight: 600;
+          color: #2c3e50;
+          margin-bottom: 1rem;
+        }
+
+        .bar-chart-container canvas {
+          width: 100% !important;
+          max-width: 600px;
+          height: auto !important;
+          margin: 0 auto;
+        }
+
+        /* Grid untuk chart lainnya */
+        .charts-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 2rem;
+          margin-top: 2rem;
+          padding: 1rem;
+        }
+
+        .charts-grid > div {
+          background: #ffffff;
+          border-radius: 10px;
+          padding: 1rem;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+
+        .charts-grid h4 {
+          margin-bottom: 1rem;
+          color: #2c3e50;
+          font-size: 18px;
+          font-weight: 600;
+          border-bottom: 1px solid #eee;
+          padding-bottom: 5px;
           width: 100%;
-          height: 300px;
         }
 
-        /* ===== RESPONSIVE ===== */
+        .charts-grid canvas {
+          width: 100% !important;
+          max-width: 100%;
+          height: auto !important;
+        }
+
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
           .sidebar {
             width: 200px;
@@ -253,6 +309,10 @@
 
           .main-content.full {
             margin-left: 0;
+          }
+
+          .cards {
+            flex-direction: column;
           }
         }
     </style>
@@ -302,10 +362,38 @@
             <img src="https://cdn-icons-png.flaticon.com/512/2892/2892920.png" alt="Pengembali">
             <p>PENGEMBALI<br><strong th:text="${jumlahPengembali}">0</strong></p>
         </div>
+        <!-- ✅ Tambahan kartu -->
+        <div class="card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1010/1010420.png" alt="Bulan Ini">
+            <p>BULAN INI<br><strong th:text="${jumlahPeminjamanBulanIni}">0</strong></p>
+        </div>
     </section>
 
-    <section class="bar-chart-container">
-        <canvas id="barChart" width="400" height="200"></canvas>
+    <section class="charts-grid">
+        <div>
+            <h4>Jumlah Peminjaman Bulan Ini</h4>
+            <canvas id="barChart" height="200"></canvas>
+        </div>
+        <div>
+            <h4>Jumlah Buku per Kategori</h4>
+            <canvas id="kategoriChart" height="200"></canvas>
+        </div>
+        <div>
+            <h4>Peminjaman per Bulan</h4>
+            <canvas id="pinjamPerBulanChart" height="200"></canvas>
+        </div>
+        <div>
+            <h4>Tren Peminjaman Buku</h4>
+            <canvas id="trenChart" height="200"></canvas>
+        </div>
+        <div>
+            <h4>Status Buku</h4>
+            <canvas id="statusChart" height="200"></canvas>
+        </div>
+        <div>
+            <h4>Top 5 Buku Terpopuler</h4>
+            <canvas id="topBooksChart" height="200"></canvas>
+        </div>
     </section>
 
     <section class="table-section">
@@ -369,121 +457,228 @@
         });
     }
 
-function selesaikanPengembalian(checkbox) {
-    if (checkbox.checked) {
-        const row = checkbox.closest("tr");
-        const id = checkbox.getAttribute('data-id');
-        const namaPeminjam = checkbox.getAttribute('data-nama');
-        const namaBuku = checkbox.getAttribute('data-buku');
-        const tglPinjam = checkbox.getAttribute('data-pinjam');
-        const tglKembali = checkbox.getAttribute('data-kembali');
-        const tglPengembalian = new Date().toISOString().split('T')[0];
+    function selesaikanPengembalian(checkbox) {
+        if (checkbox.checked) {
+            const row = checkbox.closest("tr");
+            const id = checkbox.getAttribute('data-id');
+            const namaPeminjam = checkbox.getAttribute('data-nama');
+            const namaBuku = checkbox.getAttribute('data-buku');
+            const tglPinjam = checkbox.getAttribute('data-pinjam');
+            const tglKembali = checkbox.getAttribute('data-kembali');
+            const tglPengembalian = new Date().toISOString().split('T')[0];
 
-        // Ambil token CSRF dari meta tag
-        const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-        const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+            const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+            const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
 
-        // Buat body dengan encoding x-www-form-urlencoded
-        const body = `namaPeminjam=${encodeURIComponent(namaPeminjam)}&` +
-                     `namaBuku=${encodeURIComponent(namaBuku)}&` +
-                     `tglPinjam=${encodeURIComponent(tglPinjam)}&` +
-                     `tglKembali=${encodeURIComponent(tglKembali)}&` +
-                     `tglPengembalian=${encodeURIComponent(tglPengembalian)}`;
+            const body = `namaPeminjam=${encodeURIComponent(namaPeminjam)}&` +
+                         `namaBuku=${encodeURIComponent(namaBuku)}&` +
+                         `tglPinjam=${encodeURIComponent(tglPinjam)}&` +
+                         `tglKembali=${encodeURIComponent(tglKembali)}&` +
+                         `tglPengembalian=${encodeURIComponent(tglPengembalian)}`;
 
-        fetch('/admin-perpustakaan/simpan-pengembalian', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                [header]: token
-            },
-            body: body
-        })
-        .then(response => {
-            if (response.ok) {
-                // Hapus baris dari tampilan
-                row.remove();
-                updateNomorUrut();
-
-                // Hapus data peminjaman dari backend
-                return fetch(`/admin-perpustakaan/hapus/${id}`, {
-                    method: 'POST',
-                    headers: {
-                        [header]: token
-                    }
-                });
-            } else {
-                throw new Error('Gagal menyimpan pengembalian!');
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                // Tampilkan alert sukses dengan SweetAlert2
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: 'Data pengembalian berhasil disimpan.',
-                    icon: 'success',
-                    confirmButtonText: 'Lihat Data Pengembalian'
-                }).then(() => {
-                    window.location.href = '/admin-perpustakaan/data-pengembalian';
-                });
-            } else {
-                throw new Error('Gagal menghapus data peminjaman!');
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                title: 'Oops!',
-                text: error.message || 'Terjadi kesalahan.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            checkbox.checked = false;
-        });
-    }
-}
-    window.addEventListener('DOMContentLoaded', function () {
-        updateNomorUrut();
-
-        const rows = document.querySelectorAll('#guruTable tbody tr');
-        const bookCounts = {};
-
-        rows.forEach(row => {
-            const bookName = row.cells[2]?.textContent.trim();
-            if (bookName) {
-                bookCounts[bookName] = bookCounts[bookName] ? bookCounts[bookName] + 1 : 1;
-            }
-        });
-
-        const labels = Object.keys(bookCounts);
-        const data = Object.values(bookCounts);
-
-        if (labels.length > 0 && data.length > 0) {
-            const colors = labels.map((_, i) => `hsl(${(i * 360 / labels.length)}, 70%, 60%)`);
-            const ctx = document.getElementById('barChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Jumlah Peminjaman',
-                        data: data,
-                        backgroundColor: colors,
-                        borderColor: colors,
-                        borderWidth: 1
-                    }]
+            fetch('/admin-perpustakaan/simpan-pengembalian', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    [header]: token
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            precision: 0
-                        }
-                    }
+                body: body
+            })
+            .then(response => {
+                if (response.ok) {
+                    row.remove();
+                    updateNomorUrut();
+                    return fetch(`/admin-perpustakaan/hapus/${id}`, {
+                        method: 'POST',
+                        headers: { [header]: token }
+                    });
+                } else {
+                    throw new Error('Gagal menyimpan pengembalian!');
                 }
+            })
+            .then(response => {
+                if (response.ok) {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'Data pengembalian berhasil disimpan.',
+                        icon: 'success',
+                        confirmButtonText: 'Lihat Data Pengembalian'
+                    }).then(() => {
+                        window.location.href = '/admin-perpustakaan/data-pengembalian';
+                    });
+                } else {
+                    throw new Error('Gagal menghapus data peminjaman!');
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Oops!',
+                    text: error.message || 'Terjadi kesalahan.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                checkbox.checked = false;
             });
         }
-    });
+    }
+
+window.addEventListener('DOMContentLoaded', function () {
+    updateNomorUrut();
+
+    // Fungsi umum untuk ambil dan render chart
+    function loadChart(endpoint, elementId, chartConfigCallback) {
+        fetch(endpoint)
+            .then(res => res.json())
+            .then(data => {
+                const ctx = document.getElementById(elementId).getContext('2d');
+                new Chart(ctx, chartConfigCallback(data));
+            })
+            .catch(err => {
+                console.error(`Gagal memuat data dari ${endpoint}:`, err);
+            });
+    }
+
+    const defaultOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: {
+                    font: { family: 'Poppins', size: 14 },
+                    color: '#333'
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: '#555',
+                    font: { family: 'Poppins' }
+                },
+                grid: {
+                    color: '#eee'
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#555',
+                    font: { family: 'Poppins' }
+                },
+                grid: {
+                    color: '#eee'
+                }
+            }
+        }
+    };
+
+    // 📌 Jumlah Peminjaman Bulan Ini (barChart teratas)
+    loadChart('/admin-perpustakaan/chart/peminjaman-bulan-ini', 'barChart', data => ({
+        type: 'bar',
+        data: {
+            labels: [data.bulan], // Misalnya "Juni 2025"
+            datasets: [{
+                label: 'Jumlah Peminjaman',
+                data: [data.jumlah],
+                backgroundColor: '#4e73df'
+            }]
+        },
+        options: {
+            ...defaultOptions
+        }
+    }));
+
+    // 📌 Jumlah Buku per Kategori
+    loadChart('/admin-perpustakaan/chart/kategori', 'kategoriChart', data => ({
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Jumlah Buku',
+                data: data.values,
+                backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0']
+            }]
+        },
+        options: {
+            ...defaultOptions
+        }
+    }));
+
+    // 📌 Peminjaman per Bulan
+    loadChart('/admin-perpustakaan/chart/peminjaman-per-bulan', 'pinjamPerBulanChart', data => ({
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Jumlah Peminjaman',
+                data: data.values,
+                backgroundColor: '#03A9F4'
+            }]
+        },
+        options: {
+            ...defaultOptions
+        }
+    }));
+
+    // 📌 Tren Peminjaman
+    loadChart('/admin-perpustakaan/chart/tren', 'trenChart', data => ({
+        type: 'line',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Jumlah Peminjaman',
+                data: data.values,
+                borderColor: '#FF9800',
+                backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            ...defaultOptions
+        }
+    }));
+
+    // 📌 Status Buku
+    loadChart('/admin-perpustakaan/chart/status', 'statusChart', data => ({
+        type: 'pie',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Status Buku',
+                data: data.values,
+                backgroundColor: ['#4CAF50', '#F44336']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        font: { family: 'Poppins', size: 14 },
+                        color: '#333'
+                    }
+                }
+            }
+        }
+    }));
+
+    // 📌 Buku Terpopuler
+    loadChart('/admin-perpustakaan/chart/terpopuler', 'topBooksChart', data => ({
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: 'Jumlah Dipinjam',
+                data: data.values,
+                backgroundColor: '#673AB7'
+            }]
+        },
+        options: {
+            ...defaultOptions,
+            indexAxis: 'y'
+        }
+    }));
+});
 </script>
 </body>
 </html>

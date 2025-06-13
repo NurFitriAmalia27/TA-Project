@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BukuService {
@@ -37,5 +39,20 @@ public class BukuService {
 
     public long count() {
         return bukuRepository.count();
+    }
+
+    // ✅ Tambahan: Total seluruh buku
+    public long getJumlahBuku() {
+        return bukuRepository.count();
+    }
+
+    // ✅ Tambahan: Jumlah buku per kategori
+    public Map<String, Long> getJumlahBukuPerKategori() {
+        List<Buku> daftarBuku = bukuRepository.findAll();
+        return daftarBuku.stream()
+                .collect(Collectors.groupingBy(
+                        Buku::getKategori,
+                        Collectors.counting()
+                ));
     }
 }
