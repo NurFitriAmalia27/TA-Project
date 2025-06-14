@@ -1,6 +1,5 @@
 package web.sekolah.controller;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import web.sekolah.model.Pengembalian;
 import web.sekolah.service.PengembalianService;
@@ -40,16 +39,20 @@ public class PengembalianController {
     @PostMapping("/simpan-pengembalian")
     @ResponseBody
     public ResponseEntity<String> simpanAjax(@ModelAttribute Pengembalian pengembalian) {
-        System.out.println("Pengembalian diterima: " + pengembalian.getNamaPeminjam());
-        System.out.println("Tgl Pinjam: " + pengembalian.getTglPinjam());
-        System.out.println("Tgl Kembali: " + pengembalian.getTglKembali());
-        System.out.println("Tgl Pengembalian: " + pengembalian.getTglPengembalian());
+        System.out.println("✅ Pengembalian diterima:");
+        System.out.println(" - Nama Peminjam: " + pengembalian.getNamaPeminjam());
+        System.out.println(" - Nama Buku: " + pengembalian.getNamaBuku());
+        System.out.println(" - Buku ID: " + pengembalian.getBukuId());
+        System.out.println(" - Tgl Pinjam: " + pengembalian.getTglPinjam());
+        System.out.println(" - Tgl Kembali: " + pengembalian.getTglKembali());
+        System.out.println(" - Tgl Pengembalian: " + pengembalian.getTglPengembalian());
+
         try {
             service.simpanDanUpdateStok(pengembalian);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Gagal menyimpan pengembalian: " + e.getMessage());
+            return ResponseEntity.status(500).body("❌ Gagal menyimpan pengembalian: " + e.getMessage());
         }
     }
 }

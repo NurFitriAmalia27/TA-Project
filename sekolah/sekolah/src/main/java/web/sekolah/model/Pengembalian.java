@@ -15,6 +15,9 @@ public class Pengembalian {
     private String namaPeminjam;
     private String namaBuku;
 
+    // Field tambahan untuk menghubungkan ke Buku
+    private Long bukuId;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate tglPinjam;
 
@@ -26,6 +29,7 @@ public class Pengembalian {
 
     private Integer denda;
 
+    // --- GETTER & SETTER ---
     public Long getId() {
         return id;
     }
@@ -48,6 +52,14 @@ public class Pengembalian {
 
     public void setNamaBuku(String namaBuku) {
         this.namaBuku = namaBuku;
+    }
+
+    public Long getBukuId() {
+        return bukuId;
+    }
+
+    public void setBukuId(Long bukuId) {
+        this.bukuId = bukuId;
     }
 
     public LocalDate getTglPinjam() {

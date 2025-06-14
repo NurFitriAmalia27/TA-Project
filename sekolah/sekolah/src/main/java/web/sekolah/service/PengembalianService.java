@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PengembalianService {
@@ -27,7 +28,6 @@ public class PengembalianService {
         return repository.findAll().size();
     }
 
-
     public Pengembalian simpan(Pengembalian pengembalian) {
         int denda = hitungDenda(pengembalian);
         pengembalian.setDenda(denda);
@@ -38,11 +38,18 @@ public class PengembalianService {
         int denda = hitungDenda(pengembalian);
         pengembalian.setDenda(denda);
 
-        // Tambah stok buku setelah pengembalian
-        Buku buku = bukuRepository.findByNamaBukuIgnoreCase(pengembalian.getNamaBuku());
-        if (buku != null) {
-            buku.setQty(buku.getQty() + 1);
-            bukuRepository.save(buku);
+        // ✅ Tambah stok buku berdasarkan bukuId
+        if (pengembalian.getBukuId() != null) {
+            Optional<Buku> optionalBuku = bukuRepository.findById(pengembalian.getBukuId());
+            if (optionalBuku.isPresent()) {
+                Buku buku = optionalBuku.get();
+                buku.setQty(buku.getQty() + 1); // Tambah stok
+                bukuRepository.save(buku);
+            } else {
+                System.err.println("❌ Buku dengan ID " + pengembalian.getBukuId() + " tidak ditemukan.");
+            }
+        } else {
+            System.err.println("❌ bukuId di data pengembalian kosong.");
         }
 
         return repository.save(pengembalian);

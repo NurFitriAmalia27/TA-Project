@@ -425,6 +425,7 @@
                            th:attr="data-id=${peminjaman.id},
                             data-nama=${peminjaman.namaPeminjam},
                             data-buku=${peminjaman.buku != null ? peminjaman.buku.namaBuku : 'Tidak Diketahui'},
+                            data-bukuid=${peminjaman.buku != null ? peminjaman.buku.id : 0},
                             data-pinjam=${peminjaman.tglPinjam},
                             data-kembali=${peminjaman.tglKembali}">
                 </td>
@@ -466,70 +467,72 @@
         });
     }
 
-    function selesaikanPengembalian(checkbox) {
-        if (checkbox.checked) {
-            const row = checkbox.closest("tr");
-            const id = checkbox.getAttribute('data-id');
-            const namaPeminjam = checkbox.getAttribute('data-nama');
-            const namaBuku = checkbox.getAttribute('data-buku');
-            const tglPinjam = checkbox.getAttribute('data-pinjam');
-            const tglKembali = checkbox.getAttribute('data-kembali');
-            const tglPengembalian = new Date().toISOString().split('T')[0];
+function selesaikanPengembalian(checkbox) {
+    if (checkbox.checked) {
+        const row = checkbox.closest("tr");
+        const id = checkbox.getAttribute('data-id');
+        const namaPeminjam = checkbox.getAttribute('data-nama');
+        const namaBuku = checkbox.getAttribute('data-buku');
+        const bukuId = checkbox.getAttribute('data-bukuid');
+        const tglPinjam = checkbox.getAttribute('data-pinjam');
+        const tglKembali = checkbox.getAttribute('data-kembali');
+        const tglPengembalian = new Date().toISOString().split('T')[0];
 
-            const token = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-            const header = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+        const token = document.querySelector('meta[name="_csrf"]')?.getAttribute('content') || '';
+        const header = document.querySelector('meta[name="_csrf_header"]')?.getAttribute('content') || '';
 
-            const body = `namaPeminjam=${encodeURIComponent(namaPeminjam)}&` +
-                         `namaBuku=${encodeURIComponent(namaBuku)}&` +
-                         `tglPinjam=${encodeURIComponent(tglPinjam)}&` +
-                         `tglKembali=${encodeURIComponent(tglKembali)}&` +
-                         `tglPengembalian=${encodeURIComponent(tglPengembalian)}`;
+        const body = `namaPeminjam=${encodeURIComponent(namaPeminjam)}&` +
+                     `namaBuku=${encodeURIComponent(namaBuku)}&` +
+                     `bukuId=${encodeURIComponent(bukuId)}&` +
+                     `tglPinjam=${encodeURIComponent(tglPinjam)}&` +
+                     `tglKembali=${encodeURIComponent(tglKembali)}&` +
+                     `tglPengembalian=${encodeURIComponent(tglPengembalian)}`;
 
-            fetch('/admin-perpustakaan/simpan-pengembalian', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    [header]: token
-                },
-                body: body
-            })
-            .then(response => {
-                if (response.ok) {
-                    row.remove();
-                    updateNomorUrut();
-                    return fetch(`/admin-perpustakaan/hapus/${id}`, {
-                        method: 'POST',
-                        headers: { [header]: token }
-                    });
-                } else {
-                    throw new Error('Gagal menyimpan pengembalian!');
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    Swal.fire({
-                        title: 'Berhasil!',
-                        text: 'Data pengembalian berhasil disimpan.',
-                        icon: 'success',
-                        confirmButtonText: 'Lihat Data Pengembalian'
-                    }).then(() => {
-                        window.location.href = '/admin-perpustakaan/data-pengembalian';
-                    });
-                } else {
-                    throw new Error('Gagal menghapus data peminjaman!');
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: 'Oops!',
-                    text: error.message || 'Terjadi kesalahan.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
+        fetch('/admin-perpustakaan/simpan-pengembalian', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                ...(token && header ? { [header]: token } : {})
+            },
+            body: body
+        })
+        .then(response => {
+            if (response.ok) {
+                row.remove();
+                updateNomorUrut();
+                return fetch(`/admin-perpustakaan/hapus/${id}`, {
+                    method: 'POST',
+                    headers: token && header ? { [header]: token } : {}
                 });
-                checkbox.checked = false;
+            } else {
+                throw new Error('Gagal menyimpan pengembalian!');
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                Swal.fire({
+                    title: 'Berhasil!',
+                    text: 'Data pengembalian berhasil disimpan.',
+                    icon: 'success',
+                    confirmButtonText: 'Lihat Data Pengembalian'
+                }).then(() => {
+                    window.location.href = '/admin-perpustakaan/data-pengembalian';
+                });
+            } else {
+                throw new Error('Gagal menghapus data peminjaman!');
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Oops!',
+                text: error.message || 'Terjadi kesalahan.',
+                icon: 'error',
+                confirmButtonText: 'OK'
             });
-        }
+            checkbox.checked = false;
+        });
     }
+}
 
 window.addEventListener('DOMContentLoaded', function () {
     updateNomorUrut();
