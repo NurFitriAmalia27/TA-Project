@@ -479,21 +479,23 @@
 <script>
   // Toggle Sidebar
   function toggleSidebar() {
-    var sidebar = document.getElementById("sidebar");
-    var content = document.getElementById("content");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+
     sidebar.classList.toggle("sidebar-hidden");
     content.classList.toggle("sidebar-collapsed");
   }
 
- function filterTable() {
+  // Filter Tabel Pengunjung
+  function filterTable() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const selectedHari = document.getElementById("NamaFilter").value;
     const table = document.getElementById("tabelPengunjung");
-    const trs = table.getElementsByTagName("tr");
+    const rows = table.getElementsByTagName("tr");
 
-    for (let i = 1; i < trs.length; i++) {
-      const namaTd = trs[i].getElementsByTagName("td")[1]; // Nama
-      const hariTd = trs[i].getElementsByTagName("td")[3]; // Hari
+    for (let i = 1; i < rows.length; i++) {
+      const namaTd = rows[i].getElementsByTagName("td")[1]; // Kolom Nama
+      const hariTd = rows[i].getElementsByTagName("td")[3]; // Kolom Hari
 
       if (namaTd && hariTd) {
         const namaText = namaTd.textContent.toLowerCase();
@@ -502,57 +504,60 @@
         const matchesSearch = namaText.includes(searchInput);
         const matchesHari = selectedHari === "" || hariText === selectedHari;
 
-        trs[i].style.display = (matchesSearch && matchesHari) ? "" : "none";
+        rows[i].style.display = (matchesSearch && matchesHari) ? "" : "none";
       }
     }
   }
 
-  // Trigger filter saat ketik atau pilih hari
+  // Event Listener untuk Filter Otomatis
   document.getElementById("searchInput").addEventListener("keyup", filterTable);
   document.getElementById("NamaFilter").addEventListener("change", filterTable);
 
-  // Download data sebagai CSV
+  // Download Data Tabel sebagai CSV
   function downloadTable() {
-    let table = document.getElementById("tabelPengunjung");
-    let rows = Array.from(table.rows);
-    let csv = rows.map(row =>
+    const table = document.getElementById("tabelPengunjung");
+    const rows = Array.from(table.rows);
+
+    const csv = rows.map(row =>
       Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
     ).join("\n");
 
-    let blob = new Blob([csv], { type: "text/csv" });
-    let link = document.createElement("a");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const link = document.createElement("a");
+
     link.href = URL.createObjectURL(blob);
     link.download = "data_pengunjung.csv";
     link.click();
   }
 
-  // Fungsi tidak dipakai namun disiapkan
+  // Fungsi Hapus Baris (tidak digunakan saat ini)
   function deleteRow(button) {
     const row = button.closest("tr");
     row.remove();
   }
 
-   // Logout confirmation
-    function confirmLogout() {
-        Swal.fire({
-            title: 'Yakin ingin logout?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, logout'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "/logout";
-            }
-        });
-    }
+  // Konfirmasi Logout
+  function confirmLogout() {
+    Swal.fire({
+      title: 'Yakin ingin Logout?',
+      text: "Anda akan keluar dari sistem.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Logout!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "logout.html";
+      }
+    });
+  }
 
-  // Dummy call on load
+  // Inisialisasi saat Halaman Selesai Dimuat
   window.onload = function () {
-    // Bisa tambahkan init di sini jika perlu
+    // Tempat untuk fungsi inisialisasi jika diperlukan
   };
 </script>
-
 </body>
 </html>

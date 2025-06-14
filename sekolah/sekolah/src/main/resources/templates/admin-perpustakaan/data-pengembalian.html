@@ -494,6 +494,7 @@
 </div>
 
 <script>
+  // Toggle Sidebar
   function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     const content = document.getElementById("content");
@@ -501,7 +502,7 @@
     content.classList.toggle("full");
   }
 
-  // Search Function
+  // Pencarian Data Tabel
   function searchTable() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.getElementById("tabelPengembalian").getElementsByTagName("tr");
@@ -515,59 +516,61 @@
     }
   }
 
-function filterTahunPengembalian() {
-  const tahun = document.getElementById("TahunFilter")?.value || document.getElementById("filter-tahun")?.value;
-  const rows = document.querySelectorAll("#tabelPengembalian tbody tr");
+  // Filter Berdasarkan Tahun Pengembalian
+  function filterTahunPengembalian() {
+    const tahun = document.getElementById("TahunFilter")?.value || document.getElementById("filter-tahun")?.value;
+    const rows = document.querySelectorAll("#tabelPengembalian tbody tr");
 
-  rows.forEach(row => {
-    const tglPengembalian = row.cells[5].textContent;
-    const tahunPengembalian = new Date(tglPengembalian).getFullYear().toString();
+    rows.forEach(row => {
+      const tglPengembalian = row.cells[5].textContent;
+      const tahunPengembalian = new Date(tglPengembalian).getFullYear().toString();
 
-    if (!tahun || tahun === "semua" || tahunPengembalian === tahun) {
-      row.style.display = "";
-    } else {
-      row.style.display = "none";
-    }
-  });
-}
+      row.style.display = (!tahun || tahun === "semua" || tahunPengembalian === tahun) ? "" : "none";
+    });
+  }
 
+  // Unduh Tabel sebagai CSV
   function downloadTable() {
-    let table = document.getElementById("tabelPengembalian");
-    let rows = Array.from(table.rows);
-    let csv = rows.map(row =>
+    const table = document.getElementById("tabelPengembalian");
+    const rows = Array.from(table.rows);
+
+    const csv = rows.map(row =>
       Array.from(row.cells).map(cell => `${cell.innerText}`).join(",")
     ).join("\n");
 
-    let blob = new Blob([csv], { type: "text/csv" });
-    let link = document.createElement("a");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = "data_pengembalian.csv";
     link.click();
   }
 
+  // Konfirmasi Logout
   function confirmLogout() {
     Swal.fire({
-      title: 'Yakin ingin logout?',
-      text: "Kamu akan keluar dari sistem.",
+      title: 'Yakin ingin Logout?',
+      text: "Anda akan keluar dari sistem.",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Ya, logout',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Logout!',
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/login";
+        window.location.href = "logout.html";
       }
     });
   }
 
+  // Format Tanggal ke Bahasa Indonesia
   function formatTanggal(tgl) {
     const tanggal = new Date(tgl);
     const options = { day: '2-digit', month: 'long', year: 'numeric' };
     return tanggal.toLocaleDateString('id-ID', options);
   }
 
+  // Load Data Pengembalian dari LocalStorage
   function loadDataPengembalian() {
     const data = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
     const tbody = document.querySelector('#tabelPengembalian tbody');
@@ -597,6 +600,7 @@ function filterTahunPengembalian() {
     }
   }
 
+  // Hapus Semua Data Pengembalian
   function hapusSemua() {
     if (confirm("Yakin ingin menghapus semua data pengembalian?")) {
       const dataSebelumnya = localStorage.getItem("dataPengembalian");
@@ -607,6 +611,7 @@ function filterTahunPengembalian() {
     }
   }
 
+  // Undo Penghapusan Data Pengembalian
   function undoPenghapusan() {
     const backup = sessionStorage.getItem("backupPengembalian");
     if (backup) {

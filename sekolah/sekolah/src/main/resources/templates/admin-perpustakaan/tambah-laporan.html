@@ -324,7 +324,7 @@
   </div>
 </div>
 <script>
-  // Toggle sidebar
+  // Toggle Sidebar
   function toggleSidebar() {
     const sidebar = document.getElementById("sidebar");
     const content = document.getElementById("content");
@@ -332,19 +332,21 @@
     content.classList.toggle("sidebar-collapsed");
   }
 
-  // Toggle submenu navigasi
+  // Toggle Submenu Navigasi
   function toggleSubmenu(event) {
     event.preventDefault();
-    let submenuContainer = event.target.closest(".has-submenu");
-    let submenu = submenuContainer.querySelector(".submenu");
-    let icon = submenuContainer.querySelector(".submenu-toggle");
-    let isOpen = submenu.style.display === "block";
+
+    const submenuContainer = event.target.closest(".has-submenu");
+    const submenu = submenuContainer.querySelector(".submenu");
+    const icon = submenuContainer.querySelector(".submenu-toggle");
+    const isOpen = submenu.style.display === "block";
 
     // Tutup semua submenu terlebih dahulu
     document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
     document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
     document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
 
+    // Buka submenu yang diklik jika belum terbuka
     if (!isOpen) {
       submenu.style.display = "block";
       icon.style.transform = "rotate(90deg)";
@@ -352,7 +354,7 @@
     }
   }
 
-  // Set menu aktif saat diklik
+  // Set Menu Aktif Saat Diklik
   document.querySelectorAll('.menu-list a').forEach(link => {
     link.addEventListener('click', function (e) {
       if (this.getAttribute("href") === "#") {
@@ -363,37 +365,37 @@
     });
   });
 
-  // Konfirmasi logout
+  // Konfirmasi Logout
   function confirmLogout() {
     Swal.fire({
-      title: 'Yakin ingin logout?',
-      text: "Kamu akan keluar dari sistem.",
+      title: 'Yakin ingin Logout?',
+      text: "Anda akan keluar dari sistem.",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Ya, logout',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, Logout!',
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/login";
+        window.location.href = "logout.html";
       }
     });
   }
 
-  // Tampilkan form tambah laporan
+  // Tampilkan Form Tambah Laporan
   function showForm() {
     document.getElementById('formContainer').style.display = 'block';
     document.getElementById('overlay').style.display = 'block';
   }
 
-  // Sembunyikan form
+  // Sembunyikan Form
   function hideForm() {
     document.getElementById('formContainer').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
   }
 
-  // Saat DOM siap
+  // Saat DOM Siap
   document.addEventListener('DOMContentLoaded', function () {
     const cancelBtn = document.querySelector('.btn-batal');
     if (cancelBtn) {
@@ -402,14 +404,13 @@
       });
     }
 
-    // Reset form saat halaman dimuat jika perlu
+    // Reset form dan tambahkan SweetAlert konfirmasi simpan
     const form = document.getElementById("addBookForm");
     if (form) {
       form.reset();
 
-      // [SWEETALERT SIMPAN] Tambahkan event listener untuk submit form
       form.addEventListener('submit', function (e) {
-        e.preventDefault(); // Hentikan submit default
+        e.preventDefault();
 
         Swal.fire({
           title: 'Simpan Data?',
@@ -422,14 +423,13 @@
           cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
-            // Kirim form jika pengguna mengkonfirmasi
             form.submit();
           }
         });
       });
     }
 
-    // Placeholder setup fungsi tambahan (jika ada)
+    // Setup tombol tambahan jika tersedia
     if (typeof setupEditButtons === 'function') setupEditButtons();
     if (typeof setupDeleteButtons === 'function') setupDeleteButtons();
   });

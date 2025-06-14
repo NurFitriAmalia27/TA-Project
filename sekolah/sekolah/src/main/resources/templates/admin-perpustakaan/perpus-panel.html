@@ -445,6 +445,7 @@
 </main>
 
 <script>
+    // Toggle sidebar visibility
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         const content = document.getElementById("content");
@@ -452,12 +453,25 @@
         content.classList.toggle("full");
     }
 
+    // Konfirmasi sebelum logout
     function confirmLogout() {
-        if (confirm("Apakah Anda yakin ingin keluar?")) {
-            window.location.href = "logout.html";
-        }
+        Swal.fire({
+            title: 'Yakin ingin Logout?',
+            text: "Anda akan keluar dari sistem.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "logout.html";
+            }
+        });
     }
 
+    // Update nomor urut pada tabel guru
     function updateNomorUrut() {
         const rows = document.querySelectorAll('#guruTable tbody tr');
         rows.forEach((row, index) => {
@@ -467,8 +481,10 @@
         });
     }
 
-function selesaikanPengembalian(checkbox) {
-    if (checkbox.checked) {
+    // Menyelesaikan proses pengembalian buku
+    function selesaikanPengembalian(checkbox) {
+        if (!checkbox.checked) return;
+
         const row = checkbox.closest("tr");
         const id = checkbox.getAttribute('data-id');
         const namaPeminjam = checkbox.getAttribute('data-nama');
@@ -497,30 +513,25 @@ function selesaikanPengembalian(checkbox) {
             body: body
         })
         .then(response => {
-            if (response.ok) {
-                row.remove();
-                updateNomorUrut();
-                return fetch(`/admin-perpustakaan/hapus/${id}`, {
-                    method: 'POST',
-                    headers: token && header ? { [header]: token } : {}
-                });
-            } else {
-                throw new Error('Gagal menyimpan pengembalian!');
-            }
+            if (!response.ok) throw new Error('Gagal menyimpan pengembalian!');
+            row.remove();
+            updateNomorUrut();
+
+            return fetch(`/admin-perpustakaan/hapus/${id}`, {
+                method: 'POST',
+                headers: token && header ? { [header]: token } : {}
+            });
         })
         .then(response => {
-            if (response.ok) {
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: 'Data pengembalian berhasil disimpan.',
-                    icon: 'success',
-                    confirmButtonText: 'Lihat Data Pengembalian'
-                }).then(() => {
-                    window.location.href = '/admin-perpustakaan/data-pengembalian';
-                });
-            } else {
-                throw new Error('Gagal menghapus data peminjaman!');
-            }
+            if (!response.ok) throw new Error('Gagal menghapus data peminjaman!');
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Data pengembalian berhasil disimpan.',
+                icon: 'success',
+                confirmButtonText: 'Lihat Data Pengembalian'
+            }).then(() => {
+                window.location.href = '/admin-perpustakaan/data-pengembalian';
+            });
         })
         .catch(error => {
             Swal.fire({
@@ -532,136 +543,26 @@ function selesaikanPengembalian(checkbox) {
             checkbox.checked = false;
         });
     }
-}
 
-window.addEventListener('DOMContentLoaded', function () {
-    updateNomorUrut();
+    // Setelah DOM dimuat
+    window.addEventListener('DOMContentLoaded', function () {
+        updateNomorUrut();
 
-    // Fungsi umum untuk ambil dan render chart
-    function loadChart(endpoint, elementId, chartConfigCallback) {
-        fetch(endpoint)
-            .then(res => res.json())
-            .then(data => {
-                const ctx = document.getElementById(elementId).getContext('2d');
-                new Chart(ctx, chartConfigCallback(data));
-            })
-            .catch(err => {
-                console.error(`Gagal memuat data dari ${endpoint}:`, err);
-            });
-    }
-
-    const defaultOptions = {
-        responsive: true,
-        plugins: {
-            legend: {
-                labels: {
-                    font: { family: 'Poppins', size: 14 },
-                    color: '#333'
-                }
-            }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    color: '#555',
-                    font: { family: 'Poppins' }
-                },
-                grid: {
-                    color: '#eee'
-                }
-            },
-            x: {
-                ticks: {
-                    color: '#555',
-                    font: { family: 'Poppins' }
-                },
-                grid: {
-                    color: '#eee'
-                }
-            }
+        // Fungsi umum untuk mengambil dan menampilkan chart
+        function loadChart(endpoint, elementId, chartConfigCallback) {
+            fetch(endpoint)
+                .then(res => res.json())
+                .then(data => {
+                    const ctx = document.getElementById(elementId).getContext('2d');
+                    new Chart(ctx, chartConfigCallback(data));
+                })
+                .catch(err => {
+                    console.error(`Gagal memuat data dari ${endpoint}:`, err);
+                });
         }
-    };
 
-    // 📌 Jumlah Peminjaman Bulan Ini (barChart teratas)
-    loadChart('/admin-perpustakaan/chart/peminjaman-bulan-ini', 'barChart', data => ({
-        type: 'bar',
-        data: {
-            labels: [data.bulan], // Misalnya "Juni 2025"
-            datasets: [{
-                label: 'Jumlah Peminjaman',
-                data: [data.jumlah],
-                backgroundColor: '#4e73df'
-            }]
-        },
-        options: {
-            ...defaultOptions
-        }
-    }));
-
-    // 📌 Jumlah Buku per Kategori
-    loadChart('/admin-perpustakaan/chart/kategori', 'kategoriChart', data => ({
-        type: 'bar',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Jumlah Buku',
-                data: data.values,
-                backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0']
-            }]
-        },
-        options: {
-            ...defaultOptions
-        }
-    }));
-
-    // 📌 Peminjaman per Bulan
-    loadChart('/admin-perpustakaan/chart/peminjaman-per-bulan', 'pinjamPerBulanChart', data => ({
-        type: 'bar',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Jumlah Peminjaman',
-                data: data.values,
-                backgroundColor: '#03A9F4'
-            }]
-        },
-        options: {
-            ...defaultOptions
-        }
-    }));
-
-    // 📌 Tren Peminjaman
-    loadChart('/admin-perpustakaan/chart/tren', 'trenChart', data => ({
-        type: 'line',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Jumlah Peminjaman',
-                data: data.values,
-                borderColor: '#FF9800',
-                backgroundColor: 'rgba(255, 152, 0, 0.2)',
-                fill: true,
-                tension: 0.3
-            }]
-        },
-        options: {
-            ...defaultOptions
-        }
-    }));
-
-    // 📌 Status Buku
-    loadChart('/admin-perpustakaan/chart/status', 'statusChart', data => ({
-        type: 'pie',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Status Buku',
-                data: data.values,
-                backgroundColor: ['#4CAF50', '#F44336']
-            }]
-        },
-        options: {
+        // Opsi default untuk semua chart
+        const defaultOptions = {
             responsive: true,
             plugins: {
                 legend: {
@@ -670,27 +571,126 @@ window.addEventListener('DOMContentLoaded', function () {
                         color: '#333'
                     }
                 }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#555',
+                        font: { family: 'Poppins' }
+                    },
+                    grid: { color: '#eee' }
+                },
+                x: {
+                    ticks: {
+                        color: '#555',
+                        font: { family: 'Poppins' }
+                    },
+                    grid: { color: '#eee' }
+                }
             }
-        }
-    }));
+        };
 
-    // 📌 Buku Terpopuler
-    loadChart('/admin-perpustakaan/chart/terpopuler', 'topBooksChart', data => ({
-        type: 'bar',
-        data: {
-            labels: data.labels,
-            datasets: [{
-                label: 'Jumlah Dipinjam',
-                data: data.values,
-                backgroundColor: '#673AB7'
-            }]
-        },
-        options: {
-            ...defaultOptions,
-            indexAxis: 'y'
-        }
-    }));
-});
+        // 📊 Chart Peminjaman Bulan Ini
+        loadChart('/admin-perpustakaan/chart/peminjaman-bulan-ini', 'barChart', data => ({
+            type: 'bar',
+            data: {
+                labels: [data.bulan],
+                datasets: [{
+                    label: 'Jumlah Peminjaman',
+                    data: [data.jumlah],
+                    backgroundColor: '#4e73df'
+                }]
+            },
+            options: { ...defaultOptions }
+        }));
+
+        // 📊 Chart Kategori Buku
+        loadChart('/admin-perpustakaan/chart/kategori', 'kategoriChart', data => ({
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Jumlah Buku',
+                    data: data.values,
+                    backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0']
+                }]
+            },
+            options: { ...defaultOptions }
+        }));
+
+        // 📊 Chart Peminjaman per Bulan
+        loadChart('/admin-perpustakaan/chart/peminjaman-per-bulan', 'pinjamPerBulanChart', data => ({
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Jumlah Peminjaman',
+                    data: data.values,
+                    backgroundColor: '#03A9F4'
+                }]
+            },
+            options: { ...defaultOptions }
+        }));
+
+        // 📈 Tren Peminjaman
+        loadChart('/admin-perpustakaan/chart/tren', 'trenChart', data => ({
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Jumlah Peminjaman',
+                    data: data.values,
+                    borderColor: '#FF9800',
+                    backgroundColor: 'rgba(255, 152, 0, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: { ...defaultOptions }
+        }));
+
+        // 🧾 Status Buku
+        loadChart('/admin-perpustakaan/chart/status', 'statusChart', data => ({
+            type: 'pie',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Status Buku',
+                    data: data.values,
+                    backgroundColor: ['#4CAF50', '#F44336']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            font: { family: 'Poppins', size: 14 },
+                            color: '#333'
+                        }
+                    }
+                }
+            }
+        }));
+
+        // 📚 Buku Terpopuler
+        loadChart('/admin-perpustakaan/chart/terpopuler', 'topBooksChart', data => ({
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Jumlah Dipinjam',
+                    data: data.values,
+                    backgroundColor: '#673AB7'
+                }]
+            },
+            options: {
+                ...defaultOptions,
+                indexAxis: 'y'
+            }
+        }));
+    });
 </script>
 </body>
 </html>
