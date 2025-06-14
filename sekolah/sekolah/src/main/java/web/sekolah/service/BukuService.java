@@ -43,7 +43,10 @@ public class BukuService {
 
     // ✅ Tambahan: Total seluruh buku
     public long getJumlahBuku() {
-        return bukuRepository.count();
+        List<Buku> daftarBuku = bukuRepository.findAll();
+        return daftarBuku.stream()
+                .mapToLong(b -> b.getQty() != null ? b.getQty() : 0)
+                .sum();
     }
 
     // ✅ Tambahan: Jumlah buku per kategori
