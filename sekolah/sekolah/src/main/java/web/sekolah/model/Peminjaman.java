@@ -11,14 +11,23 @@ public class Peminjaman {
     private Long id;
 
     private String namaPeminjam;
-    private String namaBuku;
+
+    @ManyToOne
+    @JoinColumn(name = "buku_id")
+    private Buku buku;
+
+    private Integer jumlahPinjam;
+
     private LocalDate tglPinjam;
     private LocalDate tglKembali;
 
-    // Tambahkan field status
     private String status;
 
-    // Getter & Setter
+    @Transient
+    private Long bukuId; // 🔑 Digunakan untuk binding ID buku dari <select>
+
+    // ===== Getter & Setter =====
+
     public Long getId() {
         return id;
     }
@@ -35,12 +44,20 @@ public class Peminjaman {
         this.namaPeminjam = namaPeminjam;
     }
 
-    public String getNamaBuku() {
-        return namaBuku;
+    public Buku getBuku() {
+        return buku;
     }
 
-    public void setNamaBuku(String namaBuku) {
-        this.namaBuku = namaBuku;
+    public void setBuku(Buku buku) {
+        this.buku = buku;
+    }
+
+    public Integer getJumlahPinjam() {
+        return jumlahPinjam;
+    }
+
+    public void setJumlahPinjam(Integer jumlahPinjam) {
+        this.jumlahPinjam = jumlahPinjam;
     }
 
     public LocalDate getTglPinjam() {
@@ -59,12 +76,19 @@ public class Peminjaman {
         this.tglKembali = tglKembali;
     }
 
-    // Getter & Setter untuk status
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Long getBukuId() {
+        return bukuId;
+    }
+
+    public void setBukuId(Long bukuId) {
+        this.bukuId = bukuId;
     }
 }

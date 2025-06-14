@@ -80,4 +80,18 @@ public class Buku {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Buku buku = (Buku) o;
+        return id != null && id.equals(buku.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }

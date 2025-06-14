@@ -55,4 +55,19 @@ public class BukuService {
                         Collectors.counting()
                 ));
     }
+
+    // ✅ Tambahan: Kurangi stok buku saat peminjaman
+    public void kurangiStokBuku(Long bukuId, int jumlah) {
+        Buku buku = bukuRepository.findById(bukuId).orElse(null);
+        if (buku != null) {
+            int stokSekarang = buku.getQty() != null ? buku.getQty() : 0;
+            if (stokSekarang >= jumlah) {
+                buku.setQty(stokSekarang - jumlah);
+                bukuRepository.save(buku);
+            } else {
+                throw new IllegalArgumentException("Stok buku tidak mencukupi");
+            }
+        }
+    }
 }
+

@@ -416,7 +416,7 @@
             <tr th:each="peminjaman, stat : ${daftarPeminjaman}">
                 <td th:text="${stat.index + 1}">1</td>
                 <td th:text="${peminjaman.namaPeminjam}">Nama</td>
-                <td th:text="${peminjaman.namaBuku}">Buku</td>
+                <td th:text="${peminjaman.buku != null ? peminjaman.buku.namaBuku : 'Tidak Diketahui'}">Buku</td>
                 <td th:text="${peminjaman.tglPinjam}">2024-01-01</td>
                 <td th:text="${peminjaman.tglKembali}">2024-01-10</td>
                 <td>
@@ -424,7 +424,7 @@
                            onchange="selesaikanPengembalian(this)"
                            th:attr="data-id=${peminjaman.id},
                             data-nama=${peminjaman.namaPeminjam},
-                            data-buku=${peminjaman.namaBuku},
+                            data-buku=${peminjaman.buku != null ? peminjaman.buku.namaBuku : 'Tidak Diketahui'},
                             data-pinjam=${peminjaman.tglPinjam},
                             data-kembali=${peminjaman.tglKembali}">
                 </td>
@@ -432,6 +432,15 @@
             </tbody>
         </table>
     </section>
+    <div th:if="${success}">
+        <script th:inline="javascript">
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: [[${success}]]
+            });
+        </script>
+    </div>
 </main>
 
 <script>

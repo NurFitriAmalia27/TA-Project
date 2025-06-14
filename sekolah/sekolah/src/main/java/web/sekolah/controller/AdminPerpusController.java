@@ -27,7 +27,6 @@ public class AdminPerpusController {
 
     @Autowired
     private PengembalianService pengembalianService;
-
     @GetMapping("/perpus-panel")
     public String tampilPanelPerpus(Model model) {
         List<Peminjaman> daftar = peminjamanService.getAllPeminjaman();
@@ -118,7 +117,7 @@ public class AdminPerpusController {
     public Map<String, Object> getChartTerpopuler() {
         Map<String, Long> countPerBook = peminjamanService.getAllPeminjaman().stream()
                 .collect(Collectors.groupingBy(
-                        p -> p.getNamaBuku(),
+                        p -> p.getBuku() != null ? p.getBuku().getNamaBuku() : "Tidak Diketahui",
                         Collectors.counting()
                 ));
 
