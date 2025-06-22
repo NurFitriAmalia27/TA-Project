@@ -66,10 +66,16 @@ public class PeminjamanService {
     public long getTotalBukuSedangDipinjam() {
         return peminjamanRepository.findAll().stream()
                 .filter(p -> p.getStatus() == null || p.getStatus().equalsIgnoreCase("dipinjam"))
-                .count();
+                .mapToLong(p -> p.getJumlahPinjam() != null ? p.getJumlahPinjam() : 0)
+                .sum();
     }
 
     public long getJumlahPeminjamanBulanIni() {
         return peminjamanRepository.countPeminjamanInCurrentMonth(LocalDate.now());
+    }
+
+    // ✅ Tambahan: Jumlah peminjaman per buku di bulan ini
+    public List<Object[]> getJumlahPeminjamanPerBukuBulanIni() {
+        return peminjamanRepository.countPeminjamanPerBukuBulanIni();
     }
 }

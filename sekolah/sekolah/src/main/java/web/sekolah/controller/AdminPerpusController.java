@@ -27,6 +27,7 @@ public class AdminPerpusController {
 
     @Autowired
     private PengembalianService pengembalianService;
+
     @GetMapping("/perpus-panel")
     public String tampilPanelPerpus(Model model) {
         List<Peminjaman> daftar = peminjamanService.getAllPeminjaman();
@@ -34,14 +35,10 @@ public class AdminPerpusController {
         model.addAttribute("jumlahPeminjam", daftar.size());
         model.addAttribute("jumlahBuku", bukuService.getJumlahBuku());
         model.addAttribute("jumlahPengembali", pengembalianService.getJumlahPengembali());
-
-        // ✅ Tambahan
         model.addAttribute("jumlahPeminjamanBulanIni", peminjamanService.getJumlahPeminjamanBulanIni());
 
         return "admin-perpustakaan/perpus-panel";
     }
-
-    // === CHART DATA ENDPOINTS ===
 
     // 1. Buku berdasarkan kategori
     @GetMapping("/chart/kategori")
@@ -101,13 +98,18 @@ public class AdminPerpusController {
     @GetMapping("/chart/status")
     @ResponseBody
     public Map<String, Object> getChartStatus() {
-        long total = bukuService.getJumlahBuku();
-        long dipinjam = peminjamanService.getTotalBukuSedangDipinjam();
-        long tersedia = total - dipinjam;
+        // Ambil total stok buku (jumlah fisik semua buku yang tersedia)
+        long totalStokTersedia = bukuService.getJumlahBuku();
+
+        // Hitung total yang sedang dipinjam (status belum dikembalikan)
+        long totalDipinjam = peminjamanService.getAllPeminjaman().stream()
+                .filter(p -> !"Dikembalikan".equalsIgnoreCase(p.getStatus()))
+                .mapToLong(p -> p.getJumlahPinjam() != null ? p.getJumlahPinjam() : 0)
+                .sum();
 
         return Map.of(
                 "labels", List.of("Tersedia", "Dipinjam"),
-                "values", List.of(tersedia, dipinjam)
+                "values", List.of(totalStokTersedia, totalDipinjam)
         );
     }
 
@@ -131,4 +133,30 @@ public class AdminPerpusController {
 
         return Map.of("labels", labels, "values", values);
     }
+
+    // 6. Peminjaman Bulan Ini: Jumlah per Buku
+    @GetMapping("/chart/peminjaman-bulan-ini")
+    @ResponseBody
+    public Map<String, Object> getChartPeminjamanBulanIni() {
+        List<Peminjaman> daftarBulanIni = peminjamanService.getAllPeminjaman().stream()
+                .filter(p -> {
+                    LocalDate tgl = p.getTglPinjam();
+                    return tgl != null &&
+                            tgl.getMonthValue() == LocalDate.now().getMonthValue() &&
+                            tgl.getYear() == LocalDate.now().getYear();
+                })
+                .collect(Collectors.toList());
+
+        Map<String, Integer> jumlahPerBuku = daftarBulanIni.stream()
+                .collect(Collectors.groupingBy(
+                        p -> p.getBuku() != null ? p.getBuku().getNamaBuku() : "Tidak Diketahui",
+                        Collectors.summingInt(Peminjaman::getJumlahPinjam)
+                ));
+
+        return Map.of(
+                "labels", new ArrayList<>(jumlahPerBuku.keySet()),
+                "values", new ArrayList<>(jumlahPerBuku.values())
+        );
+    }
+
 }
