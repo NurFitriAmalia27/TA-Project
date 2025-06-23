@@ -424,13 +424,13 @@
   <h1>Data Pengunjung Perpustakaan</h1>
 
   <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Cari nama Pengunjung" onkeyup="searchTable()">
+    <input type="text" id="searchInput" placeholder="Cari nama Pengunjung">
     <i class="fas fa-search search-icon"></i>
   </div>
 
   <div class="filter-container">
     <label for="NamaFilter">Filter Hari Pengunjung:</label>
-    <select id="NamaFilter" onchange="filterByNama()">
+    <select id="NamaFilter">
       <option value="">Semua</option>
       <option value="Senin">Senin</option>
       <option value="Selasa">Selasa</option>
@@ -446,7 +446,6 @@
       <i class="fas fa-download"></i>
     </button>
   </div>
-
 
   <div class="button-container">
     <a class="back-btn" th:href="@{/admin-perpustakaan/tambah-pengunjung}">+ Tambah Pengunjung</a>
@@ -475,7 +474,6 @@
     </tbody>
   </table>
 </div>
-
 <script>
   // Toggle Sidebar
   function toggleSidebar() {
@@ -486,7 +484,7 @@
     content.classList.toggle("sidebar-collapsed");
   }
 
-  // Filter Tabel Pengunjung
+  // Filter Tabel Pengunjung (Nama + Hari)
   function filterTable() {
     const searchInput = document.getElementById("searchInput").value.toLowerCase();
     const selectedHari = document.getElementById("NamaFilter").value;
@@ -499,7 +497,7 @@
 
       if (namaTd && hariTd) {
         const namaText = namaTd.textContent.toLowerCase();
-        const hariText = hariTd.textContent;
+        const hariText = hariTd.textContent.trim();
 
         const matchesSearch = namaText.includes(searchInput);
         const matchesHari = selectedHari === "" || hariText === selectedHari;
@@ -509,9 +507,11 @@
     }
   }
 
-  // Event Listener untuk Filter Otomatis
-  document.getElementById("searchInput").addEventListener("keyup", filterTable);
-  document.getElementById("NamaFilter").addEventListener("change", filterTable);
+  // Event Listener untuk Filter Otomatis (Nama + Hari)
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("searchInput").addEventListener("keyup", filterTable);
+    document.getElementById("NamaFilter").addEventListener("change", filterTable);
+  });
 
   // Download Data Tabel sebagai CSV
   function downloadTable() {
@@ -556,7 +556,8 @@
 
   // Inisialisasi saat Halaman Selesai Dimuat
   window.onload = function () {
-    // Tempat untuk fungsi inisialisasi jika diperlukan
+    // Inisialisasi filter saat halaman dimuat, jika perlu
+    filterTable();
   };
 </script>
 </body>
