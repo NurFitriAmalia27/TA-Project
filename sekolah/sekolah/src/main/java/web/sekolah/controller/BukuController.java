@@ -26,7 +26,7 @@ public class BukuController {
     @Autowired
     private BukuService bukuService;
 
-    private final String UPLOAD_DIR = "C:/sekolah/sekolah/src/main/resources/static/img/buku";
+    private final String UPLOAD_DIR = "C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/buku";
 
     // Daftar kategori default
     private List<String> kategoriList() {
