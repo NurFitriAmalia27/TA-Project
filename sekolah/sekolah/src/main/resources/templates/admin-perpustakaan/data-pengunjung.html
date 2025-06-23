@@ -511,6 +511,17 @@
   document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("searchInput").addEventListener("keyup", filterTable);
     document.getElementById("NamaFilter").addEventListener("change", filterTable);
+
+    // Tampilkan popup jika query string sukses=1 ada
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("sukses") === "1") {
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: 'Data pengunjung berhasil disimpan.',
+        confirmButtonColor: '#3085d6'
+      });
+    }
   });
 
   // Download Data Tabel sebagai CSV

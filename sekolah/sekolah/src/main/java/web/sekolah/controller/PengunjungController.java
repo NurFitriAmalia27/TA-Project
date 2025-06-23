@@ -27,7 +27,7 @@ public class PengunjungController {
     @PostMapping("/save-pengunjung")
     public String save(@ModelAttribute Pengunjung pengunjung) {
         service.save(pengunjung);
-        return "redirect:/admin-perpustakaan/data-pengunjung";
+        return "redirect:/admin-perpustakaan/data-pengunjung?sukses=1";
     }
 
     // Tampilkan semua pengunjung

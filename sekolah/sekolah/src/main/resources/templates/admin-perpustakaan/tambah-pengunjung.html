@@ -73,12 +73,12 @@
       top: 0;
       left: 0;
       z-index: 999;
-      transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
+      transition: transform 0.3s ease-in-out;
       overflow-y: auto;
     }
 
     .sidebar-hidden {
-      transform: translateX(-100%); /* Sidebar tersembunyi */
+      transform: translateX(-100%);
     }
 
     .admin-profile {
@@ -164,17 +164,18 @@
     }
 
     h2 {
-  text-align: center;
-  margin-bottom: 20px; /* Menambah jarak bawah agar tidak terlalu dekat dengan konten form */
-}
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-label {
-  font-weight: bold;
-  margin-top: 20px; /* Menambah jarak atas agar lebih terlihat terpisah dari judul */
-}
+    label {
+      font-weight: bold;
+      margin-top: 20px;
+    }
 
-
-    input, select, textarea {
+    input,
+    select,
+    textarea {
       width: 100%;
       padding: 10px;
       margin: 8px 0 16px 0;
@@ -183,62 +184,51 @@ label {
     }
 
     .button-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-simpan,
+    .btn-batal {
+      flex: 1 1 48%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
       text-align: center;
     }
 
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
     .btn-simpan {
-      background-color: #4CAF50;
+      background-color: #28a745;
       color: white;
     }
 
     .btn-batal {
-      background-color: #f44336;
+      background-color: #dc3545;
       color: white;
     }
 
-    button:hover {
-      opacity: 0.8;
+    .btn-simpan:hover,
+    .btn-batal:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
     }
-    .button-container {
-  display: flex;
-  justify-content: center;
-  gap: 12px; /* jarak antar tombol */
-  margin-top: 10px;
-}
 
-.btn-simpan,
-.btn-batal {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
+    @media (max-width: 500px) {
+      .button-container {
+        flex-direction: column;
+      }
 
-.btn-simpan {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-batal {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-simpan:hover,
-.btn-batal:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
+      .btn-simpan,
+      .btn-batal {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -291,8 +281,8 @@ label {
       <textarea id="keperluan" name="keperluan" th:field="*{keperluan}" rows="3" required></textarea>
 
       <div class="button-container">
-        <button type="submit" class="btn-simpan">Simpan</button>
         <a th:href="@{/admin-perpustakaan/data-pengunjung}" class="btn-batal">Batal</a>
+        <button type="submit" class="btn-simpan">Simpan</button>
       </div>
 
     </form>
