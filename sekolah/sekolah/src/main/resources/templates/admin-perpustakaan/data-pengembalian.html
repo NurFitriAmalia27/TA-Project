@@ -450,7 +450,7 @@
     </div>
 
     <div class="right-group">
-      <form action="/admin-perpustakaan/hapus-semua-pengembalian" method="post" style="display: inline;">
+      <form action="/admin-perpustakaan/hapus-semua-pengembalian" method="post" onsubmit="hapusSemua(event)">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
         <button type="submit" class="icon-button delete" title="Hapus Semua">
           <i class="fas fa-trash-alt"></i>
@@ -502,40 +502,45 @@
     content.classList.toggle("full");
   }
 
-  // Pencarian Data Tabel
-  function searchTable() {
-    const searchInput = document.getElementById("searchInput").value.toLowerCase();
-    const rows = document.getElementById("tabelPengembalian").getElementsByTagName("tr");
-
-    for (let i = 1; i < rows.length; i++) {
-      const cell = rows[i].getElementsByTagName("td")[1];
-      if (cell) {
-        const text = cell.textContent || cell.innerText;
-        rows[i].style.display = text.toLowerCase().includes(searchInput) ? "" : "none";
-      }
-    }
-  }
-
-  // Filter Berdasarkan Tahun Pengembalian
-  function filterTahunPengembalian() {
-    const tahun = document.getElementById("TahunFilter")?.value || document.getElementById("filter-tahun")?.value;
+  // 🔍 Filter Nama Peminjam
+  function filterNamaPeminjam() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.trim().toLowerCase();
     const rows = document.querySelectorAll("#tabelPengembalian tbody tr");
 
     rows.forEach(row => {
-      const tglPengembalian = row.cells[5].textContent;
-      const tahunPengembalian = new Date(tglPengembalian).getFullYear().toString();
+      const namaCell = row.cells[1];
+      const nama = namaCell?.textContent?.trim().toLowerCase() || "";
+      const isMatch = nama.includes(filter);
+      row.style.display = isMatch ? "" : "none";
+    });
 
-      row.style.display = (!tahun || tahun === "semua" || tahunPengembalian === tahun) ? "" : "none";
+    filterTahunPengembalian(); // Re-apply filter tahun juga
+  }
+
+  // 📅 Filter Tahun
+  function filterTahunPengembalian() {
+    const tahun = document.getElementById("filter-tahun")?.value || "semua";
+    const rows = document.querySelectorAll("#tabelPengembalian tbody tr");
+    const namaFilter = document.getElementById("searchInput").value.trim().toLowerCase();
+
+    rows.forEach(row => {
+      const tglPengembalian = row.cells[5]?.textContent || "";
+      const tahunPengembalian = new Date(tglPengembalian).getFullYear().toString();
+      const nama = row.cells[1]?.textContent?.trim().toLowerCase() || "";
+      const cocokNama = nama.includes(namaFilter);
+      const cocokTahun = tahun === "semua" || tahunPengembalian === tahun;
+
+      row.style.display = (cocokNama && cocokTahun) ? "" : "none";
     });
   }
 
-  // Unduh Tabel sebagai CSV
+  // 💾 Download Tabel
   function downloadTable() {
     const table = document.getElementById("tabelPengembalian");
     const rows = Array.from(table.rows);
-
     const csv = rows.map(row =>
-      Array.from(row.cells).map(cell => `${cell.innerText}`).join(",")
+      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
     ).join("\n");
 
     const blob = new Blob([csv], { type: "text/csv" });
@@ -545,7 +550,7 @@
     link.click();
   }
 
-  // Konfirmasi Logout
+  // 🔐 Konfirmasi Logout
   function confirmLogout() {
     Swal.fire({
       title: 'Yakin ingin Logout?',
@@ -563,14 +568,14 @@
     });
   }
 
-  // Format Tanggal ke Bahasa Indonesia
+  // 📆 Format Tanggal Lokal
   function formatTanggal(tgl) {
     const tanggal = new Date(tgl);
     const options = { day: '2-digit', month: 'long', year: 'numeric' };
     return tanggal.toLocaleDateString('id-ID', options);
   }
 
-  // Load Data Pengembalian dari LocalStorage
+  // 📊 Load dari LocalStorage (opsional)
   function loadDataPengembalian() {
     const data = JSON.parse(localStorage.getItem('dataPengembalian')) || [];
     const tbody = document.querySelector('#tabelPengembalian tbody');
@@ -579,10 +584,10 @@
     let totalDenda = 0;
 
     data.forEach((item, index) => {
-      const tr = document.createElement('tr');
       const dendaValue = parseInt(item.denda) || 0;
       totalDenda += dendaValue;
 
+      const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${index + 1}</td>
         <td>${item.namaPeminjam}</td>
@@ -600,18 +605,42 @@
     }
   }
 
-  // Hapus Semua Data Pengembalian
-  function hapusSemua() {
-    if (confirm("Yakin ingin menghapus semua data pengembalian?")) {
-      const dataSebelumnya = localStorage.getItem("dataPengembalian");
-      sessionStorage.setItem("backupPengembalian", dataSebelumnya);
-      localStorage.removeItem("dataPengembalian");
-      loadDataPengembalian();
-      alert("Data dihapus. Klik Undo untuk mengembalikan.");
-    }
+  // ❌ Hapus Semua (dengan Swal)
+  function hapusSemua(event) {
+    event.preventDefault(); // Mencegah submit langsung
+
+    Swal.fire({
+      title: 'Hapus Semua Data?',
+      text: "Data pengembalian akan dihapus permanen.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, Hapus!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Submit form penghapusan jika memakai server-side
+        event.target.closest("form").submit();
+
+        // Atau jika pakai localStorage:
+        // const dataSebelumnya = localStorage.getItem("dataPengembalian");
+        // sessionStorage.setItem("backupPengembalian", dataSebelumnya);
+        // localStorage.removeItem("dataPengembalian");
+        // loadDataPengembalian();
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil Dihapus',
+          text: 'Semua data pengembalian telah dihapus.',
+          timer: 2000,
+          showConfirmButton: false
+        });
+      }
+    });
   }
 
-  // Undo Penghapusan Data Pengembalian
+  // 🔄 Undo Penghapusan (jika pakai localStorage)
   function undoPenghapusan() {
     const backup = sessionStorage.getItem("backupPengembalian");
     if (backup) {
