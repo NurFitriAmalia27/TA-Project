@@ -467,7 +467,6 @@
             </option>
         </select>
 
-        <!-- Tombol ikon download -->
         <button onclick="downloadTable()" class="icon-button" title="Download CSV">
             <i class="fas fa-download"></i>
         </button>
@@ -494,10 +493,10 @@
             <td th:text="${buku.pengarang}"></td>
             <td th:text="${buku.qty}"></td>
             <td th:text="${buku.deskripsi}"></td>
-            <td><img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" alt="Buku" width="100">
+            <td><img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" alt="Buku" width="100"></td>
             <td>
                 <a th:href="@{'/admin-perpustakaan/edit-buku/' + ${buku.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
-                <a th:href="@{'/admin-perpustakaan/hapus-buku/' + ${buku.id}}" class="delete-btn"><i class="fas fa-trash"></i></a>
+                <a href="#" class="delete-btn" th:attr="data-id=${buku.id}"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
@@ -507,12 +506,24 @@
         <strong>Total Jumlah Buku: <span id="totalQty" th:text="${totalQty}"></span></strong>
     </div>
 
-    <!-- Tombol "Tambah Data Buku" -->
     <div class="button-container">
         <a href="/admin-perpustakaan/tambah-buku" class="create-button">+ Tambah Data Buku</a>
     </div>
 </div>
 
+<!-- SweetAlert trigger for simpan success -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+        const saved = /*[[${param.saved}]]*/ false;
+        if (saved === 'true') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data berhasil disimpan!'
+            });
+        }
+    /*]]>*/
+</script>
 <script>
     // Toggle Sidebar
     function toggleSidebar() {
@@ -574,24 +585,22 @@
     }
 
     // Logout confirmation
-function confirmLogout() {
-  Swal.fire({
-    title: 'Yakin ingin Logout?',
-    text: "Anda akan keluar dari sistem.",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Ya, Logout!',
-    cancelButtonText: 'Batal'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // Arahkan ke endpoint login yang sesuai (dari root path)
-      window.location.href = "/login";
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Yakin ingin Logout?',
+            text: "Anda akan keluar dari sistem.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/login";
+            }
+        });
     }
-  });
-}
-
 
     // Alert: Simpan
     function showSaveAlert() {
@@ -623,17 +632,61 @@ function confirmLogout() {
             confirmButtonText: 'Ya, hapus!'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Terhapus!',
-                    'Data telah dihapus.',
-                    'success'
-                );
+                Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
                 if (typeof callback === 'function') {
                     callback(); // Panggil fungsi hapus yang sesungguhnya
                 }
             }
         });
     }
+
+    // ===========================
+    // Tambahan: Trigger via URL
+    // ===========================
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("saved") === "true") {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data berhasil disimpan!'
+            });
+        }
+
+        if (params.get("updated") === "true") {
+            Swal.fire({
+                icon: 'info',
+                title: 'Diperbarui',
+                text: 'Data berhasil diperbarui!'
+            });
+        }
+
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                const id = this.getAttribute("data-id");
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data yang dihapus tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
+                        setTimeout(() => {
+                            window.location.href = `/admin-perpustakaan/hapus-buku/${id}`;
+                        }, 1200);
+                    }
+                });
+            });
+        });
+    });
 </script>
 </body>
 </html>

@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +42,6 @@ public class BukuController {
             listBuku = bukuService.getAllBuku();
         }
 
-        // Hitung total qty dari semua buku
         int totalQty = listBuku.stream().mapToInt(Buku::getQty).sum();
 
         model.addAttribute("listBuku", listBuku);
@@ -62,7 +61,8 @@ public class BukuController {
 
     @PostMapping("/simpan-buku")
     public String simpanBuku(@ModelAttribute Buku buku,
-                             @RequestParam("fotoFile") MultipartFile fotoFile) throws IOException {
+                             @RequestParam("fotoFile") MultipartFile fotoFile,
+                             RedirectAttributes redirectAttributes) throws IOException {
 
         if (!fotoFile.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(fotoFile.getOriginalFilename());
@@ -77,7 +77,8 @@ public class BukuController {
         }
 
         bukuService.save(buku);
-        return "redirect:/admin-perpustakaan/data-buku";
+        redirectAttributes.addFlashAttribute("notif", "simpan");
+        return "redirect:/admin-perpustakaan/data-buku?saved=true";
     }
 
     @GetMapping("/edit-buku/{id}")
@@ -90,7 +91,8 @@ public class BukuController {
 
     @PostMapping("/update-buku")
     public String updateBuku(@ModelAttribute Buku buku,
-                             @RequestParam("fotoFile") MultipartFile fotoFile) throws IOException {
+                             @RequestParam("fotoFile") MultipartFile fotoFile,
+                             RedirectAttributes redirectAttributes) throws IOException {
 
         if (!fotoFile.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + StringUtils.cleanPath(fotoFile.getOriginalFilename());
@@ -108,12 +110,14 @@ public class BukuController {
         }
 
         bukuService.save(buku);
-        return "redirect:/admin-perpustakaan/data-buku";
+        redirectAttributes.addFlashAttribute("notif", "update");
+        return "redirect:/admin-perpustakaan/data-buku?updated=true";
     }
 
     @GetMapping("/hapus-buku/{id}")
-    public String hapusBuku(@PathVariable Long id) {
+    public String hapusBuku(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         bukuService.delete(id);
+        redirectAttributes.addFlashAttribute("notif", "hapus");
         return "redirect:/admin-perpustakaan/data-buku";
     }
 }
