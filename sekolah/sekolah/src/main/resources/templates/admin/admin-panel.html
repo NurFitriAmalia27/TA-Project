@@ -52,12 +52,12 @@
       <a href="/admin/guru/data-guru" class="stat-box">
         <p>Jumlah Guru</p>
         <canvas id="guruPieChart" width="250" height="250"></canvas>
-        <h3 th:text="${totalGuru}">0</h3>
+        <h3 th:text="'Total :  ' + ${totalGuru}">0</h3>
       </a>
       <a href="/admin/eskul/data-eskul" class="stat-box">
         <p>Jumlah Ekstrakurikuler</p>
         <canvas id="eskulChart" width="400" height="300"></canvas>
-        <h3 th:text="${totalEkstrakurikuler}">0</h3>
+        <h3 th:text="'Total :  ' + ${totalEkstrakurikuler}">0</h3>
       </a>
     </div>
 

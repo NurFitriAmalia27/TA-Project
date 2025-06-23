@@ -278,7 +278,7 @@
         }
 
      .create-button:hover {
-       background-color: #5D2D2A;
+       background-color: #1E2A38;
      }
 
      .action-buttons {
@@ -332,7 +332,8 @@
      td:nth-child(1),
      td:nth-child(5),
      td:nth-child(6),
-     td:nth-child(7) {
+     td:nth-child(7),
+     td:nth-child(8){
        text-align: center;
        vertical-align: middle;
      }
@@ -454,7 +455,7 @@
     <h1>Berita</h1>
 
     <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari judul berita">
         <i class="fas fa-search search-icon"></i>
     </div>
   
@@ -464,6 +465,8 @@
             <option value="">Semua</option>
             <option value="2025">2025</option>
             <option value="2024">2024</option>
+            <option value="2024">2023</option>
+            <option value="2024">2022</option>
         </select>
 
 
@@ -486,6 +489,7 @@
               <th>Tanggal</th>
               <th>Penulis</th>
               <th>Foto Kegiatan</th>
+              <th>Views</th>
               <th>Ubah</th>
           </tr>
           </thead>
@@ -501,12 +505,14 @@
                   <img th:src="@{'/img/berita/' + ${berita.foto}}" alt="Foto Kegiatan"
                        style="width: 100px; height: 100px; object-fit: cover;">
               </td>
+              <td th:text="${berita.views}">0</td>
               <td>
                   <div class="action-buttons">
                   <a th:href="@{'/admin/berita/edit/' + ${berita.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
                   <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${berita.id}"><i class="fas fa-trash" ></i></a>
                   </div>
               </td>
+
           </tr>
           </tbody>
       </table>

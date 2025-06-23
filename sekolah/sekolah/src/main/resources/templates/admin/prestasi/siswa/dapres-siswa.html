@@ -208,6 +208,36 @@
         }
 
         /* Filter */
+        .search-container {
+          position: relative;
+          width: 300px;
+          margin: 20px 0;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: wrap;
+        }
+
+        .search-container input[type="text"] {
+          width: 100%;
+          height: 40px;
+          padding: 8px 36px 8px 12px;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 14px;
+        }
+
+        .search-container .search-icon {
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          transform: translateY(-50%);
+          color: #888;
+          font-size: 16px;
+          pointer-events: none;
+        }
+
+        /* Filter */
         .filter-container {
           display: flex;
           align-items: center;
@@ -228,6 +258,15 @@
           border: 1px solid #ccc;
           font-size: 14px;
         }
+
+ .button-container {
+   margin: 20px 0; /* atas dan bawah 20px */
+ }
+
+     .filter-container select {
+       max-width: 300px;
+       height: 40px;         /* tambahkan tinggi */
+     }
 
 .top-actions {
   display: flex;
@@ -263,7 +302,7 @@
         }
 
     .create-button:hover {
-      background-color: #218838;
+      background-color: #1E2A38;
     }
 
     table {
@@ -435,17 +474,18 @@ td img {
     <h1>Data Prestasi Siswa</h1>
 
     <div class="search-container">
-      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau prestasi">
+      <i class="fas fa-search search-icon"></i>
     </div>
   
     <div class="filter-container">
       <label for="yearFilter">Filter Tahun:</label>
       <select id="yearFilter" onchange="filterByYear()">
         <option value="">Semua</option>
-        <option value="2022">2022</option>
-        <option value="2023">2023</option>
-        <option value="2024">2024</option>
         <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2024">2023</option>
+        <option value="2024">2022</option>
       </select>
    <!-- Tombol Tambah Data -->
   
@@ -526,27 +566,27 @@ td img {
   }
 
   // Fungsi pencarian nama atau jenis prestasi
-  function searchTable() {
-    let input = document.getElementById("searchInput").value.toLowerCase();
-    let table = document.getElementById("guruTable");
-    let rows = table.getElementsByTagName("tr");
+      function searchTable() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let table = document.getElementById("guruTable");
+        let rows = table.getElementsByTagName("tr");
 
-    for (let i = 1; i < rows.length; i++) {
-      let nama = rows[i].getElementsByTagName("td")[1];
-      let jenis = rows[i].getElementsByTagName("td")[4];
+        for (let i = 1; i < rows.length; i++) {
+          let nama = rows[i].getElementsByTagName("td")[1];
+          let jenis = rows[i].getElementsByTagName("td")[2];
 
-      if (nama && jenis) {
-        let namaText = nama.textContent.toLowerCase();
-        let jenisText = jenis.textContent.toLowerCase();
+          if (nama && jenis) {
+            let namaText = nama.textContent.toLowerCase();
+            let jenisText = jenis.textContent.toLowerCase();
 
-        if (namaText.includes(input) || jenisText.includes(input)) {
-          rows[i].style.display = "";
-        } else {
-          rows[i].style.display = "none";
+            if (namaText.includes(input) || jenisText.includes(input)) {
+              rows[i].style.display = "";
+            } else {
+              rows[i].style.display = "none";
+            }
+          }
         }
       }
-    }
-  }
 
   // Fungsi filter berdasarkan tahun
   function filterByYear() {

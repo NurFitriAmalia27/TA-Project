@@ -272,7 +272,7 @@
         }
 
      .create-button:hover {
-       background-color: #5D2D2A;
+       background-color: #1E2A38;
      }
 
     table {
@@ -296,9 +296,9 @@
      }
 
      td:nth-child(1),
-     td:nth-child(3),
      td:nth-child(4),
      td:nth-child(5),
+     td:nth-child(6),
      td:nth-child(8),
      td:nth-child(9){
        text-align: center;
@@ -445,7 +445,7 @@ td img {
     <h1>Data Prestasi Guru</h1>
 
     <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau jenis prestasi">
+        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama atau prestasi">
         <i class="fas fa-search search-icon"></i>
     </div>
 
@@ -453,10 +453,10 @@ td img {
         <label for="yearFilter">Filter Tahun:</label>
         <select id="yearFilter" onchange="filterByYear()">
             <option value="">Semua</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
             <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2024">2023</option>
+            <option value="2024">2022</option>
         </select>
         <!-- Tombol Tambah Data -->
 
@@ -473,10 +473,10 @@ td img {
         <tr>
             <th>No</th>
             <th>Nama Guru</th>
+            <th>Prestasi</th>
             <th>Peringkat</th>
             <th>Tingkat</th>
             <th>Tahun</th>
-            <th>Jenis Prestasi</th>
             <th>Deskripsi</th>
             <th>Foto</th>
             <th>Aksi</th>
@@ -486,10 +486,10 @@ td img {
         <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
             <td th:text="${iterStat.index + 1}"></td>
             <td th:text="${prestasi.namaGuru}"></td>
+            <td th:text="${prestasi.jenisPrestasi}"></td>
             <td th:text="${prestasi.peringkat}"></td>
             <td th:text="${prestasi.tingkat}"></td>
             <td th:text="${prestasi.tahun}"></td>
-            <td th:text="${prestasi.jenisPrestasi}"></td>
             <td th:text="${prestasi.deskripsi}"></td>
             <td>
                 <img th:if="${prestasi.foto != null}" th:src="@{'/img/prestasi-guru/' + ${prestasi.foto}}" alt="Foto Prestasi"
@@ -545,7 +545,7 @@ td img {
 
         for (let i = 1; i < rows.length; i++) {
           let nama = rows[i].getElementsByTagName("td")[1];
-          let jenis = rows[i].getElementsByTagName("td")[4];
+          let jenis = rows[i].getElementsByTagName("td")[2];
 
           if (nama && jenis) {
             let namaText = nama.textContent.toLowerCase();
@@ -567,7 +567,7 @@ td img {
         let rows = table.getElementsByTagName("tr");
 
         for (let i = 1; i < rows.length; i++) {
-          let yearCell = rows[i].getElementsByTagName("td")[4]; // Kolom tahun
+          let yearCell = rows[i].getElementsByTagName("td")[5]; // Kolom tahun
           if (yearCell) {
             let yearText = yearCell.textContent || yearCell.innerText;
             if (selectedYear === "" || yearText === selectedYear) {
