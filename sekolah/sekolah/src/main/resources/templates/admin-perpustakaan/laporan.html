@@ -493,12 +493,9 @@
         <span th:if="${laporan.foto == null}">Tidak Ada Foto</span>
       </td>
       <td>
-        <!-- Tombol Edit -->
         <a th:href="@{'/admin-perpustakaan/laporan/edit/' + ${laporan.id}}" class="edit-btn" title="Edit" style="text-decoration: none;">
           <i class="fas fa-edit" style="color: blue;"></i>
         </a>
-
-        <!-- Tombol Hapus dengan SweetAlert (hapus konfirmasi onclick) -->
         <a th:href="@{'/admin-perpustakaan/laporan/delete/' + ${laporan.id}}" class="delete-btn" title="Hapus" style="text-decoration: none;">
           <i class="fas fa-trash" style="color: red;"></i>
         </a>
@@ -513,31 +510,76 @@
 
   <button class="create-button" onclick="window.location.href='/admin-perpustakaan/tambah-laporan'">+ Tambah Laporan</button>
 </div>
-<script>
-  // Toggle sidebar
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const content = document.getElementById("content");
 
-    sidebar.classList.toggle("sidebar-hidden");
-    content.classList.toggle("sidebar-collapsed");
+<script>
+  // Pencarian berdasarkan nama buku
+  function searchTable() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const filter = document.getElementById("KeteranganFilter").value.toLowerCase();
+    const table = document.getElementById("guruTable");
+    const trs = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+    for (let i = 0; i < trs.length; i++) {
+      const tdNama = trs[i].getElementsByTagName("td")[1];
+      const tdKet = trs[i].getElementsByTagName("td")[4];
+      const namaText = tdNama?.textContent.toLowerCase() || "";
+      const ketText = tdKet?.textContent.toLowerCase() || "";
+
+      const cocokNama = namaText.includes(input);
+      const cocokKet = filter === "" || ketText === filter;
+
+      trs[i].style.display = (cocokNama && cocokKet) ? "" : "none";
+    }
   }
 
-  // Toggle submenu navigasi
+  // Filter berdasarkan keterangan
+  function filterByKeterangan() {
+    searchTable(); // digabung agar bekerja bersama pencarian
+  }
+
+  // Export tabel ke CSV
+  function downloadTable() {
+    const table = document.getElementById("guruTable");
+    let csv = [];
+    const rows = table.querySelectorAll("tr");
+
+    for (let row of rows) {
+      let cols = row.querySelectorAll("td, th");
+      let rowData = [];
+      for (let col of cols) {
+        let text = col.innerText.replace(/"/g, '""');
+        rowData.push(`"${text}"`);
+      }
+      csv.push(rowData.join(","));
+    }
+
+    const csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+    const url = URL.createObjectURL(csvFile);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "laporan_buku.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  // Fungsi lainnya
+  function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("sidebar-hidden");
+    document.getElementById("content").classList.toggle("sidebar-collapsed");
+  }
+
   function toggleSubmenu(event) {
     event.preventDefault();
-
     const submenuContainer = event.target.closest(".has-submenu");
     const submenu = submenuContainer.querySelector(".submenu");
     const icon = submenuContainer.querySelector(".submenu-toggle");
     const isOpen = submenu.style.display === "block";
 
-    // Tutup semua submenu terlebih dahulu
     document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
     document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
     document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
 
-    // Buka submenu jika sebelumnya tertutup
     if (!isOpen) {
       submenu.style.display = "block";
       icon.style.transform = "rotate(90deg)";
@@ -545,19 +587,14 @@
     }
   }
 
-  // Set menu aktif saat diklik
   document.querySelectorAll('.menu-list a').forEach(link => {
     link.addEventListener('click', function (e) {
-      if (this.getAttribute("href") === "#") {
-        e.preventDefault();
-      }
-
+      if (this.getAttribute("href") === "#") e.preventDefault();
       document.querySelectorAll('.menu-list a').forEach(el => el.classList.remove('active'));
       this.classList.add('active');
     });
   });
 
-  // Konfirmasi logout
   function confirmLogout() {
     Swal.fire({
       title: 'Yakin ingin Logout?',
@@ -570,26 +607,22 @@
       cancelButtonText: 'Batal'
     }).then((result) => {
       if (result.isConfirmed) {
-        window.location.href = "/login;
+        window.location.href = "/login";
       }
     });
   }
 
-  // Tampilkan form tambah laporan
   function showForm() {
     document.getElementById('formContainer').style.display = 'block';
     document.getElementById('overlay').style.display = 'block';
   }
 
-  // Sembunyikan form
   function hideForm() {
     document.getElementById('formContainer').style.display = 'none';
     document.getElementById('overlay').style.display = 'none';
   }
 
-  // Saat DOM siap
   document.addEventListener('DOMContentLoaded', function () {
-    // Tombol batal (kembali)
     const cancelBtn = document.querySelector('.btn-batal');
     if (cancelBtn) {
       cancelBtn.addEventListener('click', function () {
@@ -597,14 +630,11 @@
       });
     }
 
-    // Reset form saat halaman dimuat dan tambahkan konfirmasi simpan
     const form = document.getElementById("addBookForm");
     if (form) {
       form.reset();
-
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-
         Swal.fire({
           title: 'Simpan Data?',
           text: "Pastikan data yang diisi sudah benar.",
@@ -622,7 +652,6 @@
       });
     }
 
-    // Tambahkan konfirmasi sebelum hapus data
     document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -645,7 +674,6 @@
       });
     });
 
-    // Panggil fungsi tambahan jika tersedia
     if (typeof setupEditButtons === 'function') setupEditButtons();
     if (typeof setupDeleteButtons === 'function') setupDeleteButtons();
   });
