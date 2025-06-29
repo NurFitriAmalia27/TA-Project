@@ -524,23 +524,28 @@
         }
     /*]]>*/
 </script>
+
 <script>
-    // Toggle Sidebar
+    // =====================
+    // Sidebar Toggle
+    // =====================
     function toggleSidebar() {
-        var sidebar = document.getElementById("sidebar");
-        var content = document.getElementById("content");
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
         sidebar.classList.toggle("sidebar-hidden");
         content.classList.toggle("sidebar-collapsed");
     }
 
+    // =====================
     // Search Function
+    // =====================
     function searchTable() {
         const input = document.getElementById("searchInput").value.toLowerCase();
         const table = document.getElementById("guruTable");
         const trs = table.getElementsByTagName("tr");
 
         for (let i = 1; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[1]; // Kolom ke-2 = Nama Buku
+            const td = trs[i].getElementsByTagName("td")[1]; // Kolom Nama Buku
             if (td) {
                 const textValue = td.textContent || td.innerText;
                 trs[i].style.display = textValue.toLowerCase().includes(input) ? "" : "none";
@@ -548,14 +553,16 @@
         }
     }
 
-    // Filter by Nama Buku/Kategori
+    // =====================
+    // Filter by Nama/Kategori
+    // =====================
     function filterByNama() {
         const selected = document.getElementById("NamaFilter").value.toLowerCase();
         const table = document.getElementById("guruTable");
         const trs = table.getElementsByTagName("tr");
 
         for (let i = 1; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[2]; // kolom Kategori
+            const td = trs[i].getElementsByTagName("td")[2]; // Kolom Kategori
             if (td) {
                 const textValue = td.textContent || td.innerText;
                 trs[i].style.display = (selected === "semua" || textValue.toLowerCase() === selected) ? "" : "none";
@@ -563,17 +570,19 @@
         }
     }
 
+    // =====================
     // Download CSV Function
+    // =====================
     function downloadTable() {
         const table = document.getElementById("guruTable");
         let csvContent = "data:text/csv;charset=utf-8,";
         const rows = table.querySelectorAll("tr");
 
-        for (let row of rows) {
+        rows.forEach(row => {
             const cols = row.querySelectorAll("td, th");
-            let rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
+            const rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
             csvContent += rowData + "\r\n";
-        }
+        });
 
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
@@ -584,7 +593,9 @@
         document.body.removeChild(link);
     }
 
-    // Logout confirmation
+    // =====================
+    // Logout Confirmation
+    // =====================
     function confirmLogout() {
         Swal.fire({
             title: 'Yakin ingin Logout?',
@@ -602,7 +613,9 @@
         });
     }
 
-    // Alert: Simpan
+    // =====================
+    // Alert Simpan & Edit
+    // =====================
     function showSaveAlert() {
         Swal.fire({
             icon: 'success',
@@ -611,7 +624,6 @@
         });
     }
 
-    // Alert: Edit
     function showUpdateAlert() {
         Swal.fire({
             icon: 'info',
@@ -620,7 +632,9 @@
         });
     }
 
-    // Alert: Hapus
+    // =====================
+    // Alert Hapus Konfirmasi (callback opsional)
+    // =====================
     function showDeleteAlert(callback) {
         Swal.fire({
             title: 'Yakin ingin menghapus?',
@@ -629,39 +643,33 @@
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!'
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
                 if (typeof callback === 'function') {
-                    callback(); // Panggil fungsi hapus yang sesungguhnya
+                    callback();
                 }
             }
         });
     }
 
-    // ===========================
-    // Tambahan: Trigger via URL
-    // ===========================
+    // =====================
+    // Auto-Trigger Alerts via URL Parameters
+    // =====================
     document.addEventListener("DOMContentLoaded", function () {
         const params = new URLSearchParams(window.location.search);
 
         if (params.get("saved") === "true") {
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'Data berhasil disimpan!'
-            });
+            showSaveAlert();
         }
 
         if (params.get("updated") === "true") {
-            Swal.fire({
-                icon: 'info',
-                title: 'Diperbarui',
-                text: 'Data berhasil diperbarui!'
-            });
+            showUpdateAlert();
         }
 
+        // Tambahkan event listener ke semua tombol hapus
         const deleteButtons = document.querySelectorAll(".delete-btn");
         deleteButtons.forEach(button => {
             button.addEventListener("click", function (e) {
@@ -675,7 +683,8 @@
                     showCancelButton: true,
                     confirmButtonColor: '#d33',
                     cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Ya, hapus!'
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
@@ -687,6 +696,7 @@
             });
         });
     });
+</script>
 </script>
 </body>
 </html>
