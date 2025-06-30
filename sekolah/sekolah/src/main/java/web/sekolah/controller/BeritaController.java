@@ -42,6 +42,7 @@ public class BeritaController {
     @PostMapping("/save")
     public String saveBerita(@RequestParam(value = "id", required = false) Long id,
                              @RequestParam("judul") String judul,
+                             @RequestParam("subjudul") String subjudul,
                              @RequestParam("deskripsi") String deskripsi,
                              @RequestParam("tanggal") String tanggal,
                              @RequestParam("penulis") String penulis,
@@ -63,6 +64,7 @@ public class BeritaController {
         }
 
         berita.setJudul(judul);
+        berita.setSubjudul(subjudul);
         berita.setDeskripsi(deskripsi);
         berita.setTanggal(localDate);
         berita.setPenulis(penulis);
@@ -131,6 +133,7 @@ public class BeritaController {
     @PostMapping("/update")
     public String updateBerita(@RequestParam("id") Long id,
                                @RequestParam("judul") String judul,
+                               @RequestParam("subjudul") String subjudul,
                                @RequestParam("deskripsi") String deskripsi,
                                @RequestParam("tanggal") String tanggal,
                                @RequestParam("penulis") String penulis,
@@ -144,6 +147,7 @@ public class BeritaController {
 
         // Set data lainnya (judul, deskripsi, dll)
         berita.setJudul(judul);
+        berita.setSubjudul(subjudul);
         berita.setDeskripsi(deskripsi);
         berita.setTanggal(LocalDate.parse(tanggal));
         berita.setPenulis(penulis);

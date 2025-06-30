@@ -21,7 +21,7 @@ public class LaporanController {
     private LaporanService laporanService;
 
     // Sesuaikan folder upload untuk foto buku
-    private final String UPLOAD_DIR = "C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/laporanbuku";
+    private final String UPLOAD_DIR = "C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/laporanbuku";
 
     @GetMapping("/laporan")
     public String listLaporan(Model model) {

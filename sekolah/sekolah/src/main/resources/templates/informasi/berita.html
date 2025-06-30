@@ -75,6 +75,9 @@
     <div class="news-item" th:each="berita : ${listBerita}">
         <img th:src="@{'/img/berita/' + ${berita.foto}}" alt="Gambar Berita" />
         <h3 th:text="${berita.judul}">Judul Berita</h3>
+        <p th:text="${berita.deskripsi.length() > 100 ? #strings.substring(berita.deskripsi, 0, 100) + '...' : berita.deskripsi}">
+            Isi singkat berita akan tampil di sini.
+        </p>
         <a th:href="@{/informasi/sub-berita/{id}(id=${berita.id})}" class="btn-link">
             <button>Baca Selengkapnya</button>
         </a>

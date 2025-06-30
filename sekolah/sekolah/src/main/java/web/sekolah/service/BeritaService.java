@@ -2,15 +2,10 @@ package web.sekolah.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import web.sekolah.model.Berita;
-import web.sekolah.model.Guru;
 import web.sekolah.repository.BeritaRepository;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class BeritaService {

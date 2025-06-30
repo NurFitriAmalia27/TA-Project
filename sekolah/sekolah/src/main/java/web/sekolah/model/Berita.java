@@ -3,7 +3,6 @@ package web.sekolah.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -17,6 +16,9 @@ public class Berita {
 
     @NotBlank(message = "Judul tidak boleh kosong")
     private String judul;
+
+    @NotBlank(message = "SubJudul tidak boleh kosong")
+    private String subjudul;
 
     @NotBlank(message = "Deskripsi tidak boleh kosong")
     @Column(columnDefinition = "TEXT")
@@ -37,8 +39,9 @@ public class Berita {
     public Berita() {
     }
 
-    public Berita(String judul, String deskripsi, String penulis, LocalDate tanggal, int views, String foto) {
+    public Berita(String judul, String subjudul, String deskripsi, String penulis, LocalDate tanggal, int views, String foto) {
         this.judul = judul;
+        this.subjudul = subjudul;
         this.deskripsi = deskripsi;
         this.penulis = penulis;
         this.tanggal = tanggal;
@@ -61,6 +64,14 @@ public class Berita {
 
     public void setJudul(String judul) {
         this.judul = judul;
+    }
+
+    public String getSubjudul() {
+        return subjudul;
+    }
+
+    public void setSubjudul(String subjudul) {
+        this.subjudul = subjudul;
     }
 
     public String getDeskripsi() {

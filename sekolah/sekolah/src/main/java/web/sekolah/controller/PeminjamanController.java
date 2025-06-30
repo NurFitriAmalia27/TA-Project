@@ -21,7 +21,7 @@ public class PeminjamanController {
     private PeminjamanService peminjamanService;
 
     @Autowired
-    private BukuService bukuService; // ✅ Tambahan
+    private BukuService bukuService;
 
     @GetMapping("/data-peminjaman")
     public String tampilFormPeminjaman(Model model) {

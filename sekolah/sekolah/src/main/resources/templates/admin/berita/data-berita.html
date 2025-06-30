@@ -350,6 +350,14 @@
        background-color: #f2f2f2;
      }
 
+     .deskripsi-scroll {
+     max-height: 4.5em;
+     overflow-y: auto;
+     padding-right: 5px;
+     white-space: normal;
+     line-height: 1.5em;
+     }
+
      /* =======================
         RESPONSIVE DESIGN
      ========================== */
@@ -485,6 +493,7 @@
           <tr>
               <th>NO</th>
               <th>Judul Berita</th>
+              <th>Sub Judul</th>
               <th>Isi Berita</th>
               <th>Tanggal</th>
               <th>Penulis</th>
@@ -498,7 +507,12 @@
           <tr th:each="berita, iterStat : ${listBerita}">
               <td th:text="${iterStat.index + 1}">1</td>
               <td th:text="${berita.judul}">Judul Berita</td>
-              <td th:text="${berita.deskripsi}">Isi Berita</td>
+              <td th:text="${berita.subjudul}">Sub Judul</td>
+              <td>
+                  <div class="deskripsi-scroll" th:utext="${berita.deskripsi}">
+                      Isi Berita
+                  </div>
+              </td>
               <td th:text="${#temporals.format(berita.tanggal, 'dd MMMM yyyy')}">01 Mei 2025</td>
               <td th:text="${berita.penulis}">Penulis</td>
               <td>
@@ -512,11 +526,9 @@
                   <a href="javascript:void(0)" class="delete-btn" th:attr="data-id=${berita.id}"><i class="fas fa-trash" ></i></a>
                   </div>
               </td>
-
           </tr>
           </tbody>
       </table>
-
   </div>
 </div>
   <script>
