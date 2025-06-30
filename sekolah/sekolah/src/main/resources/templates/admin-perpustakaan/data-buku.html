@@ -1,426 +1,22 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buku - Perpustakaan SDN Poris Pelawad 6</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        /* Reset dan font dasar */
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: Arial, sans-serif;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Buku - Perpustakaan SDN Poris Pelawad 6</title>
 
-        body {
-          background-color: #f8f9fa;
-        }
+    <!-- Eksternal Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        /* Navbar */
-        .navbar {
-          width: 100%;
-          height: 60px;
-          background: #1E2A38;
-          color: white;
-          display: flex;
-          align-items: center;
-          padding: 0 20px;
-          position: fixed;
-          top: 0;
-          left: 0;
-          z-index: 1000;
-        }
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        .menu-icon {
-          font-size: 24px;
-          cursor: pointer;
-        }
-
-        .right-section {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-left: auto;
-        }
-
-        .navbar i.user-icon {
-          font-size: 30px !important;
-        }
-
-        .navbar img {
-          height: 40px;
-          width: 40px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        .navbar h1 {
-          font-size: 20px;
-          font-weight: bold;
-        }
-
-        /* Sidebar */
-        .sidebar {
-          width: 250px;
-          background: #2F4050;
-          color: white;
-          height: 100vh;
-          padding-top: 80px;
-          position: fixed;
-          top: 0;
-          left: 0;
-          z-index: 999;
-          transition: transform 0.3s ease-in-out;
-          overflow-y: auto;
-        }
-
-        .sidebar-hidden {
-          transform: translateX(-100%);
-        }
-
-        .admin-profile {
-          text-align: center;
-          margin-bottom: 20px;
-        }
-
-        .admin-image {
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          object-fit: cover;
-          margin-bottom: 10px;
-        }
-
-        .admin-profile::after {
-          content: "";
-          display: block;
-          width: 100%;
-          height: 2px;
-          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
-          margin-top: 10px;
-        }
-
-        .admin-name {
-          font-size: 18px;
-          font-weight: bold;
-          color: #fff;
-        }
-
-        .sidebar ul {
-          list-style: none;
-          padding: 0;
-        }
-
-        .sidebar ul li {
-          margin: 5px 0;
-        }
-
-        .sidebar ul li a {
-          display: flex;
-          align-items: center;
-          text-decoration: none;
-          color: white;
-          font-size: 18px;
-          padding: 12px 15px;
-          transition: background 0.3s;
-          gap: 10px;
-        }
-
-        .sidebar ul li a i {
-          font-size: 20px;
-          width: 30px;
-          text-align: center;
-        }
-
-        .sidebar ul li a:hover {
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 8px;
-        }
-
-        .sidebar ul li a.active {
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 8px;
-          font-weight: bold;
-        }
-
-        /* Submenu */
-        .submenu {
-          display: none;
-          list-style: none;
-          padding-left: 45px;
-        }
-
-        .submenu li a {
-          font-size: 16px;
-          padding: 8px 20px;
-          display: block;
-        }
-
-        .submenu li a:hover {
-          background: rgba(255, 255, 255, 0.2);
-          border-radius: 8px;
-        }
-
-        .has-submenu a {
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        .submenu-toggle {
-          transition: transform 0.3s ease-in-out;
-          font-size: 16px;
-        }
-
-        .submenu-open .submenu-toggle {
-          transform: rotate(90deg);
-        }
-
-        /* Konten utama */
-        .content {
-          margin-top: 80px;
-          padding-left: 270px;
-          padding-right: 20px;
-          transition: padding-left 0.3s ease-in-out;
-          width: 100%;
-          box-sizing: border-box;
-        }
-
-        .content.sidebar-collapsed {
-          padding-left: 20px;
-        }
-
-        /* Pencarian */
-        .search-container {
-          position: relative;
-          width: 300px;
-          margin: 20px 0;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          flex-wrap: wrap;
-        }
-
-        .search-container input[type="text"] {
-          width: 100%;
-          height: 40px;
-          padding: 8px 36px 8px 12px;
-          border-radius: 5px;
-          border: 1px solid #ccc;
-          font-size: 14px;
-        }
-
-        .search-container .search-icon {
-          position: absolute;
-          top: 50%;
-          right: 12px;
-          transform: translateY(-50%);
-          color: #888;
-          font-size: 16px;
-          pointer-events: none;
-        }
-
-        /* Filter */
-        .filter-container {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin: 20px 0;
-          flex-wrap: wrap;
-        }
-
-        .filter-container label {
-          font-weight: 500;
-        }
-
-        .filter-container select {
-          height: 40px;
-          max-width: 300px;
-          padding: 5px 10px;
-          border-radius: 5px;
-          border: 1px solid #ccc;
-          font-size: 14px;
-        }
-
-        /* Tombol buat data */
-        .create-button {
-          background-color: #2F4050;
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          font-weight: bold;
-          text-decoration: none;
-          transition: background-color 0.3s ease;
-        }
-
-        .create-button:hover {
-          background-color: #1E6FA3;
-        }
-
-        .button-container {
-          margin: 20px 0;
-        }
-
-        /* Tombol ikon saja */
-        .icon-button {
-          width: 40px;
-          height: 40px;
-          background-color: #4CAF50;
-          color: white;
-          border: none;
-          border-radius: 6px;
-          font-size: 16px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-        }
-
-        .icon-button:hover {
-          background-color: #4CAF50;
-        }
-
-        /* Tabel */
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          background: white;
-        }
-
-        th, td {
-          text-align: center;
-          padding: 12px;
-          border: 1px solid #ddd;
-        }
-
-        th {
-          background-color: #2980B9;
-          color: white;
-        }
-
-        tr:nth-child(even) {
-          background-color: #f2f2f2;
-        }
-
-        .edit-btn, .delete-btn {
-          background: none;
-          border: none;
-          font-size: 18px;
-          cursor: pointer;
-          margin: 0 5px;
-        }
-
-        .edit-btn {
-          color: blue;
-        }
-
-        .delete-btn {
-          color: red;
-        }
-
-        /* Tombol kembali */
-        .back-btn {
-          display: inline-block;
-          margin-top: 20px;
-          text-decoration: none;
-          background-color: #2F4050;
-          color: white;
-          padding: 10px 15px;
-          border-radius: 5px;
-        }
-
-        .back-btn:hover {
-          background-color: #4e2625;
-        }
-
-        /* Responsif: Tablet */
-        @media screen and (max-width: 768px) {
-          .navbar {
-            padding: 0 10px;
-          }
-
-          .navbar h1 {
-            font-size: 16px;
-          }
-
-          .sidebar {
-            width: 220px;
-            transform: translateX(-100%);
-          }
-
-          .sidebar.sidebar-hidden {
-            transform: translateX(-100%);
-          }
-
-          .content {
-            padding-left: 20px;
-          }
-
-          table {
-            display: block;
-            overflow-x: auto;
-            white-space: nowrap;
-          }
-        }
-
-        /* Responsif: Mobile */
-        @media screen and (max-width: 600px) {
-          .filter-container {
-            flex-direction: column;
-            align-items: flex-start;
-          }
-        }
-
-        @media screen and (max-width: 480px) {
-          .navbar h1 {
-            font-size: 14px;
-          }
-
-          .menu-icon {
-            font-size: 20px;
-          }
-
-          .sidebar {
-            width: 200px;
-            transform: translateX(-100%);
-          }
-
-          .sidebar.sidebar-hidden {
-            transform: translateX(-100%);
-          }
-
-          .sidebar ul li a {
-            font-size: 16px;
-            padding: 10px;
-          }
-
-          th, td {
-            font-size: 14px;
-            padding: 5px;
-          }
-
-          .search-container,
-          .filter-container {
-            flex-direction: column;
-            align-items: stretch;
-            width: 100%;
-          }
-
-          .search-container input[type="text"],
-          .filter-container select {
-            width: 100%;
-          }
-        }
-    </style>
+    <!-- File CSS terpisah -->
+    <link rel="stylesheet" th:href="@{/css/data-buku.css}" />
 </head>
-<body>
 
+<body>
 <div class="navbar">
   <span class="menu-icon" onclick="toggleSidebar()">☰</span>
   <div class="right-section">
@@ -448,7 +44,7 @@
   </ul>
 </div>
 
-<div class="content" id="content">
+<div class="main-content" id="content">
     <h1>Data Buku</h1>
 
     <div class="search-container">
@@ -467,7 +63,6 @@
             </option>
         </select>
 
-        <!-- Tombol ikon download -->
         <button onclick="downloadTable()" class="icon-button" title="Download CSV">
             <i class="fas fa-download"></i>
         </button>
@@ -494,10 +89,10 @@
             <td th:text="${buku.pengarang}"></td>
             <td th:text="${buku.qty}"></td>
             <td th:text="${buku.deskripsi}"></td>
-            <td><img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" alt="Buku" width="100">
+            <td><img th:src="@{/img/buku/{foto}(foto=${buku.foto})}" alt="Buku" width="100"></td>
             <td>
                 <a th:href="@{'/admin-perpustakaan/edit-buku/' + ${buku.id}}" class="edit-btn"><i class="fas fa-edit"></i></a>
-                <a th:href="@{'/admin-perpustakaan/hapus-buku/' + ${buku.id}}" class="delete-btn"><i class="fas fa-trash"></i></a>
+                <a href="#" class="delete-btn" th:attr="data-id=${buku.id}"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         </tbody>
@@ -507,29 +102,46 @@
         <strong>Total Jumlah Buku: <span id="totalQty" th:text="${totalQty}"></span></strong>
     </div>
 
-    <!-- Tombol "Tambah Data Buku" -->
     <div class="button-container">
         <a href="/admin-perpustakaan/tambah-buku" class="create-button">+ Tambah Data Buku</a>
     </div>
 </div>
 
+<!-- SweetAlert trigger for simpan success -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+        const saved = /*[[${param.saved}]]*/ false;
+        if (saved === 'true') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data berhasil disimpan!'
+            });
+        }
+    /*]]>*/
+</script>
+
 <script>
-    // Toggle Sidebar
+    // =====================
+    // Sidebar Toggle
+    // =====================
     function toggleSidebar() {
-        var sidebar = document.getElementById("sidebar");
-        var content = document.getElementById("content");
+        const sidebar = document.getElementById("sidebar");
+        const content = document.getElementById("content");
         sidebar.classList.toggle("sidebar-hidden");
         content.classList.toggle("sidebar-collapsed");
     }
 
+    // =====================
     // Search Function
+    // =====================
     function searchTable() {
         const input = document.getElementById("searchInput").value.toLowerCase();
         const table = document.getElementById("guruTable");
         const trs = table.getElementsByTagName("tr");
 
         for (let i = 1; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[1]; // Kolom ke-2 = Nama Buku
+            const td = trs[i].getElementsByTagName("td")[1]; // Kolom Nama Buku
             if (td) {
                 const textValue = td.textContent || td.innerText;
                 trs[i].style.display = textValue.toLowerCase().includes(input) ? "" : "none";
@@ -537,14 +149,16 @@
         }
     }
 
-    // Filter by Nama Buku/Kategori
+    // =====================
+    // Filter by Nama/Kategori
+    // =====================
     function filterByNama() {
         const selected = document.getElementById("NamaFilter").value.toLowerCase();
         const table = document.getElementById("guruTable");
         const trs = table.getElementsByTagName("tr");
 
         for (let i = 1; i < trs.length; i++) {
-            const td = trs[i].getElementsByTagName("td")[2]; // kolom Kategori
+            const td = trs[i].getElementsByTagName("td")[2]; // Kolom Kategori
             if (td) {
                 const textValue = td.textContent || td.innerText;
                 trs[i].style.display = (selected === "semua" || textValue.toLowerCase() === selected) ? "" : "none";
@@ -552,17 +166,19 @@
         }
     }
 
+    // =====================
     // Download CSV Function
+    // =====================
     function downloadTable() {
         const table = document.getElementById("guruTable");
         let csvContent = "data:text/csv;charset=utf-8,";
         const rows = table.querySelectorAll("tr");
 
-        for (let row of rows) {
+        rows.forEach(row => {
             const cols = row.querySelectorAll("td, th");
-            let rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
+            const rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
             csvContent += rowData + "\r\n";
-        }
+        });
 
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
@@ -573,27 +189,29 @@
         document.body.removeChild(link);
     }
 
-    // Logout confirmation
-function confirmLogout() {
-  Swal.fire({
-    title: 'Yakin ingin Logout?',
-    text: "Anda akan keluar dari sistem.",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Ya, Logout!',
-    cancelButtonText: 'Batal'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // Arahkan ke endpoint login yang sesuai (dari root path)
-      window.location.href = "/login";
+    // =====================
+    // Logout Confirmation
+    // =====================
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Yakin ingin Logout?',
+            text: "Anda akan keluar dari sistem.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Logout!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "/login";
+            }
+        });
     }
-  });
-}
 
-
-    // Alert: Simpan
+    // =====================
+    // Alert Simpan & Edit
+    // =====================
     function showSaveAlert() {
         Swal.fire({
             icon: 'success',
@@ -602,7 +220,6 @@ function confirmLogout() {
         });
     }
 
-    // Alert: Edit
     function showUpdateAlert() {
         Swal.fire({
             icon: 'info',
@@ -611,7 +228,9 @@ function confirmLogout() {
         });
     }
 
-    // Alert: Hapus
+    // =====================
+    // Alert Hapus Konfirmasi (callback opsional)
+    // =====================
     function showDeleteAlert(callback) {
         Swal.fire({
             title: 'Yakin ingin menghapus?',
@@ -620,20 +239,60 @@ function confirmLogout() {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!'
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Terhapus!',
-                    'Data telah dihapus.',
-                    'success'
-                );
+                Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
                 if (typeof callback === 'function') {
-                    callback(); // Panggil fungsi hapus yang sesungguhnya
+                    callback();
                 }
             }
         });
     }
+
+    // =====================
+    // Auto-Trigger Alerts via URL Parameters
+    // =====================
+    document.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get("saved") === "true") {
+            showSaveAlert();
+        }
+
+        if (params.get("updated") === "true") {
+            showUpdateAlert();
+        }
+
+        // Tambahkan event listener ke semua tombol hapus
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+                const id = this.getAttribute("data-id");
+
+                Swal.fire({
+                    title: 'Yakin ingin menghapus?',
+                    text: "Data yang dihapus tidak bisa dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
+                        setTimeout(() => {
+                            window.location.href = `/admin-perpustakaan/hapus-buku/${id}`;
+                        }, 1200);
+                    }
+                });
+            });
+        });
+    });
+</script>
 </script>
 </body>
 </html>

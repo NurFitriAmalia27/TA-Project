@@ -4,243 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tambah Pengunjung - Perpustakaan SDN Poris Pelawad 6</title>
+
+  <!-- Icon dan Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
 
-    body {
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
-    }
-
-    .navbar {
-      width: 100%;
-      height: 60px;
-      background: #1E2A38;
-      color: white;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-    }
-
-    .menu-icon {
-      font-size: 24px;
-      cursor: pointer;
-    }
-
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-    }
-
-    .navbar i.user-icon {
-      font-size: 30px !important;
-    }
-
-    .navbar img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    .navbar h1 {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background: #2F4050;
-      color: white;
-      height: 100vh;
-      padding-top: 80px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      transition: transform 0.3s ease-in-out; /* Transisi yang lebih halus */
-      overflow-y: auto;
-    }
-
-    .sidebar-hidden {
-      transform: translateX(-100%); /* Sidebar tersembunyi */
-    }
-
-    .admin-profile {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .admin-image {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 10px;
-    }
-
-    .admin-profile::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
-      margin-top: 10px;
-    }
-
-    .admin-name {
-      font-size: 18px;
-      font-weight: bold;
-      color: #fff;
-    }
-
-    .menu-list li {
-      margin: 8px 0;
-    }
-
-    .menu-list li a {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 20px;
-      text-decoration: none;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .menu-list li a:hover,
-    .menu-list li a.active {
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-    }
-
-    .menu-list li a i {
-      width: 25px;
-      text-align: center;
-      font-size: 18px;
-    }
-
-    .main-content {
-      padding: 80px 20px 20px 20px;
-      margin-left: 250px;
-      transition: margin-left 0.3s ease-in-out;
-    }
-
-    .main-content.full {
-      margin-left: 0;
-    }
-
-    .form-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-
-    .floating-form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
-
-    h2 {
-  text-align: center;
-  margin-bottom: 20px; /* Menambah jarak bawah agar tidak terlalu dekat dengan konten form */
-}
-
-label {
-  font-weight: bold;
-  margin-top: 20px; /* Menambah jarak atas agar lebih terlihat terpisah dari judul */
-}
-
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0 16px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-
-    .button-container {
-      text-align: center;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .btn-simpan {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    .btn-batal {
-      background-color: #f44336;
-      color: white;
-    }
-
-    button:hover {
-      opacity: 0.8;
-    }
-    .button-container {
-  display: flex;
-  justify-content: center;
-  gap: 12px; /* jarak antar tombol */
-  margin-top: 10px;
-}
-
-.btn-simpan,
-.btn-batal {
-  padding: 10px 24px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-simpan {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-batal {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-simpan:hover,
-.btn-batal:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-  </style>
+  <!-- Font & CSS Eksternal -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/tambah-pengunjung.css}" />
 </head>
+
 <body>
 
 <div class="navbar">
@@ -270,6 +43,7 @@ label {
   </ul>
 </div>
 
+<!-- Main Content -->
 <div class="form-wrapper">
   <div class="floating-form">
     <h2>Tambah Data Pengunjung</h2>
@@ -281,17 +55,7 @@ label {
       <label for="jumlah">Jumlah Pengunjung:</label>
       <input type="number" id="jumlah" name="jumlah" th:field="*{jumlah}" required>
 
-      <label for="hari">Hari Kunjungan:</label>
-      <select id="hari" name="hari" th:field="*{hari}" required>
-        <option value="">Pilih Hari</option>
-        <option value="Senin">Senin</option>
-        <option value="Selasa">Selasa</option>
-        <option value="Rabu">Rabu</option>
-        <option value="Kamis">Kamis</option>
-        <option value="Jumat">Jumat</option>
-        <option value="Sabtu">Sabtu</option>
-        <option value="Minggu">Minggu</option>
-      </select>
+      <!-- HARI KUNJUNGAN DIHAPUS -->
 
       <label for="tanggal">Tanggal Kunjungan:</label>
       <input type="date" id="tanggal" name="tanggal" th:field="*{tanggal}" required>
@@ -300,12 +64,14 @@ label {
       <textarea id="keperluan" name="keperluan" th:field="*{keperluan}" rows="3" required></textarea>
 
       <div class="button-container">
-        <button type="submit" class="btn-simpan">Simpan</button>
         <a th:href="@{/admin-perpustakaan/data-pengunjung}" class="btn-batal">Batal</a>
+        <button type="submit" class="btn-simpan">Simpan</button>
       </div>
 
     </form>
   </div>
+</div>
+
 </div>
 
 <script>
@@ -336,13 +102,13 @@ label {
     });
   }
 
-  // Saat form submit
-  document.getElementById("addVisitorForm").addEventListener("submit", function (event) {
+  // Handler saat form tambah pengunjung disubmit (jika menggunakan localStorage)
+  document.getElementById("addVisitorForm")?.addEventListener("submit", function (event) {
     event.preventDefault(); // Cegah reload halaman
 
     // Ambil data dari input
-    const nama = document.getElementById("namaPengunjung").value;
-    const jumlah = document.getElementById("qty").value;
+    const nama = document.getElementById("nama").value;
+    const jumlah = document.getElementById("jumlah").value;
     const tanggal = document.getElementById("tanggal").value;
     const keperluan = document.getElementById("keperluan").value;
 
@@ -367,9 +133,8 @@ label {
     window.location.href = "Data Pengunjung.html";
   });
 
-  // Dummy init on load
+  // Inisialisasi saat halaman dimuat
   window.onload = function () {
-    // Bisa tambahkan fungsi inisialisasi di sini jika dibutuhkan
   };
 </script>
 </body>

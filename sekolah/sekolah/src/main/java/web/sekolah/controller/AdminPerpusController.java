@@ -35,7 +35,16 @@ public class AdminPerpusController {
         model.addAttribute("jumlahPeminjam", daftar.size());
         model.addAttribute("jumlahBuku", bukuService.getJumlahBuku());
         model.addAttribute("jumlahPengembali", pengembalianService.getJumlahPengembali());
-        model.addAttribute("jumlahPeminjamanBulanIni", peminjamanService.getJumlahPeminjamanBulanIni());
+        int jumlahBukuDipinjamBulanIni = peminjamanService.getAllPeminjaman().stream()
+                .filter(p -> {
+                    LocalDate tgl = p.getTglPinjam();
+                    return tgl != null &&
+                            tgl.getMonthValue() == LocalDate.now().getMonthValue() &&
+                            tgl.getYear() == LocalDate.now().getYear();
+                })
+                .mapToInt(p -> p.getJumlahPinjam() != null ? p.getJumlahPinjam() : 0)
+                .sum();
+        model.addAttribute("jumlahPeminjamanBulanIni", jumlahBukuDipinjamBulanIni);
 
         return "admin-perpustakaan/perpus-panel";
     }
