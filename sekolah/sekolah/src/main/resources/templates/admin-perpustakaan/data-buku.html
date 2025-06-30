@@ -47,25 +47,37 @@
 <div class="main-content" id="content">
     <h1>Data Buku</h1>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Cari nama Buku" onkeyup="searchTable()">
-        <i class="fas fa-search search-icon"></i>
+    <!-- Baris 1: Search -->
+    <div class="top-bar-row">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Cari nama Buku" onkeyup="searchTable()">
+            <i class="fas fa-search search-icon"></i>
+        </div>
     </div>
 
-    <div class="filter-container">
-        <label for="NamaFilter">Filter Kategori Buku:</label>
-        <select id="NamaFilter" onchange="filterByNama()">
-            <option value="Semua" th:selected="${selectedKategori == 'Semua'}">Semua</option>
-            <option th:each="kategori : ${kategoriList}"
-                    th:value="${kategori}"
-                    th:text="${kategori}"
-                    th:selected="${kategori == selectedKategori}">
-            </option>
-        </select>
+    <!-- Baris 2: Filter + Create -->
+    <div class="top-bar-row between">
+        <div class="filter-group">
+            <div class="filter-container">
+                <label for="NamaFilter">Filter Kategori Buku:</label>
+                <select id="NamaFilter" onchange="filterByNama()">
+                    <option value="Semua" th:selected="${selectedKategori == 'Semua'}">Semua</option>
+                    <option th:each="kategori : ${kategoriList}"
+                            th:value="${kategori}"
+                            th:text="${kategori}"
+                            th:selected="${kategori == selectedKategori}">
+                    </option>
+                </select>
 
-        <button onclick="downloadTable()" class="icon-button" title="Download CSV">
-            <i class="fas fa-download"></i>
-        </button>
+                <button onclick="downloadTable()" class="icon-button" title="Download CSV">
+                    <i class="fas fa-download"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <a href="/admin-perpustakaan/tambah-buku" class="create-button">+ Tambah Data Buku</a>
+        </div>
     </div>
 
     <table id="guruTable">
@@ -102,9 +114,6 @@
         <strong>Total Jumlah Buku: <span id="totalQty" th:text="${totalQty}"></span></strong>
     </div>
 
-    <div class="button-container">
-        <a href="/admin-perpustakaan/tambah-buku" class="create-button">+ Tambah Data Buku</a>
-    </div>
 </div>
 
 <!-- SweetAlert trigger for simpan success -->

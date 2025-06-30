@@ -30,7 +30,7 @@ public class BukuController {
 
     // Daftar kategori default
     private List<String> kategoriList() {
-        return Arrays.asList("Novel", "Ensiklopedia", "Pelajaran", "Biografi", "Komik", "Lainnya");
+        return Arrays.asList("Novel", "Ensiklopedia", "Pelajaran", "Biografi", "Dongeng", "Lainnya");
     }
 
     @GetMapping("/data-buku")

@@ -49,24 +49,35 @@
 <div class="content" id="content">
   <h1>Laporan</h1>
 
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Cari nama Buku" onkeyup="searchTable()">
-    <i class="fas fa-search search-icon"></i>
+  <!-- Baris pertama: Search -->
+  <div class="search-row">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Cari nama Buku" onkeyup="searchTable()">
+      <i class="fas fa-search search-icon"></i>
+    </div>
   </div>
 
-  <div class="filter-container">
-    <label for="KeteranganFilter">Filter Keterangan:</label>
-    <select id="KeteranganFilter" onchange="filterByKeterangan()">
-      <option value="">Semua</option>
-      <option value="Hilang">Hilang</option>
-      <option value="Rusak">Rusak</option>
-    </select>
+  <!-- Baris kedua: Filter + Download kiri, Tambah Laporan kanan -->
+  <div class="action-row">
+    <div class="filter-container">
+      <label for="KeteranganFilter">Filter Keterangan:</label>
+      <select id="KeteranganFilter" onchange="filterByKeterangan()">
+        <option value="">Semua</option>
+        <option value="Hilang">Hilang</option>
+        <option value="Rusak">Rusak</option>
+      </select>
 
-    <button onclick="downloadTable()" class="icon-button" title="Download CSV">
-      <i class="fas fa-download"></i>
-    </button>
+      <button onclick="downloadTable()" class="icon-button" title="Download CSV">
+        <i class="fas fa-download"></i>
+      </button>
+    </div>
+
+    <div class="button-container">
+      <button class="create-button" onclick="window.location.href='/admin-perpustakaan/tambah-laporan'">+ Tambah Laporan</button>
+    </div>
   </div>
 
+  <!-- Tabel Laporan -->
   <table id="guruTable">
     <thead>
     <tr>
@@ -91,11 +102,11 @@
         <span th:if="${laporan.foto == null}">Tidak Ada Foto</span>
       </td>
       <td>
-        <a th:href="@{'/admin-perpustakaan/laporan/edit/' + ${laporan.id}}" class="edit-btn" title="Edit" style="text-decoration: none;">
-          <i class="fas fa-edit" style="color: blue;"></i>
+        <a th:href="@{'/admin-perpustakaan/laporan/edit/' + ${laporan.id}}" class="edit-btn" title="Edit">
+          <i class="fas fa-edit"></i>
         </a>
-        <a th:href="@{'/admin-perpustakaan/laporan/delete/' + ${laporan.id}}" class="delete-btn" title="Hapus" style="text-decoration: none;">
-          <i class="fas fa-trash" style="color: red;"></i>
+        <a th:href="@{'/admin-perpustakaan/laporan/delete/' + ${laporan.id}}" class="delete-btn" title="Hapus">
+          <i class="fas fa-trash"></i>
         </a>
       </td>
     </tr>
@@ -105,8 +116,6 @@
   <div class="button-container">
     <strong>Total Jumlah Buku: <span id="totalQty" th:text="${totalQty}">0</span></strong>
   </div>
-
-  <button class="create-button" onclick="window.location.href='/admin-perpustakaan/tambah-laporan'">+ Tambah Laporan</button>
 </div>
 
 <script>
