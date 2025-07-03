@@ -104,9 +104,10 @@
     </table>
   </div>
 
-  <p id="totalDenda" class="total-denda">Total Denda: <span th:text="'Rp ' + ${totalDenda}">Rp 0</span></p>
-  <a class="back-btn" href="/admin-perpustakaan/perpus-panel">← Kembali ke Beranda</a>
-</div>
+  <div class="denda-bar">
+    <a class="back-btn" href="/admin-perpustakaan/perpus-panel">← Kembali ke Beranda</a>
+    <p id="totalDenda" class="total-denda">Total Denda: <span th:text="'Rp ' + ${totalDenda}">Rp 0</span></p>
+  </div>
 
 <script>
   // Toggle Sidebar

@@ -150,18 +150,34 @@ body {
 }
 
 .main-content h1 {
+  text-align: center;
+  color: #1E2A38;
   margin-bottom: 20px;
+  font-size: 36px;      /* Atau 40px jika ingin lebih besar */
+  font-weight: 700;     /* Bisa juga 800 jika ingin sangat tebal */
+}
+
+
+/* === BARIS === */
+.top-bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.top-bar-row.between {
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
 /* === SEARCH === */
 .search-container {
   position: relative;
   width: 300px;
-  margin: 20px 0;
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .search-container input[type="text"] {
@@ -188,7 +204,6 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 20px 0;
   flex-wrap: wrap;
 }
 
@@ -222,7 +237,8 @@ body {
 }
 
 .button-container {
-  margin: 20px 0;
+  display: flex;
+  justify-content: flex-start;
 }
 
 /* === BUTTON ICON ONLY === */

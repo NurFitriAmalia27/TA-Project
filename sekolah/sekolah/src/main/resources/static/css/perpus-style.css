@@ -140,11 +140,13 @@
         }
 
         .page-title {
-          font-size: 26px;
-          font-weight: 600;
-          color: #2c3e50;
-          margin-bottom: 1rem;
+            text-align: center;
+            color: #1E2A38;
+            margin-bottom: 20px;
+            font-size: 40px;
+            font-weight: 900;
         }
+
 
         /* === KARTU (CARDS) === */
         .cards {

@@ -48,32 +48,38 @@
 <div class="main-content" id="content">
   <h1>Data Pengunjung Perpustakaan</h1>
 
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Cari nama Pengunjung">
-    <i class="fas fa-search search-icon"></i>
+  <!-- Baris pertama: Search -->
+  <div class="search-row">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Cari nama Pengunjung">
+      <i class="fas fa-search search-icon"></i>
+    </div>
   </div>
 
-  <div class="filter-container">
-    <label for="NamaFilter">Filter Hari Pengunjung:</label>
-    <select id="NamaFilter">
-      <option value="">Semua</option>
-      <option value="Senin">Senin</option>
-      <option value="Selasa">Selasa</option>
-      <option value="Rabu">Rabu</option>
-      <option value="Kamis">Kamis</option>
-      <option value="Jumat">Jumat</option>
-      <option value="Sabtu">Sabtu</option>
-      <option value="Minggu">Minggu</option>
-    </select>
+  <!-- Baris kedua: Filter + Download kiri, Tambah Pengunjung kanan -->
+  <div class="action-row">
+    <div class="filter-container">
+      <label for="NamaFilter">Filter Hari Pengunjung:</label>
+      <select id="NamaFilter">
+        <option value="">Semua</option>
+        <option value="Senin">Senin</option>
+        <option value="Selasa">Selasa</option>
+        <option value="Rabu">Rabu</option>
+        <option value="Kamis">Kamis</option>
+        <option value="Jumat">Jumat</option>
+        <option value="Sabtu">Sabtu</option>
+        <option value="Minggu">Minggu</option>
+      </select>
 
-    <!-- Tombol ikon download -->
-    <button onclick="downloadTable()" class="icon-button" title="Download CSV">
-      <i class="fas fa-download"></i>
-    </button>
-  </div>
+      <!-- Tombol ikon download -->
+      <button onclick="downloadTable()" class="icon-button" title="Download CSV">
+        <i class="fas fa-download"></i>
+      </button>
+    </div>
 
-  <div class="button-container">
-    <a class="back-btn" th:href="@{/admin-perpustakaan/tambah-pengunjung}">+ Tambah Pengunjung</a>
+    <div class="button-container">
+      <a class="back-btn" th:href="@{/admin-perpustakaan/tambah-pengunjung}">+ Tambah Pengunjung</a>
+    </div>
   </div>
 
   <table id="tabelPengunjung">
