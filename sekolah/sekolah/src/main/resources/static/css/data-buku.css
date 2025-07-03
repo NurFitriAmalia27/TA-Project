@@ -64,7 +64,7 @@ body {
   top: 0;
   left: 0;
   z-index: 999;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
   overflow-y: auto;
 }
 
@@ -145,7 +145,7 @@ body {
   transition: margin-left 0.3s ease-in-out;
 }
 
-.main-content.full {
+.sidebar-hidden ~ .main-content {
   margin-left: 0;
 }
 
@@ -153,10 +153,9 @@ body {
   text-align: center;
   color: #1E2A38;
   margin-bottom: 20px;
-  font-size: 36px;      /* Atau 40px jika ingin lebih besar */
-  font-weight: 700;     /* Bisa juga 800 jika ingin sangat tebal */
+  font-size: 36px;
+  font-weight: 700;
 }
-
 
 /* === BARIS === */
 .top-bar-row {
@@ -315,6 +314,25 @@ tr:nth-child(even) {
 }
 
 /* === RESPONSIVE === */
+@media screen and (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+    position: fixed;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .main-content.full {
+    margin-left: 0;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .navbar {
     padding: 0 10px;
@@ -326,14 +344,6 @@ tr:nth-child(even) {
 
   .sidebar {
     width: 220px;
-  }
-
-  .main-content {
-    margin-left: 220px;
-  }
-
-  .main-content.full {
-    margin-left: 0;
   }
 
   table {

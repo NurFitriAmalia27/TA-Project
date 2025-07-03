@@ -137,9 +137,12 @@
     function toggleSidebar() {
         const sidebar = document.getElementById("sidebar");
         const content = document.getElementById("content");
+
         sidebar.classList.toggle("sidebar-hidden");
-        content.classList.toggle("sidebar-collapsed");
+        sidebar.classList.toggle("show");
+        content.classList.toggle("full");
     }
+
 
     // =====================
     // Search Function
