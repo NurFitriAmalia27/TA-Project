@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.sekolah.model.Ekstrakurikuler;
 import web.sekolah.service.EkstrakurikulerService;
 
@@ -37,18 +38,20 @@ public class EkstrakurikulerController {
     public String saveEskul(@Valid @ModelAttribute("ekstrakurikuler") Ekstrakurikuler eskul,
                             BindingResult result,
                             @RequestParam("foto") MultipartFile fotoFile,
-                            Model model) {
+                            Model model,
+                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "admin/eskul/create-eskul";
         }
 
         eskulService.save(eskul, fotoFile);
+        redirectAttributes.addAttribute("saved", "true");
         return "redirect:/admin/eskul/data-eskul";
     }
 
     // Tampilkan form edit
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
+    public String showEditForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Ekstrakurikuler eskul = eskulService.getById(id);
         model.addAttribute("ekstrakurikuler", eskul);
         return "admin/eskul/edit-eskul"; // pastikan file ini ada
@@ -58,8 +61,10 @@ public class EkstrakurikulerController {
     @PostMapping("/edit/{id}")
     public String updateEskul(@PathVariable("id") Long id,
                               @ModelAttribute Ekstrakurikuler eskul,
-                              @RequestParam("foto") MultipartFile fotoFile) {
+                              @RequestParam("foto") MultipartFile fotoFile,
+                              RedirectAttributes redirectAttributes) {
         eskulService.update(id, eskul, fotoFile);
+        redirectAttributes.addAttribute("updated", "true");
         return "redirect:/admin/eskul/data-eskul";
     }
 

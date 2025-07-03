@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.sekolah.model.Berita;
 import web.sekolah.service.BeritaService;
 
@@ -46,7 +47,8 @@ public class BeritaController {
                              @RequestParam("deskripsi") String deskripsi,
                              @RequestParam("tanggal") String tanggal,
                              @RequestParam("penulis") String penulis,
-                             @RequestParam("foto") MultipartFile fotoFile) throws IOException {
+                             @RequestParam("foto") MultipartFile fotoFile,
+                             RedirectAttributes redirectAttributes) throws IOException {
 
         LocalDate localDate = LocalDate.parse(tanggal);
 
@@ -87,7 +89,7 @@ public class BeritaController {
 
         // Simpan berita
         beritaService.save(berita);
-
+        redirectAttributes.addAttribute("saved", "true");
         return "redirect:/admin/berita/data-berita";  // Redirect ke halaman data berita
     }
 
@@ -105,7 +107,8 @@ public class BeritaController {
     public String updateBerita(@PathVariable("id") Long id,
                                @ModelAttribute Berita berita,
                                @RequestParam("file") MultipartFile file,
-                               @RequestParam("fotoLama") String fotoLama) {
+                               @RequestParam("fotoLama") String fotoLama,
+                               RedirectAttributes redirectAttributes) {
 
         if (!file.isEmpty()) {
             String fileName = file.getOriginalFilename();
@@ -127,6 +130,7 @@ public class BeritaController {
         }
 
         beritaService.save(berita);
+        redirectAttributes.addAttribute("updated", "true");
         return "redirect:/admin/berita/data-berita"; // Redirect sesuai kebutuhan
     }
 
@@ -137,7 +141,8 @@ public class BeritaController {
                                @RequestParam("deskripsi") String deskripsi,
                                @RequestParam("tanggal") String tanggal,
                                @RequestParam("penulis") String penulis,
-                               @RequestParam(value = "foto", required = false) MultipartFile foto) {
+                               @RequestParam(value = "foto", required = false) MultipartFile foto,
+                               RedirectAttributes redirectAttributes) {
 
         // Ambil berita berdasarkan ID
         Berita berita = beritaService.findById(id);
@@ -179,7 +184,7 @@ public class BeritaController {
 
         // Simpan berita yang telah diperbarui
         beritaService.save(berita);
-
+        redirectAttributes.addAttribute("updated", "true");
         return "redirect:/admin/berita/data-berita"; // Redirect ke halaman data berita
     }
 

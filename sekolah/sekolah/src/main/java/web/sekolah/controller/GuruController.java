@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.sekolah.model.Guru;
 import web.sekolah.repository.GuruRepository;
 import web.sekolah.service.GuruService;
@@ -50,16 +51,18 @@ public class GuruController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editGuru(@PathVariable Long id, Model model) {
+    public String editGuru(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
         Guru guru = guruService.findById(id);
         model.addAttribute("guru", guru);
+        redirectAttributes.addAttribute("updated", "true");
         return "admin/guru/edit-guru";
     }
 
     @PostMapping("/save")
     public String saveGuru(@Valid @ModelAttribute Guru guru,
                            BindingResult result,
-                           @RequestParam("foto") MultipartFile fotoFile) throws IOException {
+                           @RequestParam("foto") MultipartFile fotoFile,
+                           RedirectAttributes redirectAttributes) throws IOException {
         if (result.hasErrors()) {
             // Jika ada error validasi, tampilkan kembali form dengan pesan error
             return "admin/guru/create-guru";  // Atau halaman edit-guru
@@ -80,6 +83,7 @@ public class GuruController {
         }
 
         guruRepository.save(guru);
+        redirectAttributes.addAttribute("saved", "true");
         return "redirect:/admin/guru/data-guru";  // Redirect ke halaman data guru
     }
 

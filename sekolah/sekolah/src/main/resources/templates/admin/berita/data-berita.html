@@ -68,6 +68,34 @@
        margin-left: auto;
      }
 
+     .admin-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.admin-profile::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+  margin-top: 10px;
+}
+
+.admin-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  }
+
      /* =======================
         SIDEBAR
      ========================== */
@@ -438,6 +466,10 @@
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
+    <div class="admin-profile">
+        <img src="/img/Logo.png" alt="Profil Admin" class="admin-image">
+        <p class="admin-name">ADMIN WEBSITE</p>
+    </div>
     <ul class="menu-list">
         <li><a th:href="@{/admin/admin-panel}"><i class="fas fa-home"></i> Dashboard</a></li>
         <li><a th:href="@{/admin/guru/data-guru}"><i class="fas fa-chalkboard-teacher"></i> Data Guru</a></li>
@@ -628,7 +660,32 @@ function filterByTahun() {
       });
     }
 
-    //function delet
+    //function popout saved & updated
+    document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const saved = urlParams.get('saved');
+    const updated = urlParams.get('updated');
+
+    if (saved === 'true') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: 'Data berhasil ditambahkan!',
+        confirmButtonColor: '#3085d6'
+      });
+    }
+
+    if (updated === 'true') {
+      Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: 'Data berhasil diupdate!',
+        confirmButtonColor: '#3085d6'
+      });
+    }
+  });
+
+    //function delete
     document.addEventListener('DOMContentLoaded', function () {
     const deleteButtons = document.querySelectorAll('.delete-btn');
 
@@ -646,7 +703,10 @@ function filterByTahun() {
           cancelButtonText: 'Batal'
         }).then((result) => {
           if (result.isConfirmed) {
+          Swal.fire('Terhapus!', 'Data telah dihapus.', 'success');
+                        setTimeout(() => {
             window.location.href = `/admin/berita/delete/${beritaId}`;
+            }, 1200);
           }
         });
       });

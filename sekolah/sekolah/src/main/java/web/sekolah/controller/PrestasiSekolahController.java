@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.sekolah.model.PrestasiSekolah;
 import web.sekolah.service.PrestasiSekolahService;
 
@@ -34,7 +35,8 @@ public class PrestasiSekolahController {
 
     @PostMapping("/simpan")
     public String simpanPrestasi(@ModelAttribute PrestasiSekolah prestasiSekolah,
-                                 @RequestParam("file") MultipartFile file) {
+                                 @RequestParam("file") MultipartFile file,
+                                 RedirectAttributes redirectAttributes) {
 
         if (!file.isEmpty()) {
             try {
@@ -58,13 +60,15 @@ public class PrestasiSekolahController {
         }
 
         prestasiSekolahService.savePrestasiSekolah(prestasiSekolah);
+        redirectAttributes.addAttribute("saved", "true");
         return "redirect:/admin/prestasi/sekolah/dapres-sekolah";
     }
 
     @GetMapping("/edit-sepres/{id}")
-    public String editForm(@PathVariable("id") Long id, Model model) {
+    public String editForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         PrestasiSekolah prestasiSekolah = prestasiSekolahService.getById(id);
         model.addAttribute("prestasiSekolah", prestasiSekolah);
+        redirectAttributes.addAttribute("updated", "true");
         return "admin/prestasi/sekolah/edit-sepres";
     }
 

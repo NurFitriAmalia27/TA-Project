@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/admin-panel.css">
+    <link rel="stylesheet" th:href="@{/css/admin-panel.css}">
 </head>
 
 <body>
@@ -20,6 +20,10 @@
 </div>
 
 <div class="sidebar" id="sidebar">
+  <div class="admin-profile">
+    <img src="/img/Logo.png" alt="Profil Admin" class="admin-image">
+    <p class="admin-name">ADMIN WEBSITE</p>
+  </div>
   <ul>
     <li><a href="#"class="active"><i class="fas fa-home"></i> Dashboard</a></li>
     <li><a th:href="@{/admin/guru/data-guru}"><i class="fas fa-chalkboard-teacher"></i> Data Guru</a></li>

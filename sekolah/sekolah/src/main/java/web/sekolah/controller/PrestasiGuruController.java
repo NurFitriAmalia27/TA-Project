@@ -1,6 +1,7 @@
 package web.sekolah.controller;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.sekolah.model.PrestasiGuru;
 import web.sekolah.service.PrestasiGuruService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,8 @@ public class PrestasiGuruController {
 
     @PostMapping("/simpan")
     public String simpanPrestasi(@ModelAttribute PrestasiGuru prestasiGuru,
-                                 @RequestParam("file") MultipartFile file) {
+                                 @RequestParam("file") MultipartFile file,
+                                 RedirectAttributes redirectAttributes) {
 
         if (!file.isEmpty()) {
             try {
@@ -62,13 +64,15 @@ public class PrestasiGuruController {
         }
 
         prestasiGuruService.savePrestasiGuru(prestasiGuru);
+        redirectAttributes.addAttribute("saved", "true");
         return "redirect:/admin/prestasi/guru/dapres-guru";
     }
 
     @GetMapping("/edit-gupres/{id}")
-    public String editForm(@PathVariable("id") Long id, Model model) {
+    public String editForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         PrestasiGuru prestasiGuru = prestasiGuruService.getById(id);
         model.addAttribute("prestasiGuru", prestasiGuru);
+        redirectAttributes.addAttribute("updated", "true");
         return "admin/prestasi/guru/edit-gupres";
     }
 

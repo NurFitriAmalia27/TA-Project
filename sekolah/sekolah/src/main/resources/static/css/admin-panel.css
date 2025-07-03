@@ -1,9 +1,9 @@
 /* RESET DAN DASAR */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -73,6 +73,34 @@ body {
 .sidebar-hidden {
   transform: translateX(-100%);
 }
+
+.admin-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.admin-profile::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+  margin-top: 10px;
+}
+
+.admin-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  }
 
 .sidebar ul {
   list-style: none;
