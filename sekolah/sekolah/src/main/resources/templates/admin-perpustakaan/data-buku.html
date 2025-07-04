@@ -134,12 +134,14 @@
     // =====================
     // Sidebar Toggle
     // =====================
-    function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const content = document.getElementById("content");
-        sidebar.classList.toggle("sidebar-hidden");
-        content.classList.toggle("sidebar-collapsed");
-    }
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+
+    sidebar.classList.toggle("sidebar-hidden");
+    sidebar.classList.toggle("show");
+}
+
 
     // =====================
     // Search Function

@@ -185,11 +185,14 @@ body {
   padding-left: 20px;
 }
 
-.page-title {
-  font-size: 24px;
-  font-weight: bold;
+/* Judul halaman */
+.page-title,
+.content h1 {
+  font-size: 36px;
+  font-weight: 700;
   margin-bottom: 20px;
-  color: #2c3e50;
+  color: #1E2A38;
+  text-align: center;
 }
 
 /* Baris search dan action */
@@ -215,7 +218,9 @@ body {
 }
 
 .button-container {
-  margin: 0; /* hilangkan margin agar rapi dengan baris */
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
 }
 
 /* Search */
@@ -280,7 +285,7 @@ body {
   background-color: #3e8e41;
 }
 
-/* Create button */
+/* Create button (sesuai data-buku) */
 .create-button {
   background-color: #2F4050;
   color: white;
@@ -291,6 +296,7 @@ body {
   text-decoration: none;
   transition: background-color 0.3s ease;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .create-button:hover {
