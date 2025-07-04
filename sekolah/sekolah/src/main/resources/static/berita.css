@@ -143,7 +143,7 @@ body {
 }
 
 .news-item button {
-  background: #2f8f2f;
+  background: #708e7a;
   color: #fff;
   border: none;
   padding: 10px 15px;
@@ -152,7 +152,7 @@ body {
 }
 
 .news-item button:hover {
-  background: #248424;
+  background: #8fa996
 }
 
 /* Efek hover pada grid item */

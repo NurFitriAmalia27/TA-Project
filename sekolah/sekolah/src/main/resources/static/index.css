@@ -105,6 +105,7 @@ width: 25px;
 height: 3px;
 background-color: white;
 }
+
 .hero {
 background: url('img/Tampilan1.png') center/cover no-repeat;
 height: 400px;
@@ -226,15 +227,18 @@ font-size: 2rem;
 color: #56726d;
 margin-bottom: 10px;
 }
+
 .justify-text {
 text-align: justify; /* Rata kanan dan kiri */
 }
+
 .kepala-sekolah-name {
 margin-top: 20px; /* Beri jarak 20px dari atas */
 font-size: 16px;  /* Atur ukuran font */
 color: #333;      /* Warna teks */
 text-align: left; /* Agar tetap rata kiri */
 }
+
 /* Divider Line */
 .divider-line {
 width: 100%;
@@ -242,6 +246,7 @@ height: 10px; /* Atur ketebalan garis */
 background-color: #e0e0e0; /* Warna abu-abu muda */
 margin: 20px 0; /* Jarak atas dan bawah */
 }
+
 .program-section {
        padding: 20px;
        max-width: 1000px; /* Batas lebar kontainer */
@@ -288,6 +293,55 @@ margin: 20px 0; /* Jarak atas dan bawah */
        border-radius: 10px;
        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
    }
+
+   .section-news {
+          max-width: 1200px;
+          margin: 20px auto;
+          padding: 10px 15px;
+      }
+
+   .news-container {
+     display: flex;
+     flex-wrap: wrap;
+     gap: 70px;
+     justify-content: flex-start;
+   }
+
+   .news-item {
+     width: 300px;
+     background-color: #fff;
+     padding: 15px;
+     border-radius: 8px;
+     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+   }
+
+   .news-item img {
+     width: 100%;
+     height: 160px;
+     object-fit: cover;
+     border-radius: 4px;
+   }
+
+   .news-item h3 {
+     font-size: 18px;
+     margin: 10px 0 5px;
+   }
+
+   .news-item p {
+     font-size: 14px;
+     color: #555;
+   }
+
+   .news-item .btn-link button {
+     margin-top: 10px;
+     padding: 6px 12px;
+     background-color: #708e7a;
+     color: white;
+     border: none;
+     border-radius: 4px;
+     cursor: pointer;
+   }
+
    .section {
        max-width: 1200px;
        margin: 20px auto;
@@ -313,6 +367,9 @@ margin: 20px 0; /* Jarak atas dan bawah */
        overflow: hidden;
        text-align: center;
        transition: transform 0.3s ease;
+       flex: 0 0 auto;
+       width: 250px;
+       margin: 10px;
    }
 
    .card:hover {
@@ -333,6 +390,43 @@ margin: 20px 0; /* Jarak atas dan bawah */
        text-transform: uppercase;
    }
 
+   .gallery-wrapper {
+     overflow-x: auto;
+     width: 100%;
+     position: relative;
+     cursor: grab;
+     scrollbar-width: none;
+     -ms-overflow-style: none;
+   }
+
+   .gallery-wrapper::-webkit-scrollbar {
+     display: none;                 /* Safari & Chrome */
+   }
+
+   .gallery-wrapper.active {
+     cursor: grabbing;
+     cursor: -webkit-grabbing;
+   }
+
+   .gallery-track {
+     display: flex;
+     animation: scroll-horizontal 40s linear infinite;
+   }
+
+   .gallery-wrapper:hover .gallery-track {
+     animation-play-state: paused;
+   }
+
+
+   /* Animasi jalan horizontal */
+   @keyframes scroll-horizontal {
+     0% {
+       transform: translateX(0);
+     }
+     100% {
+       transform: translateX(-50%);
+     }
+   }
 
 /* Footer Styling */
 footer {
@@ -385,6 +479,7 @@ text-decoration: underline;
 .nav-links.active {
    display: flex;
 }
+
 .logo-container {
    margin-left: 10px; /* Sesuaikan lagi untuk tampilan mobile */
 }
@@ -392,6 +487,7 @@ text-decoration: underline;
 .logo-text {
    font-size: 1rem; /* Ukuran font lebih kecil agar tetap satu baris */
 }
+
 .hamburger {
    display: flex;
 }
@@ -399,6 +495,7 @@ text-decoration: underline;
 .footer {
    font-size: 12px;
 }
+
 .content {
    flex-direction: column;
    align-items: center;
@@ -407,15 +504,18 @@ text-decoration: underline;
 .hero {
    height: 200px; /* Sesuaikan tinggi untuk perangkat kecil */
 }
+
 .hero-overlay p {
    font-size: clamp(1rem, 4vw, 2rem); /* Sesuaikan ukuran font */
 }
+
 /* Adjust Container Layout */
 .container {
    flex-direction: column;
    align-items: center;
    padding: 0 20px; /* Beri ruang pada sisi layar */
 }
+
 .features-section {
    flex-direction: column;
    align-items: center;
@@ -425,6 +525,7 @@ text-decoration: underline;
 .feature {
    max-width: 90%;
 }
+
 /* Adjust Image and Text in Welcome Section */
 .image-wrapper img {
    max-width: 100%; /* Pastikan gambar menyesuaikan ukuran layar */
@@ -439,6 +540,7 @@ text-decoration: underline;
    font-size: 1.5rem;
    text-align: center;
 }
+
 .program-item {
            flex-direction: column; /* Susun vertikal */
            text-align: center;
@@ -455,10 +557,12 @@ text-decoration: underline;
 .grid-container {
 grid-template-columns: repeat(2, 1fr); /* Dua kolom */
 }
+
 /* Divider Line */
 .divider-line {
    height: 5px; /* Tipiskan garis untuk tampilan mobile */
 }
+
 .social-link {
    font-size: 10px; /* Ukuran lebih kecil untuk teks */
 }
@@ -466,8 +570,50 @@ grid-template-columns: repeat(2, 1fr); /* Dua kolom */
 .social-media {
    gap: 10px; /* Kurangi jarak antar elemen */
 }
+
 @media (max-width: 480px) {
-   .grid-container {
-       grid-template-columns: 1fr; /* Satu kolom */
-   }
+  .grid-container {
+    justify-content: center; /* agar item di tengah */
+  }
+
+  .card {
+    width: 90%; /* agar tidak terlalu kecil di mobile */
+  }
 }
+
+@media (max-width: 1024px) {
+  .news-container {
+    gap: 40px;
+    justify-content: center;
+  }
+
+  .news-item {
+    width: 45%; /* dua kolom di tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  .news-item {
+    width: 100%; /* satu kolom di layar kecil */
+  }
+}
+
+@media (max-width: 480px) {
+  .section-news {
+    padding: 10px;
+  }
+
+  .news-item h3 {
+    font-size: 16px;
+  }
+
+  .news-item p {
+    font-size: 13px;
+  }
+
+  .news-item .btn-link button {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+

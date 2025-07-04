@@ -157,54 +157,40 @@
         </div>
     </div>
 </section>
+
+<div class="section">
+    <h2>Berita Terbaru</h2>
+    <div class="news-container">
+        <div class="news-item" th:each="berita : ${beritaTerbaru}">
+            <img th:src="@{'/img/berita/' + ${berita.foto}}" alt="Gambar Berita" />
+            <h3 th:text="${berita.judul}">Judul Berita</h3>
+            <p th:text="${berita.deskripsi.length() > 100 ? #strings.substring(berita.deskripsi, 0, 100) + '...' : berita.deskripsi}">
+                Isi singkat berita akan tampil di sini.
+            </p>
+            <a th:href="@{/informasi/sub-berita/{id}(id=${berita.id})}" class="btn-link">
+                <button>Baca Selengkapnya</button>
+            </a>
+        </div>
+    </div>
+</div>
+
 <div class="divider-line"></div>
 <!-- Bagian Galeri Kegiatan -->
-<section class="section">
+<section class="section-news">
     <h2>Galeri Kegiatan</h2>
-    <div class="grid-container">
-        <div class="card">
-            <img src="/img/Upacara Senin.jpg" alt="Upacara Senin">
-            <div class="card-title">Upacara Senin</div>
-        </div>
-        <div class="card">
-            <img src="/img/Program Jumat.jpeg" alt="Tadarus Jum'at">
-            <div class="card-title">Tadarus Jum'at</div>
-        </div>
-        <div class="card">
-            <img src="/img/Tangerang Mengaji.jpeg" alt="Tangerang Mengaji">
-            <div class="card-title">Tangerang Mengaji</div>
-        </div>
-        <div class="card">
-            <img src="/img/Penyambutan Siswa.jpeg" alt="Penyambutan Siswa">
-            <div class="card-title">Penyambutan Siswa</div>
-        </div>
-        <div class="card">
-            <img src="/img/Gelar Karya.jpeg" alt="Gelar Karya P5">
-            <div class="card-title">Gelar Karya P5</div>
-        </div>
-        <div class="card">
-            <img src="/img/Classmet.jpeg" alt="Class Meeting">
-            <div class="card-title">Class Meeting</div>
-        </div>
-        <div class="card">
-            <img src="/img/Pekan Literasi.jpeg" alt="Pekan Literasi">
-            <div class="card-title">Pekan Literasi</div>
-        </div>
-        <div class="card">
-            <img src="/img/Solat Jumat.jpeg" alt="Sholat Berjamaah">
-            <div class="card-title">Sholat Berjamaah</div>
-        </div>
-        <div class="card">
-            <img src="/img/Pembelajaran.jpeg" alt="Pembelajaran Luar Kelas">
-            <div class="card-title">Pembelajaran Luar Kelas</div>
-        </div>
-        <div class="card">
-            <img src="/img/Hari Guru.jpeg" alt="Hari Guru">
-            <div class="card-title">Hari Guru</div>
-        </div>
-        <div class="card">
-            <img src="/img/Maulid.jpeg" alt="Maulid Nabi Muhammad">
-            <div class="card-title">Maulid Nabi Muhammad</div>
+    <div class="gallery-wrapper">
+        <div class="gallery-track">
+            <div class="card"><img src="/img/Upacara Senin.jpg" alt="Upacara Senin"><div class="card-title">Upacara Senin</div></div>
+            <div class="card"><img src="/img/Program Jumat.jpeg" alt="Tadarus Jum'at"><div class="card-title">Tadarus Jum'at</div></div>
+            <div class="card"><img src="/img/Tangerang Mengaji.jpeg" alt="Tangerang Mengaji"><div class="card-title">Tangerang Mengaji</div></div>
+            <div class="card"><img src="/img/Penyambutan Siswa.jpeg" alt="Penyambutan Siswa"><div class="card-title">Penyambutan Siswa</div></div>
+            <div class="card"><img src="/img/Gelar Karya.jpeg" alt="Gelar Karya P5"><div class="card-title">Gelar Karya P5</div></div>
+            <div class="card"><img src="/img/Classmet.jpeg" alt="Class Meeting"><div class="card-title">Class Meeting</div></div>
+            <div class="card"><img src="/img/Pekan Literasi.jpeg" alt="Pekan Literasi"><div class="card-title">Pekan Literasi</div></div>
+            <div class="card"><img src="/img/Solat Jumat.jpeg" alt="Sholat Berjamaah"><div class="card-title">Sholat Berjamaah</div></div>
+            <div class="card"><img src="/img/Pembelajaran.jpeg" alt="Pembelajaran Luar Kelas"><div class="card-title">Pembelajaran Luar Kelas</div></div>
+            <div class="card"><img src="/img/Hari Guru.jpeg" alt="Hari Guru"><div class="card-title">Hari Guru</div></div>
+            <div class="card"><img src="/img/Maulid.jpeg" alt="Maulid Nabi Muhammad"><div class="card-title">Maulid Nabi Muhammad</div></div>
         </div>
     </div>
 </section>
@@ -270,6 +256,37 @@
         const navLinks = document.getElementById("nav-links");
         navLinks.classList.toggle("active");
     }
+
+    const track = document.querySelector('.gallery-wrapper');
+
+  let isDown = false;
+  let startX;
+  let scrollLeft;
+
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    track.classList.add('active');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeft = track.scrollLeft;
+  });
+
+  track.addEventListener('mouseleave', () => {
+    isDown = false;
+    track.classList.remove('active');
+  });
+
+  track.addEventListener('mouseup', () => {
+    isDown = false;
+    track.classList.remove('active');
+  });
+
+  track.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 2; // nilai *2 buat lebih cepat
+    track.scrollLeft = scrollLeft - walk;
+  });
 </script>
 </body>
 </html>
