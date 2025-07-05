@@ -28,18 +28,20 @@
 
 <!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
-  <div class="admin-profile">
-    <img src="https://i.pravatar.cc/80?img=12" alt="Profil Admin" class="admin-image">
-    <p class="admin-name">ANISA AMELIA</p>
-  </div>
-  <ul class="nav menu-list">
-    <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
-    <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Buku</a></li>
-    <li><a th:href="@{/admin-perpustakaan/data-pengunjung}" class="nav-link"><i class="fas fa-users"></i> Pengunjung</a></li>
-    <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
-    <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Pengembalian</a></li>
-    <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link active"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
-    <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+  <ul class="menu-list">
+    <div class="admin-profile">
+      <img src="https://i.pravatar.cc/80?img=12" alt="Profil Admin" class="admin-image">
+      <p class="admin-name">ANISA AMELIA</p>
+    </div>
+    <ul class="nav">
+      <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Buku</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-pengunjung}" class="nav-link"><i class="fas fa-users"></i> Pengunjung</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
+      <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Pengembalian</a></li>
+      <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link active"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
+      <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
   </ul>
 </div>
 
@@ -168,37 +170,37 @@
     document.body.removeChild(a);
   }
 
-  // Fungsi lainnya
-  function toggleSidebar() {
-    document.getElementById("sidebar").classList.toggle("sidebar-hidden");
-    document.getElementById("content").classList.toggle("sidebar-collapsed");
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("sidebar-hidden");
+  document.getElementById("content").classList.toggle("sidebar-collapsed");
+}
+
+function toggleSubmenu(event) {
+  event.preventDefault();
+  const submenuContainer = event.target.closest(".has-submenu");
+  const submenu = submenuContainer.querySelector(".submenu");
+  const icon = submenuContainer.querySelector(".submenu-toggle");
+  const isOpen = submenu.style.display === "block";
+
+  document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+  document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+  document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+  if (!isOpen) {
+    submenu.style.display = "block";
+    icon.style.transform = "rotate(90deg)";
+    submenuContainer.classList.add("submenu-open");
   }
+}
 
-  function toggleSubmenu(event) {
-    event.preventDefault();
-    const submenuContainer = event.target.closest(".has-submenu");
-    const submenu = submenuContainer.querySelector(".submenu");
-    const icon = submenuContainer.querySelector(".submenu-toggle");
-    const isOpen = submenu.style.display === "block";
-
-    document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
-    document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
-    document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
-
-    if (!isOpen) {
-      submenu.style.display = "block";
-      icon.style.transform = "rotate(90deg)";
-      submenuContainer.classList.add("submenu-open");
-    }
-  }
-
-  document.querySelectorAll('.menu-list a').forEach(link => {
-    link.addEventListener('click', function (e) {
-      if (this.getAttribute("href") === "#") e.preventDefault();
-      document.querySelectorAll('.menu-list a').forEach(el => el.classList.remove('active'));
-      this.classList.add('active');
-    });
+// Active link highlighting
+document.querySelectorAll('.menu-list a').forEach(link => {
+  link.addEventListener('click', function (e) {
+    if (this.getAttribute("href") === "#") e.preventDefault();
+    document.querySelectorAll('.menu-list a').forEach(el => el.classList.remove('active'));
+    this.classList.add('active');
   });
+});
 
   function confirmLogout() {
     Swal.fire({
