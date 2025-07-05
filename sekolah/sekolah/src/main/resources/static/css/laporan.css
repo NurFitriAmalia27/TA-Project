@@ -100,41 +100,43 @@ body {
   color: #fff;
 }
 
-.sidebar ul {
+/* Sidebar Navigation */
+.menu-list {
   list-style: none;
   padding: 0;
 }
 
-.sidebar ul li {
-  margin: 5px 0;
+.menu-list .nav {
+  list-style: none;
+  padding: 0;
 }
 
-.sidebar ul li a {
+.nav li {
+  margin: 8px 0;
+}
+
+.nav li a {
   display: flex;
   align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
   text-decoration: none;
   color: white;
-  font-size: 18px;
-  padding: 12px 15px;
-  transition: background 0.3s;
-  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s ease;
 }
 
-.sidebar ul li a i {
-  font-size: 20px;
-  width: 30px;
+.nav li a i {
+  width: 25px;
   text-align: center;
+  font-size: 18px;
 }
 
-.sidebar ul li a:hover {
-  background: rgba(255, 255, 255, 0.2);
+.nav li a:hover,
+.nav li a.active {
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-}
-
-.sidebar ul li a.active {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  font-weight: bold;
 }
 
 /* Submenu */
@@ -285,7 +287,7 @@ body {
   background-color: #3e8e41;
 }
 
-/* Create button (sesuai data-buku) */
+/* Create button */
 .create-button {
   background-color: #2F4050;
   color: white;
@@ -408,7 +410,7 @@ tr:nth-child(even) {
     width: 200px;
   }
 
-  .sidebar ul li a {
+  .nav li a {
     font-size: 16px;
     padding: 10px;
   }
