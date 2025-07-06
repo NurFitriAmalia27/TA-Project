@@ -41,13 +41,6 @@ body {
   font-size: 30px !important;
 }
 
-.navbar img {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .navbar h1 {
   font-size: 20px;
   font-weight: bold;
@@ -153,10 +146,9 @@ body {
   text-align: center;
   color: #1E2A38;
   margin-bottom: 20px;
-  font-size: 36px;      /* Atau 40px jika ingin lebih besar */
-  font-weight: 700;     /* Bisa juga 800 jika ingin sangat tebal */
+  font-size: 36px;
+  font-weight: 700;
 }
-
 
 /* === BARIS === */
 .top-bar-row {
