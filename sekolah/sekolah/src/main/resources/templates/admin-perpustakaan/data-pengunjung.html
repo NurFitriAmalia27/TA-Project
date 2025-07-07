@@ -17,38 +17,36 @@
 </head>
 
 <body>
-
+<!-- Navbar -->
 <div class="navbar">
   <span class="menu-icon" onclick="toggleSidebar()">☰</span>
   <div class="right-section">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-user user-icon"></i>
     <h1>ADMIN PERPUSTAKAAN</h1>
   </div>
 </div>
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-  <ul class="menu-list">
-    <div class="admin-profile">
-      <img src="https://i.pravatar.cc/80?img=12" alt="Profil Admin" class="admin-image">
-      <p class="admin-name">ANISA AMELIA</p>
-    </div>
-    <ul class="nav">
-      <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
-      <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Buku</a></li>
-      <li><a th:href="@{/admin-perpustakaan/data-pengunjung}" class="nav-link"><i class="fas fa-users"></i> Pengunjung</a></li> <!-- Tambahan -->
-      <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
-      <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Pengembalian</a></li>
-      <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
-      <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-    </ul>
+  <div class="admin-profile">
+    <img src="/img/Logo.png" alt="Profil Admin" class="admin-image">
+    <p class="admin-name">ANISA AMELIA</p>
+  </div>
+  <ul class="menu-list nav">
+    <li><a th:href="@{/admin-perpustakaan/perpus-panel}" class="nav-link"><i class="fas fa-home"></i> Beranda</a></li>
+    <li><a th:href="@{/admin-perpustakaan/data-buku}" class="nav-link"><i class="fas fa-book"></i> Buku</a></li>
+    <li><a th:href="@{/admin-perpustakaan/data-pengunjung}" class="nav-link"><i class="fas fa-users"></i> Pengunjung</a></li>
+    <li><a th:href="@{/admin-perpustakaan/data-peminjaman}" class="nav-link"><i class="fas fa-user-check"></i> Peminjam</a></li>
+    <li><a th:href="@{/admin-perpustakaan/data-pengembalian}" class="nav-link"><i class="fas fa-undo-alt"></i> Pengembalian</a></li>
+    <li><a th:href="@{/admin-perpustakaan/laporan}" class="nav-link"><i class="fas fa-exchange-alt"></i> Laporan</a></li>
+    <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
   </ul>
 </div>
 
+<!-- Main Content -->
 <div class="main-content" id="content">
   <h1>Data Pengunjung Perpustakaan</h1>
 
-  <!-- Baris pertama: Search -->
   <div class="search-row">
     <div class="search-container">
       <input type="text" id="searchInput" placeholder="Cari nama Pengunjung">
@@ -56,7 +54,6 @@
     </div>
   </div>
 
-  <!-- Baris kedua: Filter + Download kiri, Tambah Pengunjung kanan -->
   <div class="action-row">
     <div class="filter-container">
       <label for="NamaFilter">Filter Hari Pengunjung:</label>
@@ -71,7 +68,6 @@
         <option value="Minggu">Minggu</option>
       </select>
 
-      <!-- Tombol ikon download -->
       <button onclick="downloadTable()" class="icon-button" title="Download CSV">
         <i class="fas fa-download"></i>
       </button>
@@ -105,15 +101,37 @@
     </tbody>
   </table>
 </div>
-<script>
-  // Toggle Sidebar
-  function toggleSidebar() {
-    const sidebar = document.getElementById("sidebar");
-    const content = document.getElementById("content");
 
-    sidebar.classList.toggle("sidebar-hidden");
-    content.classList.toggle("sidebar-collapsed");
-  }
+<!-- Script -->
+<script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      const body = document.body;
+
+      // Toggle visibility sidebar
+      sidebar.classList.toggle("sidebar-hidden");
+
+      // Toggle class di body untuk ubah padding main-content
+      if (sidebar.classList.contains("sidebar-hidden")) {
+        body.classList.remove("sidebar-open");
+        body.classList.add("sidebar-collapsed");
+      } else {
+        body.classList.add("sidebar-open");
+        body.classList.remove("sidebar-collapsed");
+      }
+    }
+
+    // Inisialisasi kondisi saat halaman dimuat (jika sidebar tersembunyi dari awal)
+    window.addEventListener("DOMContentLoaded", () => {
+      const sidebar = document.getElementById("sidebar");
+      const body = document.body;
+
+      if (sidebar.classList.contains("sidebar-hidden")) {
+        body.classList.add("sidebar-collapsed");
+      } else {
+        body.classList.add("sidebar-open");
+      }
+    });
 
   // Filter Tabel Pengunjung (Nama + Hari)
   function filterTable() {

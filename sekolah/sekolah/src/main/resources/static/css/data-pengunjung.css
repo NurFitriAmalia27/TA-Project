@@ -6,8 +6,14 @@
   font-family: 'Poppins', sans-serif;
 }
 
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: #f8f9fa;
+  position: relative;
 }
 
 /* === NAVBAR === */
@@ -41,13 +47,6 @@ body {
   font-size: 30px !important;
 }
 
-.navbar img {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .navbar h1 {
   font-size: 20px;
   font-weight: bold;
@@ -63,9 +62,13 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   z-index: 999;
   transition: transform 0.3s ease-in-out;
   overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-hidden {
@@ -141,23 +144,66 @@ body {
 /* === MAIN CONTENT === */
 .main-content {
   margin-top: 80px;
-  padding-left: 270px;
   padding-right: 20px;
-  transition: padding-left 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   width: 100%;
   box-sizing: border-box;
 }
 
-.main-content.sidebar-collapsed {
-  padding-left: 20px;
+/* DESKTOP BEHAVIOR */
+@media screen and (min-width: 769px) {
+  .main-content {
+    padding-left: 270px;
+  }
+
+  body.sidebar-collapsed .main-content {
+    padding-left: 20px;
+  }
+
+  body.sidebar-open .main-content {
+    transform: none;
+  }
+}
+
+/* MOBILE BEHAVIOR */
+@media screen and (max-width: 768px) {
+  .main-content {
+    transition: transform 0.3s ease-in-out;
+    padding-left: 0;
+  }
+
+  body.sidebar-open .main-content {
+    transform: translateX(220px); /* sesuai dengan lebar sidebar mobile */
+  }
+
+  body.sidebar-collapsed .main-content,
+  body.sidebar-open.sidebar-hidden .main-content {
+    transform: translateX(0);
+  }
 }
 
 .main-content h1 {
   text-align: center;
   color: #1E2A38;
   margin-bottom: 20px;
-  font-size: 36px;      /* Atau 40px jika ingin lebih besar */
-  font-weight: 700;     /* Bisa juga 800 jika ingin sangat tebal */
+  font-size: 36px;
+  font-weight: 700;
+}
+
+/* === OVERLAY (optional) === */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 998;
+}
+
+.sidebar-visible + .overlay {
+  display: block;
 }
 
 /* === SEARCH & FILTER === */
@@ -210,6 +256,10 @@ body {
 /* === BUTTON CONTAINER === */
 .button-container {
   margin: 20px 0;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 /* === ICON BUTTON === */
@@ -270,6 +320,7 @@ tr:nth-child(even) {
   color: red;
 }
 
+/* === ROW LAYOUT === */
 .search-row,
 .action-row {
   display: flex;
@@ -277,39 +328,18 @@ tr:nth-child(even) {
   align-items: center;
   flex-wrap: wrap;
   margin-top: 0;
-  margin-bottom: 8px; /* hanya beri sedikit jarak ke bawah */
+  margin-bottom: 8px;
 }
 
-/* Pastikan search hanya satu kolom */
 .search-row {
   justify-content: flex-start;
 }
 
-/* Filter kiri, tombol tambah kanan */
 .action-row .filter-container {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-}
-
-.button-container {
-  margin: 0; /* hilangkan margin default agar baris rapi */
-}
-
-/* Tombol Tambah Pengunjung */
-.back-btn {
-  background-color: #3498db;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.back-btn:hover {
-  background-color: #2980b9;
 }
 
 /* === BACK BUTTON === */
@@ -321,13 +351,15 @@ tr:nth-child(even) {
   color: white;
   padding: 10px 15px;
   border-radius: 5px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
   background-color: #1E6FA3;
 }
 
-/* === RESPONSIVE === */
+/* === RESPONSIVE TABLE & FORM === */
 @media screen and (max-width: 768px) {
   .navbar {
     padding: 0 10px;
@@ -341,14 +373,6 @@ tr:nth-child(even) {
     width: 220px;
   }
 
-  .main-content {
-    padding-left: 220px;
-  }
-
-  .main-content.sidebar-collapsed {
-    padding-left: 0;
-  }
-
   table {
     display: block;
     overflow-x: auto;
@@ -360,6 +384,16 @@ tr:nth-child(even) {
   .filter-container {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .search-container,
+  .filter-container {
+    width: 100%;
+  }
+
+  .search-container input[type="text"],
+  .filter-container select {
+    width: 100%;
   }
 }
 
