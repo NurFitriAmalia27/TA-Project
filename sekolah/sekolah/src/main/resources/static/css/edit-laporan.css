@@ -144,113 +144,133 @@
       margin-bottom: 1rem;
     }
 
-    .floating-form {
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      border-radius: 10px;
-      width: 100%;
-      max-width: 500px;
-      margin-top: 130px;
-    }
+/* === FORM WRAPPER === */
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Tengah vertikal */
+  min-height: 100vh; /* Full height */
+  padding: 40px 20px;
+  box-sizing: border-box;
+  scale: 0.8; /* Skala 80% di desktop */
+}
 
-    .floating-form h2 {
-      font-size: 30px;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 16px;
-      text-align: center;
-    }
+/* === FORM UTAMA === */
+.floating-form {
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 0; /* Dihilangkan agar simetris */
+}
 
-    .floating-form input,
-    .floating-form textarea,
-    .floating-form select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 15px;
-      font-family: 'Poppins', sans-serif;
-      background-color: white;
-      appearance: none;
-    }
+.floating-form h2 {
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+  text-align: center;
+}
 
-    .form-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: calc(100vh - 80px);
-      padding-top: 20px;
-    }
+.floating-form input,
+.floating-form textarea,
+.floating-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  background-color: white;
+  appearance: none;
+}
 
-    .button-container {
-      display: flex;
-      gap: 10px;
-    }
+/* === BUTTON CONTAINER === */
+.button-container {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
 
-    .btn-simpan,
-    .btn-batal {
-      background-color: #28a745;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      font-size: 15px;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      flex: 1;
-    }
+/* === BUTTON STYLE === */
+.btn-simpan,
+.btn-batal {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  flex: 1;
+  width: 48%;
+  font-weight: bold;
+  transition: transform 0.2s, opacity 0.2s;
+}
 
-    .btn-simpan:hover {
-      background-color: #218838;
-    }
+.btn-simpan:hover {
+  background-color: #218838;
+  transform: scale(1.03);
+  opacity: 0.95;
+}
 
-    .btn-batal {
-      background-color: #dc3545;
-    }
+.btn-batal {
+  background-color: #dc3545;
+}
 
-    .btn-batal:hover {
-      background-color: #c82333;
-    }
+.btn-batal:hover {
+  background-color: #c82333;
+  transform: scale(1.03);
+  opacity: 0.95;
+}
 
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 200px;
-      }
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
 
-      .main-content {
-        margin-left: 200px;
-      }
+  .main-content {
+    margin-left: 200px;
+  }
 
-      .main-content.full {
-        margin-left: 0;
-      }
+  .main-content.full {
+    margin-left: 0;
+  }
 
-      .floating-form {
-        margin-top: 80px;
-        max-width: 90%;
-      }
+  .form-wrapper {
+    scale: 1;
+    padding: 20px 10px;
+  }
 
-      .floating-form h2 {
-        font-size: 18px;
-      }
+  .floating-form {
+    margin-top: 40px;
+    max-width: 90%;
+  }
 
-      .floating-form input,
-      .floating-form textarea,
-      .floating-form select {
-        font-size: 14px;
-         font-family: 'Poppins', sans-serif;
-      }
+  .floating-form h2 {
+    font-size: 18px;
+  }
 
-      .button-container {
-        flex-direction: column;
-        gap: 15px;
-      }
+  .floating-form input,
+  .floating-form textarea,
+  .floating-form select {
+    font-size: 14px;
+  }
 
-      .btn-simpan,
-      .btn-batal {
-        flex: none;
-        width: 100%;
-      }
-    }
+  .button-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn-simpan,
+  .btn-batal {
+    flex: none;
+    width: 100%;
+  }
+}
