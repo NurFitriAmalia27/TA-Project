@@ -30,16 +30,17 @@
       cursor: pointer;
     }
 
-    .right-section {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: auto;
-    }
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
 
-    .navbar i.user-icon {
-      font-size: 30px !important;
-    }
+.navbar i.book-icon {
+  font-size: 28px;
+  color: #3273dc; /* Warna biru khas edukasi, bisa diganti sesuai tema */
+}
 
     .navbar img {
       height: 40px;
