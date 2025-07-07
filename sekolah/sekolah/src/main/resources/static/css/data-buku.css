@@ -41,13 +41,6 @@ body {
   font-size: 30px !important;
 }
 
-.navbar img {
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .navbar h1 {
   font-size: 20px;
   font-weight: bold;
@@ -72,26 +65,6 @@ body {
   transform: translateX(-100%);
 }
 
-/* === MAIN CONTENT === */
-.main-content {
-  padding: 80px 20px 20px 20px;
-  margin-left: 250px;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-.sidebar-hidden + .main-content {
-  margin-left: 0;
-}
-
-.main-content h1 {
-  text-align: center;
-  color: #1E2A38;
-  margin-bottom: 20px;
-  font-size: 36px;
-  font-weight: 700;
-}
-
-/* === ADMIN PROFILE & MENU === */
 .admin-profile {
   text-align: center;
   margin-bottom: 20px;
@@ -156,6 +129,25 @@ body {
 .nav li a.active {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 8px;
+}
+
+/* === MAIN CONTENT === */
+.main-content {
+  padding: 80px 20px 20px 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.full {
+  margin-left: 0;
+}
+
+.main-content h1 {
+  text-align: center;
+  color: #1E2A38;
+  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 700;
 }
 
 /* === BARIS === */
@@ -315,26 +307,6 @@ tr:nth-child(even) {
 }
 
 /* === RESPONSIVE === */
-@media screen and (max-width: 1024px) {
-  .sidebar {
-    width: 220px;
-    transform: translateX(-100%);
-    position: fixed;
-  }
-
-  .sidebar.show {
-    transform: translateX(0);
-  }
-
-  .main-content {
-    margin-left: 0;
-  }
-
-  .sidebar.show + .main-content {
-    margin-left: 220px;
-  }
-}
-
 @media screen and (max-width: 768px) {
   .navbar {
     padding: 0 10px;
@@ -342,6 +314,18 @@ tr:nth-child(even) {
 
   .navbar h1 {
     font-size: 16px;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .main-content {
+    margin-left: 220px;
+  }
+
+  .main-content.full {
+    margin-left: 0;
   }
 
   table {
@@ -356,14 +340,6 @@ tr:nth-child(even) {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  .sidebar {
-    width: 200px;
-  }
-
-  .sidebar.show + .main-content {
-    margin-left: 200px;
-  }
 }
 
 @media screen and (max-width: 480px) {
@@ -373,6 +349,10 @@ tr:nth-child(even) {
 
   .menu-icon {
     font-size: 20px;
+  }
+
+  .sidebar {
+    width: 200px;
   }
 
   .nav li a {
