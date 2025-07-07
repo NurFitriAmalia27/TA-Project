@@ -155,9 +155,11 @@ body {
 .form-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center; /* Tengah vertikal */
   min-height: 100vh;
-  padding-top: 30px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  scale: 0.8; /* Skala 80% */
 }
 
 .floating-form {
@@ -167,8 +169,8 @@ body {
   border-radius: 10px;
   width: 100%;
   max-width: 700px;
-  margin-top: 140px;
-  margin-left: 60px;
+  margin-top: 0; /* Dihapus agar tidak terdorong ke bawah */
+  margin-left: 0; /* Dihapus agar simetris */
 }
 
 .floating-form h2 {
@@ -262,11 +264,16 @@ body {
     margin-left: 0;
   }
 
+  .form-wrapper {
+    scale: 1; /* Normal skala di mobile */
+    padding: 20px 10px;
+  }
+
   .floating-form {
     margin-top: 60px;
     max-width: 95%;
     padding: 20px;
-    margin-left: 5px;
+    margin-left: 0;
   }
 
   .floating-form h2 {
