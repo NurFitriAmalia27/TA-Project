@@ -149,63 +149,58 @@ body {
 .form-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: calc(100vh - 80px);
-  padding-top: 20px;
+  align-items: center; /* Tengah vertikal */
+  min-height: 100vh;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  scale: 0.8; /* Skala 80% */
 }
 
 .floating-form {
   background-color: #fff;
-  padding: 20px;
+  padding: 24px 28px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   width: 100%;
   max-width: 500px;
-  margin-top: 130px;
+  box-sizing: border-box;
 }
 
 .floating-form h2 {
   font-size: 30px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   text-align: center;
 }
 
 .floating-form input,
-.floating-form textarea {
+.floating-form textarea,
+.floating-form select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 16px;
   border: 1px solid #ddd;
   border-radius: 6px;
   font-size: 15px;
+  box-sizing: border-box;
+  background-color: white;
 }
 
-.floating-form label[for="kategori"] {
+.floating-form label {
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
   font-size: 15px;
   color: #333;
-}
-
-.floating-form select#kategori {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 15px;
-  box-sizing: border-box;
-  margin-bottom: 12px;
-  background-color: white;
-  appearance: none;
+  margin-top: 12px;
 }
 
 .floating-form label[for="foto"],
 .floating-form input#foto {
   display: block;
-  margin-top: 16px;
+  margin-top: 20px;
   margin-bottom: 16px;
 }
 
@@ -213,6 +208,7 @@ body {
 .button-container {
   display: flex;
   gap: 10px;
+  margin-top: 24px;
 }
 
 .btn-simpan,
@@ -226,6 +222,10 @@ body {
   font-weight: bold;
   cursor: pointer;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn-simpan:hover {
@@ -234,6 +234,7 @@ body {
 
 .btn-batal {
   background-color: #dc3545;
+  text-decoration: none;
 }
 
 .btn-batal:hover {
@@ -254,8 +255,13 @@ body {
     margin-left: 0;
   }
 
+  .form-wrapper {
+    scale: 1; /* Normal di mobile */
+    padding: 20px 10px;
+  }
+
   .floating-form {
-    margin-top: 80px;
+    margin-top: 0;
     max-width: 90%;
   }
 

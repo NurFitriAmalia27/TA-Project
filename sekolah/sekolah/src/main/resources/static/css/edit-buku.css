@@ -154,7 +154,7 @@ body {
   border-radius: 10px;
   width: 100%;
   max-width: 500px;
-  margin-top: 130px;
+  margin-top: 0; /* ⬅️ Dihapus agar form tidak turun */
 }
 
 .floating-form h2 {
@@ -179,14 +179,16 @@ body {
 .form-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: calc(100vh - 80px);
-  padding-top: 20px;
+  align-items: center; /* ⬅️ Ubah dari flex-start ke center */
+  min-height: 100vh; /* ⬅️ Ganti dari calc(100vh - 80px) */
+  padding: 40px 20px;
+  box-sizing: border-box;
+  scale: 0.8; /* ⬅️ Tambahkan skala 80% */
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between; /* ⬅️ Update: Batal kiri, Simpan kanan */
+  justify-content: space-between; /* Batal kiri, Simpan kanan */
   gap: 10px;
   margin-top: 20px;
 }
@@ -203,6 +205,10 @@ body {
   width: 48%;
   font-weight: bold;
   font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .btn-simpan:hover {
@@ -211,6 +217,7 @@ body {
 
 .btn-batal {
   background-color: #dc3545;
+  text-decoration: none;
 }
 
 .btn-batal:hover {
@@ -231,8 +238,13 @@ body {
     margin-left: 0;
   }
 
+  .form-wrapper {
+    scale: 1; /* ⬅️ Skala kembali normal di mobile */
+    padding: 20px 10px;
+  }
+
   .floating-form {
-    margin-top: 80px;
+    margin-top: 40px;
     max-width: 90%;
   }
 

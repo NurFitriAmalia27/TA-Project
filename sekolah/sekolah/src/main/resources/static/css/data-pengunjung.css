@@ -185,7 +185,8 @@ body {
 .main-content h1 {
   text-align: center;
   color: #1E2A38;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  margin-top: 10px;
   font-size: 36px;
   font-weight: 700;
 }
@@ -219,6 +220,8 @@ body {
 .search-container {
   position: relative;
   width: 290px;
+  margin-bottom: 0;
+  gap: 10px;
 }
 
 .search-container input[type="text"] {
@@ -255,11 +258,10 @@ body {
 
 /* === BUTTON CONTAINER === */
 .button-container {
-  margin: 20px 0;
+  margin: 0;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
 }
 
 /* === ICON BUTTON === */
@@ -283,10 +285,20 @@ body {
 }
 
 /* === TABLE === */
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 800px;
 }
 
 th, td {
@@ -328,11 +340,14 @@ tr:nth-child(even) {
   align-items: center;
   flex-wrap: wrap;
   margin-top: 0;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+  gap: 10px;
 }
 
 .search-row {
   justify-content: flex-start;
+  margin-bottom: 4px;
+  gap: 8px;
 }
 
 .action-row .filter-container {

@@ -130,7 +130,7 @@ body {
 
 /* Form Utama */
 .main-content {
-  padding: 80px 20px 20px 20px;
+  padding: 40px 20px;
   margin-left: 250px;
   transition: margin-left 0.3s ease-in-out;
 }
@@ -143,26 +143,35 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  scale: 0.8; /* Skala 80% */
 }
 
 .floating-form {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 24px 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   width: 100%;
   max-width: 500px;
+  box-sizing: border-box;
 }
 
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  font-size: 30px;
+  font-weight: 600;
+  color: #333;
 }
 
 label {
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 12px;
+  font-size: 15px;
+  color: #333;
   display: block;
 }
 
@@ -171,9 +180,13 @@ select,
 textarea {
   width: 100%;
   padding: 10px;
-  margin: 8px 0 16px 0;
+  margin-top: 6px;
+  margin-bottom: 16px;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 15px;
+  box-sizing: border-box;
+  background-color: white;
 }
 
 /* Tombol */
@@ -182,7 +195,7 @@ textarea {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 10px;
+  margin-top: 24px;
 }
 
 .btn-simpan,
@@ -195,6 +208,7 @@ textarea {
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   text-align: center;
+  cursor: pointer;
 }
 
 .btn-simpan {
@@ -205,6 +219,7 @@ textarea {
 .btn-batal {
   background-color: #dc3545;
   color: white;
+  text-decoration: none;
 }
 
 .btn-simpan:hover,
@@ -214,13 +229,42 @@ textarea {
 }
 
 /* Responsive */
-@media (max-width: 500px) {
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 200px;
+  }
+
+  .main-content.full {
+    margin-left: 0;
+  }
+
+  .form-wrapper {
+    scale: 1; /* Normal di mobile */
+    padding: 20px 10px;
+  }
+
+  .floating-form {
+    max-width: 90%;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 14px;
+  }
+
   .button-container {
     flex-direction: column;
+    gap: 15px;
   }
 
   .btn-simpan,
   .btn-batal {
-    max-width: 100%;
+    width: 100%;
+    flex: none;
   }
 }

@@ -132,10 +132,12 @@ body {
 .form-wrapper {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: calc(100vh - 80px);
-  padding-top: 20px;
+  align-items: center; /* Ubah dari flex-start */
+  min-height: 100vh;   /* Tinggi penuh layar */
+  padding: 40px 20px;
+  box-sizing: border-box;
   margin-left: 250px;
+  scale: 0.8; /* Tambahkan skala */
 }
 
 /* === Floating Form === */
@@ -146,7 +148,7 @@ body {
   border-radius: 10px;
   width: 100%;
   max-width: 500px;
-  margin-top: 130px;
+  margin-top: 0; /* Hapus jarak dari atas agar form bisa center vertikal */
 }
 
 .floating-form h2 {
@@ -218,10 +220,11 @@ body {
   .form-wrapper {
     margin-left: 0;
     padding: 20px;
+    scale: 1; /* Skala normal di mobile */
   }
 
   .floating-form {
-    margin-top: 80px;
+    margin-top: 60px;
     max-width: 90%;
   }
 
