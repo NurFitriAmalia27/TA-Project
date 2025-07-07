@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Berita - SDN PORIS PELAWAD 6</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/berita.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="/berita.css" />
 </head>
 
 <body>
+<!-- Header / Navbar -->
 <header>
     <div class="wrapper">
-        <!-- Navbar -->
         <nav class="navbar">
             <div class="logo-container">
-                <img src="/img/Logo.png" alt="Logo SDN Poris Pelawad 6" class="logo-img">
+                <img src="/img/Logo.png" alt="Logo SDN Poris Pelawad 6" class="logo-img" />
                 <span class="logo-text">SDN PORIS PELAWAD 6</span>
             </div>
+
             <ul class="nav-links" id="nav-links">
                 <li><a th:href="@{/}">Beranda</a></li>
+
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Profil</a>
                     <div class="dropdown-content">
@@ -27,6 +29,7 @@
                         <a th:href="@{/profil/sarana-prasarana}">Sarana & Prasana</a>
                     </div>
                 </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Kesiswaan</a>
                     <div class="dropdown-content">
@@ -34,6 +37,7 @@
                         <a th:href="@{/kesiswaan/ekstrakurikuler}">Ekstrakurikuler</a>
                     </div>
                 </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Adiwiyata</a>
                     <div class="dropdown-content">
@@ -44,6 +48,7 @@
                         <a th:href="@{/adiwiyata/dokumentasi-adiwiyata}">Dokumentasi</a>
                     </div>
                 </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Prestasi</a>
                     <div class="dropdown-content">
@@ -53,6 +58,7 @@
                         <a th:href="@{/prestasi/prestasi-kelas}">Prestasi Kelas</a>
                     </div>
                 </li>
+
                 <li class="dropdown">
                     <a href="#" class="dropbtn">Informasi</a>
                     <div class="dropdown-content">
@@ -62,6 +68,7 @@
                     </div>
                 </li>
             </ul>
+
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
@@ -71,7 +78,8 @@
     </div>
 </header>
 
-<div class="news-container">
+<!-- Konten Berita -->
+<main class="news-container">
     <div class="news-item" th:each="berita : ${listBerita}">
         <img th:src="@{'/img/berita/' + ${berita.foto}}" alt="Gambar Berita" />
         <h3 th:text="${berita.judul}">Judul Berita</h3>
@@ -82,44 +90,98 @@
             <button>Baca Selengkapnya</button>
         </a>
     </div>
-</div>
+</main>
 
+<!-- Footer -->
+<footer class="footer-full">
+    <!-- Social Media Section -->
+    <div class="footer-social">
+        <span>Get connected with us on social networks:</span>
+        <div class="footer-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
 
-<footer>
-        <div class="social-media">
-                <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://youtube.com/@sdnpp6channel80?feature=shared" class="social-link"><i class="fab fa-youtube"></i> Youtube</a>
+    <!-- Footer Content -->
+    <div class="footer-content">
+        <div class="footer-column">
+            <h6>Profil Sekolah</h6>
+            <hr />
+            <p><a href="#">Visi & Misi Sekolah</a></p>
+            <p><a href="#">Guru & Tendik</a></p>
+            <p><a href="#">Sarana Dan Prasarana</a></p>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi</h6>
+            <hr />
+            <p><a href="#">Berita</a></p>
+            <p><a href="#">PPDB</a></p>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Contact</h6>
+            <hr />
+            <p><i class="fas fa-envelope"></i> info@example.com</p>
+            <p><i class="fas fa-phone"></i> +01 234 567 88</p>
+            <P><i class="fab fa-tiktok"></i> sdnporispelawad6</P>
+            <P><i class="fab fa-youtube"></i> sdnppppppppppp</P>
+            <P><i class="fab fa-instagram"></i> sdnppppppppppp</P>
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi Sekolah</h6>
+            <hr />
+            <p>SDN Poris Pelawad 6 - Kota Tangerang, Banten.<br>
+                Alamat: Jl. Panglima Polim Plawad No.Rt 02/02, RT.005/RW.002, Poris Plawad Utara, Kec. Cipondoh,<br>
+                Kota Tangerang, Banten 15141.</p>
+
+            <div class="footer-map-inside">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6003677171193!2d106.66131747480286!3d-6.184204793803299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9004e6adedd%3A0x71d5332d19e1d1b2!2sSDN%20Poris%20Pelawad%206!5e0!3m2!1sid!2sid!4v1747975049123!5m2!1sid!2sid"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
-        <p>&copy; 2024 SDN Poris Pelawad 06. All rights reserved.</p>
-    </footer>
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById("nav-links");
-            navLinks.classList.toggle("active");
-        }
-    
-        // Fungsi untuk membuka modal
-        function openModal(modalId) {
-            var modal = document.getElementById(modalId);
-            modal.style.display = "block"; // Tampilkan modal
-        }
+        </div>
+    </div>
 
-        // Fungsi untuk menutup modal
-        function closeModal(modalId) {
-            var modal = document.getElementById(modalId);
-            modal.style.display = "none"; // Sembunyikan modal
-        }
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <p>© 2025 SDN Poris Pelawad 6. All Rights Reserved.</p>
+    </div>
+</footer>
 
-        // Menutup modal jika pengguna klik di luar modal
-        window.onclick = function(event) {
-            var modals = document.getElementsByClassName('modal');
-            for (var i = 0; i < modals.length; i++) {
-                if (event.target == modals[i]) {
-                    modals[i].style.display = "none";
-                }
-            }
+<!-- Script -->
+<script>
+    function toggleMenu() {
+      const navLinks = document.getElementById("nav-links");
+      navLinks.classList.toggle("active");
+    }
+
+    function openModal(modalId) {
+      var modal = document.getElementById(modalId);
+      modal.style.display = "block";
+    }
+
+    function closeModal(modalId) {
+      var modal = document.getElementById(modalId);
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      var modals = document.getElementsByClassName('modal');
+      for (var i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = "none";
         }
-    </script>
-    
+      }
+    }
+</script>
 </body>
 </html>

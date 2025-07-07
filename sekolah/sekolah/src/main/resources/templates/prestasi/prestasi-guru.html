@@ -71,61 +71,127 @@
     </div>
 </header>
 
-    <section class="hero">
-        <h1></h1>
-        <p></p>
-    </section>
+<section class="hero">
+    <h1></h1>
+    <p></p>
+</section>
 
-    <main>
-        <section class="section">
-            <h2>Adapun Beberapa Prestasi yang di raih oleh Guru SDN Poris Pelawad 6 </h2>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Jenis Prestasi</th>
-                            <th>Tahun</th>
-                            <th>Peringkat</th>
-                            <th>Tingkat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
-                        <td th:text="${iterStat.index + 1}">1</td>
-                        <td th:text="${prestasi.namaGuru}">Sherly Amelia</td>
-                        <td th:text="${prestasi.jenisPrestasi}">Guru Teladan</td>
-                        <td th:text="${prestasi.tahun}">2023</td>
-                        <td th:text="${prestasi.peringkat}">1</td>
-                        <td th:text="${prestasi.tingkat}">Kota</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-        </section>
-    </main>
-    <div class="divider-line"></div>
-    <!-- Bagian Galeri Kegiatan -->
+<main>
     <section class="section">
-        <h2>Dokumentasi Prestasi Guru</h2>
-        <div class="grid-container">
-            <div class="card" th:each="prestasi : ${daftarPrestasi}">
-                <img th:src="@{'/img/prestasi-guru/' + ${prestasi.foto}}" alt="Dokumentasi">
-                <div class="card-title" th:text="${prestasi.jenisPrestasi}">Jenis Prestasi</div>
+        <h2>Adapun Beberapa Prestasi yang di raih oleh Guru SDN Poris Pelawad 6 </h2>
+        <!-- Bagian filter -->
+        <div class="filter-container">
+            <label for="yearFilter">Filter Tahun:</label>
+            <select id="yearFilter" onchange="filterByYear()">
+                <option value="">Semua</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+            </select>
+        </div>
+        <div class="table-responsive">
+            <table id="prestasiTable">
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Jenis Prestasi</th>
+                    <th>Tahun</th>
+                    <th>Peringkat</th>
+                    <th>Tingkat</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="prestasi, iterStat : ${daftarPrestasi}">
+                    <td th:text="${iterStat.index + 1}">1</td>
+                    <td th:text="${prestasi.namaGuru}">Sherly Amelia</td>
+                    <td th:text="${prestasi.jenisPrestasi}">Guru Teladan</td>
+                    <td th:text="${prestasi.tahun}">2023</td>
+                    <td th:text="${prestasi.peringkat}">1</td>
+                    <td th:text="${prestasi.tingkat}">Kota</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+</main>
+<div class="divider-line"></div>
+<!-- Bagian Galeri Kegiatan -->
+<section class="section">
+    <h2>Dokumentasi Prestasi Guru</h2>
+    <div class="grid-container">
+        <div class="card" th:each="prestasi : ${daftarPrestasi}">
+            <img th:src="@{'/img/prestasi-guru/' + ${prestasi.foto}}" alt="Dokumentasi">
+            <div class="card-title" th:text="${prestasi.jenisPrestasi}">Jenis Prestasi</div>
+        </div>
+    </div>
+</section>
+<!-- Footer -->
+<footer class="footer-full">
+    <!-- Social Media Section -->
+    <div class="footer-social">
+        <span>Get connected with us on social networks:</span>
+        <div class="footer-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+    <!-- Footer Content -->
+    <div class="footer-content">
+        <div class="footer-column">
+            <h6>Profil Sekolah</h6>
+            <hr />
+            <p><a href="#">Visi & Misi Sekolah</a></p>
+            <p><a href="#">Guru & Tendik</a></p>
+            <p><a href="#">Sarana Dan Prasarana</a></p>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi</h6>
+            <hr />
+            <p><a href="#">Berita</a></p>
+            <p><a href="#">PPDB</a></p>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Contact</h6>
+            <hr />
+            <p><i class="fas fa-envelope"></i> info@example.com</p>
+            <p><i class="fas fa-phone"></i> +01 234 567 88</p>
+            <P><i class="fab fa-tiktok"></i> sdnporispelawad6</P>
+            <P><i class="fab fa-youtube"></i> sdnppppppppppp</P>
+            <P><i class="fab fa-instagram"></i> sdnppppppppppp</P>
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi Sekolah</h6>
+            <hr />
+            <p>SDN Poris Pelawad 6 - Kota Tangerang, Banten.<br>
+                Alamat: Jl. Panglima Polim Plawad No.Rt 02/02, RT.005/RW.002, Poris Plawad Utara, Kec. Cipondoh,<br>
+                Kota Tangerang, Banten 15141.</p>
+
+            <div class="footer-map-inside">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6003677171193!2d106.66131747480286!3d-6.184204793803299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9004e6adedd%3A0x71d5332d19e1d1b2!2sSDN%20Poris%20Pelawad%206!5e0!3m2!1sid!2sid!4v1747975049123!5m2!1sid!2sid"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer>
-        <div class="social-media">
-                <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://youtube.com/@sdnpp6channel80?feature=shared" class="social-link"><i class="fab fa-youtube"></i> Youtube</a>
-            </div>
-        <p>&copy; 2024 SDN Poris Pelawad 06. All rights reserved.</p>
-    </footer>
-    <script>
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <p>© 2025 SDN Poris Pelawad 6. All Rights Reserved.</p>
+    </div>
+</footer>
+<script>
     let currentImageIndex = 0;
     const images =  // Tambahkan path gambar lainnya
 
@@ -143,6 +209,32 @@
         const navLinks = document.getElementById("nav-links");
         navLinks.classList.toggle("active");
     }
+       function filterByYear() {
+    let selectedYear = document.getElementById("yearFilter").value;
+
+    // Filter baris tabel
+    let table = document.getElementById("prestasiTable");
+    let rows = table.getElementsByTagName("tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        let yearCell = rows[i].getElementsByTagName("td")[3];
+        if (yearCell) {
+            let yearText = yearCell.textContent || yearCell.innerText;
+            rows[i].style.display = (selectedYear === "" || yearText === selectedYear) ? "" : "none";
+        }
+    }
+
+    // Filter dokumentasi kartu
+    let cards = document.querySelectorAll(".card");
+    cards.forEach(function(card) {
+        let tahun = card.getAttribute("data-tahun");
+        if (selectedYear === "" || tahun === selectedYear) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
 </script>
 </body>
 </html>
