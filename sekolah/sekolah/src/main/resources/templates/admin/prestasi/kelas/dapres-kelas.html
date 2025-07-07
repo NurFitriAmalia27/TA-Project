@@ -163,7 +163,7 @@ function searchTable() {
   const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 
   for (let i = 0; i < rows.length; i++) {
-    const kelasCell = rows[i].getElementsByTagName("td")[4];
+    const kelasCell = rows[i].getElementsByTagName("td")[2];
     const kelasText = kelasCell ? kelasCell.textContent.toLowerCase() : "";
 
     if (selectedKelas === "" || kelasText.includes(selectedKelas)) {
@@ -178,16 +178,22 @@ function searchTable() {
   function downloadTable() {
     let table = document.getElementById("guruTable");
     let rows = Array.from(table.rows);
-    let csv = rows.map(row =>
-      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+
+    // Ambil hanya baris yang terlihat (tidak disembunyikan oleh filter)
+    let visibleRows = rows.filter(row => {
+        return row.style.display !== "none" || row.rowIndex === 0; // Tetap ambil header (rowIndex 0)
+    });
+
+    let csv = visibleRows.map(row =>
+        Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
     ).join("\n");
 
     let blob = new Blob([csv], { type: "text/csv" });
     let link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "data_prestasi_guru.csv";
+    link.download = "data_prestasi_kelas.csv";
     link.click();
-  }
+}
 
   // Aktifkan menu aktif saat klik
   document.querySelectorAll('.menu-list a').forEach(link => {

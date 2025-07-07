@@ -102,7 +102,7 @@
               <td th:text="${berita.judul}">Judul Berita</td>
               <td th:text="${berita.subjudul}">Sub Judul</td>
               <td>
-                  <div class="deskripsi-scroll" th:utext="${berita.deskripsi}">
+                  <div class="deskripsi-scroll" th:text="${berita.deskripsi}">
                       Isi Berita
                   </div>
               </td>
@@ -170,7 +170,7 @@ function filterByTahun() {
     const rows = document.querySelectorAll("#guruTable tbody tr");  // Menyeleksi semua baris di tabel
 
     rows.forEach(row => {
-        const tanggal = row.cells[3].textContent.trim(); // Kolom ke-4 adalah tanggal
+        const tanggal = row.cells[4].textContent.trim(); // Kolom ke-4 adalah tanggal
         const tahun = tanggal.split(" ")[2];  // Ambil bagian tahun, karena formatnya "DD bulan YYYY"
 
         const cocok = !tahunValue || tahun === tahunValue;  // Cek apakah tahun sesuai dengan filter
@@ -179,20 +179,25 @@ function filterByTahun() {
     });
 }
 
-  // Fungsi download data CSV
-  function downloadTable() {
+function downloadTable() {
     let table = document.getElementById("guruTable");
     let rows = Array.from(table.rows);
-    let csv = rows.map(row =>
-      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+
+    // Ambil hanya baris yang terlihat (tidak disembunyikan oleh filter)
+    let visibleRows = rows.filter(row => {
+        return row.style.display !== "none" || row.rowIndex === 0; // Tetap ambil header (rowIndex 0)
+    });
+
+    let csv = visibleRows.map(row =>
+        Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
     ).join("\n");
 
     let blob = new Blob([csv], { type: "text/csv" });
     let link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "data_prestasi_guru.csv";
+    link.download = "data_berita.csv";
     link.click();
-  }
+}
 
   // Aktifkan menu aktif saat klik
   document.querySelectorAll('.menu-list a').forEach(link => {
