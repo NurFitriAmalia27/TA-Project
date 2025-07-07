@@ -283,10 +283,20 @@ body {
 }
 
 /* === TABLE === */
+.table-responsive {
+  overflow-x: auto;
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 800px;
 }
 
 th, td {
