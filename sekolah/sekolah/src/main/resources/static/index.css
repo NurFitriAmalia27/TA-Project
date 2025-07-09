@@ -294,7 +294,7 @@ margin: 20px 0; /* Jarak atas dan bawah */
        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
    }
 
-   .section-news {
+   .section {
           max-width: 1200px;
           margin: 20px auto;
           padding: 10px 15px;
@@ -302,18 +302,56 @@ margin: 20px 0; /* Jarak atas dan bawah */
 
    .news-container {
      display: flex;
-     flex-wrap: wrap;
+     overflow-x: auto;
+     scroll-behavior: smooth;
      gap: 70px;
-     justify-content: flex-start;
+     padding-bottom: 10px;
+     cursor: grab;
+     scrollbar-width: none;
+     -ms-overflow-style: none;
+   }
+
+   .news-container::-webkit-scrollbar {
+     display: none;
+   }
+
+   .arrow-link {
+     width: 50px;
+     height: 50px;
+     flex: 0 0 auto;
+     font-size: 32px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     text-decoration: none;
+     color: #333;
+     background-color: #f0f0f0;
+     border-radius: 8px;
+     transition: background-color 0.3s;
+   }
+
+   .arrow-link:hover {
+     background-color: #ddd;
+   }
+
+   .news-wrapper {
+     display: flex;
+     align-items: center; /* ini bikin panah jadi tengah vertikal */
+     justify-content: center;
+     flex: 0 0 auto;
    }
 
    .news-item {
-     width: 300px;
-     background-color: #fff;
-     padding: 15px;
-     border-radius: 8px;
-     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-   }
+        width: 300px;
+        flex: 0 0 auto;
+        background-color: #f9f9f9;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
 
    .news-item img {
      width: 100%;
@@ -342,7 +380,7 @@ margin: 20px 0; /* Jarak atas dan bawah */
      cursor: pointer;
    }
 
-   .section {
+   .section-news {
        max-width: 1200px;
        margin: 20px auto;
        padding: 10px 15px;
@@ -352,12 +390,6 @@ margin: 20px 0; /* Jarak atas dan bawah */
        font-size: 1.8rem;
        color: #333;
        margin-bottom: 20px;
-   }
-
-   .grid-container {
-       display: grid;
-       grid-template-columns: repeat(3, 1fr); /* Tiga kolom */
-       gap: 15px; /* Jarak antar elemen */
    }
 
    .card {
@@ -554,6 +586,7 @@ text-decoration: underline;
        .program-text {
            padding: 10px 0;
        }
+
 .grid-container {
 grid-template-columns: repeat(2, 1fr); /* Dua kolom */
 }
@@ -581,39 +614,49 @@ grid-template-columns: repeat(2, 1fr); /* Dua kolom */
   }
 }
 
-@media (max-width: 1024px) {
-  .news-container {
-    gap: 40px;
-    justify-content: center;
-  }
-
-  .news-item {
-    width: 45%; /* dua kolom di tablet */
-  }
-}
-
+/* Untuk tablet */
 @media (max-width: 768px) {
+  .news-container {
+  gap: 16px
+  }
+
   .news-item {
-    width: 100%; /* satu kolom di layar kecil */
+    width: 240px;
+    gap: 5px;
+  }
+
+  .news-item img {
+    height: 150px;
+  }
+
+  .arrow-link {
+    right: -20px;
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
   }
 }
 
+/* Untuk HP */
 @media (max-width: 480px) {
-  .section-news {
-    padding: 10px;
+  .news-container {
+    gap: 16px
+    }
+
+  .news-item {
+    width: 200px;
+    gap: 5px;
   }
 
-  .news-item h3 {
-    font-size: 16px;
+  .news-item img {
+    height: 130px;
   }
 
-  .news-item p {
-    font-size: 13px;
-  }
-
-  .news-item .btn-link button {
-    width: 100%;
-    font-size: 14px;
+  .arrow-link {
+    right: -18px;
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
   }
 }
 
