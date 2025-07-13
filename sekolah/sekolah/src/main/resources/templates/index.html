@@ -239,6 +239,11 @@
     </div>
 </section>
 
+<!-- Floating Chat Icon -->
+<div class="chat-float-icon" onclick="toggleChat()">
+    💬
+</div>
+
 <footer>
     <div class="social-media">
         <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
@@ -295,6 +300,18 @@
     const walk = (x - startX) * 2; // nilai *2 buat lebih cepat
     track.scrollLeft = scrollLeft - walk;
   });
+
+//chatbot
+  let botSapaanSudahMuncul = false;
+
+function toggleChat() {
+    window.location.href = "/chatbot";
+    const popup = document.getElementById("chatPopup");
+
+    // Toggle tampilannya
+    const akanBuka = popup.style.display === "none" || popup.style.display === "";
+    popup.style.display = akanBuka ? "flex" : "none";
+}
 </script>
 </body>
 </html>

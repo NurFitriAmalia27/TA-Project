@@ -2,13 +2,17 @@ package web.sekolah.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import web.sekolah.service.CustomAdminDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,17 +20,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SecurityConfig {
 
     @Autowired
-    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
+    private CombinedUserDetailsService combinedUserDetailsService;
 
     @Autowired
-    private CustomAdminDetailsService customAdminDetailsService;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/api/chat"))
+                )
+
                 .authorizeHttpRequests(auth -> auth
                         // Halaman publik
-                        .requestMatchers("/", "/login", "/index", "/confirm-logout", "/profil/visi-misi", "profil/sarana-prasarana", "profil/guru-tendik",
+                        .requestMatchers("/", "/login", "/register", "/index", "/chatbot", "/confirm-logout", "/profil/visi-misi", "profil/sarana-prasarana", "profil/guru-tendik",
                                 "/prestasi/prestasi-guru", "/prestasi/prestasi-kelas", "/prestasi/prestasi-murid", "/prestasi/prestasi-sekolah",
                                 "/adiwiyata/dokumentasi-adiwiyata", "/adiwiyata/ipmlh", "/adiwiyata/program-adiwiyata", "/adiwiyata/struktur-adiwiyata", "/adiwiyata/visi-misi-adiwiyata",
                                 "/informasi/berita", "/informasi/perpustakaan", "/informasi/ppdb", "/informasi/sub-berita",
@@ -41,11 +49,12 @@ public class SecurityConfig {
                                 "/sub-berita.css", "/tata-tertib.css", "/visi-misi.css", "/visi-misi-adiwiyata.css").permitAll()
 
                         // Login dan API publik
-                        .requestMatchers("/admin/guru/api/guru/**", "/informasi/sub-berita/**").permitAll()
+                        .requestMatchers("/admin/guru/api/guru/**", "/informasi/sub-berita/**", "api/chat").permitAll()
 
-                        // Admin
+                        // Admin & User
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN_SEKOLAH")
                         .requestMatchers("/admin-perpustakaan/**").hasAuthority("ROLE_ADMIN_PERPUSTAKAAN")
+                        .requestMatchers("/user-guru/**").hasAuthority("guru")
 
                         // Lainnya
                         .anyRequest().authenticated()
@@ -67,19 +76,15 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        return customAdminDetailsService;
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        builder.userDetailsService(customAdminDetailsService).passwordEncoder(passwordEncoder());
+        builder.userDetailsService(combinedUserDetailsService)
+                .passwordEncoder(passwordEncoder());
         return builder.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

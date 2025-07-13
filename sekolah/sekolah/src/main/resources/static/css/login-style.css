@@ -117,6 +117,22 @@ body, html {
   font-size: 14px;
 }
 
+.register-link {
+margin-top: 20px;
+}
+
+.back-login {
+margin-top: 20px;
+}
+
+.error-message {
+margin-top: 10px;
+}
+
+.success-message {
+margin-top: 10px;
+}
+
 @keyframes fadeSlide {
   from {
     opacity: 0;

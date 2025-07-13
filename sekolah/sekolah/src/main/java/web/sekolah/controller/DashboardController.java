@@ -35,4 +35,10 @@ public class DashboardController {
         model.addAttribute("beritaTerbaru", beritaTerbaru);
         return "index";
         }
+
+    @GetMapping("/chatbot")
+    public String chatbotPage() {
+        return "chatbot";
+    }
+
 }

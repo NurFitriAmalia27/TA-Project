@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Chatbot SDN</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Segoe UI', sans-serif;
+        }
+
+        body, html {
+          height: 100%;
+          background: #f0f0f0;
+        }
+
+        .chat-popup {
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          width: 100%;
+          max-width: 600px;
+          margin: auto;
+          background: #ffffff;
+          box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .chat-header {
+            position: relative;
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chat-box {
+          flex: 1;
+          padding: 16px;
+          overflow-y: auto;
+          background-color: #fafafa;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .chat-message {
+          max-width: 80%;
+          padding: 10px 14px;
+          border-radius: 16px;
+          font-size: 14px;
+          line-height: 1.4;
+        }
+
+        .user-message {
+          align-self: flex-end;
+          background-color: #dcf8c6;
+          border-bottom-right-radius: 0;
+        }
+
+        .bot-message {
+          align-self: flex-start;
+          background-color: #e4e6eb;
+          border-bottom-left-radius: 0;
+        }
+
+        .chat-input {
+          display: flex;
+          padding: 12px;
+          border-top: 1px solid #ccc;
+          background-color: #fff;
+        }
+
+        .chat-input input {
+          flex: 1;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          outline: none;
+        }
+
+        .chat-input button {
+          margin-left: 10px;
+          padding: 10px 16px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+          background-color: #45a049;
+        }
+
+        @media (max-width: 600px) {
+          .chat-popup {
+            width: 100%;
+            height: 100vh;
+            border-radius: 0;
+          }
+
+          .chat-header {
+            font-size: 16px;
+            padding: 14px;
+          }
+
+          .chat-input input,
+          .chat-input button {
+            font-size: 14px;
+          }
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+        <a th:href="@{/}" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        Chat SDN</div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Tanyakan sesuatu..." />
+        <button onclick="kirimChat()">Kirim</button>
+    </div>
+</div>
+
+<script>
+    function kirimChat() {
+      const input = document.getElementById("chatInput");
+      const pesan = input.value.trim();
+      if (!pesan) return;
+
+      tampilkanPesan(pesan, "user-message");
+
+      fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: pesan
+      })
+      .then(res => res.text())
+      .then(jawaban => tampilkanPesan(jawaban, "bot-message"))
+      .catch(() => tampilkanPesan("Terjadi kesalahan.", "bot-message"));
+
+      input.value = "";
+    }
+
+    function tampilkanPesan(teks, kelas) {
+      const box = document.getElementById("chatBox");
+      const div = document.createElement("div");
+      div.className = `chat-message ${kelas}`;
+      div.textContent = teks;
+      box.appendChild(div);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    // Optional: auto sapaan awal
+    window.onload = () => {
+      tampilkanPesan("Halo! Ada yang bisa kami bantu?", "bot-message");
+    };
+</script>
+
+</body>
+</html>

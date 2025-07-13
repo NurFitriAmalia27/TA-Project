@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import web.sekolah.model.Berita;
-import web.sekolah.model.Ekstrakurikuler;
+import web.sekolah.model.User;
 import web.sekolah.repository.BeritaRepository;
+import web.sekolah.repository.UserRepository;
 import web.sekolah.service.*;
 
 import java.util.Map;
@@ -15,10 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-
-
 import java.security.Principal;
-import java.util.*;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -31,6 +32,7 @@ public class AdminController {
     private final EkstrakurikulerService ekstrakurikulerService;
 
     @Autowired
+    private UserRepository userRepository;
     public AdminController(
             GuruService guruService,
             PrestasiGuruService prestasiGuruService,
@@ -101,4 +103,19 @@ public class AdminController {
         return "admin/admin-panel";
     }
 
+    @GetMapping("/verifikasi-guru")
+    public String listPendingGuru(Model model) {
+        List<User> userList = userRepository.findByRole("guru");
+        model.addAttribute("userList", userList);
+        return "admin/verifikasi-guru"; // nama template html
+    }
+
+    @PostMapping("/verifikasi-guru/{id}")
+    public String verifikasiGuru(@PathVariable Long id) {
+        userRepository.findById(id).ifPresent(user -> {
+            user.setVerified(true);
+            userRepository.save(user);
+        });
+        return "redirect:/admin/verifikasi-guru";
+    }
 }

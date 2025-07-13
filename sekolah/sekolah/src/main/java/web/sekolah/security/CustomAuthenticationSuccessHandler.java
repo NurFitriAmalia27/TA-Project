@@ -18,8 +18,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         // Redirect sesuai role
         if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN_SEKOLAH"))) {
             response.sendRedirect("/admin/admin-panel");
+
         } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN_PERPUSTAKAAN"))) {
             response.sendRedirect("/admin-perpustakaan/perpus-panel");
+
+        } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("guru"))) {
+            response.sendRedirect("/admin/user-panel");
+
         } else {
             response.sendRedirect("/login?error=true"); // fallback
         }
