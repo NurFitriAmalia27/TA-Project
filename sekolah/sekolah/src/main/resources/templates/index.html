@@ -252,6 +252,7 @@
     </div>
 </section>
 
+
 <!-- Footer -->
 <footer class="footer-full">
     <!-- Social Media Section -->
@@ -314,6 +315,17 @@
     <!-- Footer Bottom -->
     <div class="footer-bottom">
         <p>© 2025 SDN Poris Pelawad 6. All Rights Reserved.</p>
+
+<!-- Floating Chat Icon -->
+<div class="chat-float-icon" onclick="toggleChat()">
+    💬
+</div>
+
+<footer>
+    <div class="social-media">
+        <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://youtube.com/@sdnpp6channel80?feature=shared" class="social-link"><i class="fab fa-youtube"></i> Youtube</a>
+
     </div>
 </footer>
 
@@ -366,6 +378,18 @@
     const walk = (x - startX) * 2; // nilai *2 buat lebih cepat
     track.scrollLeft = scrollLeft - walk;
   });
+
+//chatbot
+  let botSapaanSudahMuncul = false;
+
+function toggleChat() {
+    window.location.href = "/chatbot";
+    const popup = document.getElementById("chatPopup");
+
+    // Toggle tampilannya
+    const akanBuka = popup.style.display === "none" || popup.style.display === "";
+    popup.style.display = akanBuka ? "flex" : "none";
+}
 </script>
 </body>
 </html>
