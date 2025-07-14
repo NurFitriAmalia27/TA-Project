@@ -173,22 +173,28 @@
     }
   });
 
-  // Download Data Tabel sebagai CSV
-  function downloadTable() {
-    const table = document.getElementById("tabelPengunjung");
-    const rows = Array.from(table.rows);
+// =====================
+// Download Data Tabel sebagai CSV
+// =====================
+function downloadTable() {
+  const table = document.getElementById("tabelPengunjung");
 
-    const csv = rows.map(row =>
-      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
-    ).join("\n");
+  // PERUBAHAN DIMULAI: Ambil hanya baris yang terlihat (tidak disembunyikan dengan display: none)
+  const rows = Array.from(table.rows).filter(row => row.offsetParent !== null);
+  // PERUBAHAN SELESAI
 
-    const blob = new Blob([csv], { type: "text/csv" });
-    const link = document.createElement("a");
+  const csv = rows.map(row =>
+    Array.from(row.cells).map(cell => `"${cell.innerText.replace(/"/g, '""')}"`).join(",")
+  ).join("\n");
 
-    link.href = URL.createObjectURL(blob);
-    link.download = "data_pengunjung.csv";
-    link.click();
-  }
+  const blob = new Blob([csv], { type: "text/csv" });
+  const link = document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+  link.download = "data_pengunjung.csv";
+  link.click();
+}
+
 
   // Fungsi Hapus Baris (tidak digunakan saat ini)
   function deleteRow(button) {

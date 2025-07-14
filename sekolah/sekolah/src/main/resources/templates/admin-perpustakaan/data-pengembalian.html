@@ -152,20 +152,24 @@
     });
   }
 
-  // 💾 Download Tabel
-  function downloadTable() {
-    const table = document.getElementById("tabelPengembalian");
-    const rows = Array.from(table.rows);
-    const csv = rows.map(row =>
-      Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
-    ).join("\n");
+// 💾 Download Tabel
+function downloadTable() {
+  const table = document.getElementById("tabelPengembalian");
 
-    const blob = new Blob([csv], { type: "text/csv" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "data_pengembalian.csv";
-    link.click();
-  }
+  // PERUBAHAN DIMULAI: Ambil hanya baris yang terlihat (tidak disembunyikan oleh filter atau pencarian)
+  const rows = Array.from(table.rows).filter(row => row.offsetParent !== null);
+  // PERUBAHAN SELESAI
+
+  const csv = rows.map(row =>
+    Array.from(row.cells).map(cell => `"${cell.innerText.replace(/"/g, '""')}"`).join(",")
+  ).join("\n");
+
+  const blob = new Blob([csv], { type: "text/csv" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "data_pengembalian.csv";
+  link.click();
+}
 
   // 🔐 Konfirmasi Logout
   function confirmLogout() {
