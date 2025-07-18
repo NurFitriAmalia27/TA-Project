@@ -110,6 +110,11 @@
           background-color: #45a049;
         }
 
+        .chat-response a {
+          color: blue;
+          text-decoration: underline;
+        }
+
         @media (max-width: 600px) {
           .chat-popup {
             width: 100%;
@@ -136,7 +141,8 @@
         <a th:href="@{/}" class="back-button">
             <i class="fas fa-arrow-left"></i>
         </a>
-        Chat SDN</div>
+        Chat SDN
+    </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="chat-input">
         <input type="text" id="chatInput" placeholder="Tanyakan sesuatu..." />
@@ -158,22 +164,25 @@
         body: pesan
       })
       .then(res => res.text())
-      .then(jawaban => tampilkanPesan(jawaban, "bot-message"))
+      .then(jawaban => tampilkanPesan(jawaban, "bot-message", true))
       .catch(() => tampilkanPesan("Terjadi kesalahan.", "bot-message"));
 
       input.value = "";
     }
 
-    function tampilkanPesan(teks, kelas) {
+    function tampilkanPesan(teks, kelas, isHTML = false) {
       const box = document.getElementById("chatBox");
       const div = document.createElement("div");
       div.className = `chat-message ${kelas}`;
-      div.textContent = teks;
+      if (isHTML) {
+        div.innerHTML = teks;  // 👉 agar link HTML bisa aktif
+      } else {
+        div.textContent = teks;
+      }
       box.appendChild(div);
       box.scrollTop = box.scrollHeight;
     }
 
-    // Optional: auto sapaan awal
     window.onload = () => {
       tampilkanPesan("Halo! Ada yang bisa kami bantu?", "bot-message");
     };

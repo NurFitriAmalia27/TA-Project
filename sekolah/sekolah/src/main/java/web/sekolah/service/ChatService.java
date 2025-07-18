@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import web.sekolah.controller.IntentMapping;
 import web.sekolah.repository.FaqIntentRepository;
 import web.sekolah.model.FaqIntent;
-import java.util.Optional;
 
 @Service
 public class ChatService {
@@ -25,4 +24,3 @@ public class ChatService {
                 .orElse("Belum ada jawaban untuk pertanyaan ini.");
     }
 }
-
