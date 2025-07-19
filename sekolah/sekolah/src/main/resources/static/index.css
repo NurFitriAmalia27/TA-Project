@@ -552,7 +552,7 @@ margin: 20px 0; /* Jarak atas dan bawah */
  background-color: #e8fff0;
  color: #201f1f;
  margin-top: 50px;
-
+}
 
    /* Container chatbot */
   .chat-float-icon {
@@ -646,15 +646,7 @@ margin: 20px 0; /* Jarak atas dan bawah */
       cursor: pointer;
   }
 
-/* Footer Styling */
-footer {
-background-color: #708e7a;
-color: white;
-text-align: center;
-padding: 10px 0;
-margin-top: 30px;
 
-}
 
 /* Social Section */
 .footer-social {
@@ -922,97 +914,4 @@ grid-template-columns: repeat(2, 1fr); /* Dua kolom */
     height: 40px;
     font-size: 22px;
   }
-}
-
-
- .nav-links li a {
-   font-size: 13px; /* Ukuran teks lebih kecil */
-   padding: 6px 10px; /* Lebih ringkas */
- }
-
-   .nav-links.active {
-     display: flex;
-   }
-
-   .logo-container {
-     margin-left: 10px;
-   }
-
-   .logo-text {
-     font-size: 1rem;
-   }
-
-   .hamburger {
-     display: flex;
-   }
-
-   .content {
-     flex-direction: column;
-     align-items: center;
-   }
-
-   .hero {
-     height: 180px;
-   }
-
-   .hero-overlay p {
-     font-size: 1.1rem;
-     padding: 0 10px;
-     text-align: center;
-   }
-
-   .container {
-     flex-direction: column;
-     align-items: center;
-     padding: 0 15px;
-   }
-
-   .features-section {
-     flex-direction: column;
-     align-items: center;
-     gap: 25px;
-   }
-
-   .feature {
-     max-width: 90%;
-   }
-
-   .image-wrapper img {
-     max-width: 100%;
-   }
-
-   .text-wrapper h2 {
-     font-size: 1.5rem;
-     text-align: center;
-   }
-
-   .text-wrapper h3 {
-     font-size: 1.2rem;
-     text-align: center;
-   }
-
-   .program-item {
-     flex-direction: column;
-     text-align: center;
-     gap: 10px;
-   }
-
-   .program-image {
-     max-width: 100%;
-   }
-
-   .program-text {
-     padding: 10px 0;
-   }
-
-   .grid-container {
-     display: grid;
-     grid-template-columns: repeat(2, 1fr);
-     gap: 10px;
-   }
-
-   .divider-line {
-     height: 4px;
-   }
-
 }

@@ -285,15 +285,23 @@ background-color: white;
     /* Responsive Styles */
     @media (max-width: 768px) {
         .nav-links {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background-color: #708e7a;
-            padding: 10px;
-            border-radius: 8px;
-        }
+       display: none;
+       flex-direction: column;
+       position: fixed;
+       top: 60px;
+       right: 10px;
+       background-color: #708e7a;
+       padding: 8px 10px;
+       border-radius: 8px;
+       z-index: 9999;
+       width: 100px; /* <= Diperkecil dari 200px */
+       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+     }
+
+     .nav-links li a {
+       font-size: 13px; /* Ukuran teks lebih kecil */
+       padding: 6px 10px; /* Lebih ringkas */
+     }
 
         .nav-links.active {
             display: flex;
@@ -414,6 +422,9 @@ background-color: white;
                         <a th:href="@{/informasi/ppdb}">PPDB</a>
                         <a th:href="@{/informasi/berita}">Berita</a>
                         <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+                        <a href="https://nisn.data.kemdikbud.go.id/">Cek Data Siswa</a>
+                        <a href="https://dapo.kemendikdasmen.go.id/sekolah/905EEF46AC7DFCF45E54">Profil Sekolah Dapodik</a>
+                        <a href="https://sekolah.penggerak.kemendikdasmen.go.id/gurupenggerak/">Guru Penggerak</a>
                     </div>
                 </li>
             </ul>
@@ -454,56 +465,55 @@ background-color: white;
     </div>
 </div>
 
+<!-- Footer -->
 <footer class="footer-full">
-    <!-- Bagian Media Sosial -->
+    <!-- Social Media Section -->
     <div class="footer-social">
         <span>Get connected with us on social networks:</span>
         <div class="footer-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="#"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/sdnporispelawad6?igsh=MXN5c2VzZWZ4cnMxdg=="><i class="fab fa-instagram"></i></a>
+            <a href="https://youtu.be/im_xHigWPKI?si=kmsYu0pTS_aeQArx"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@sdnporispelawad6?_t=ZS-8xrILfNUF98&_r=1v"><i class="fab fa-tiktok"></i></a>
         </div>
     </div>
 
-    <!-- Konten Utama Footer -->
+    <!-- Footer Content -->
     <div class="footer-content">
-        <!-- PROFIL SEKOLAH -->
         <div class="footer-column">
-            <h6>PROFIL SEKOLAH</h6>
-            <hr>
-            <a href="#">Visi & Misi Sekolah</a>
-            <a href="#">Guru & Tendik</a>
-            <a href="#">Sarana Dan Prasarana</a>
+            <h6>Profil Sekolah</h6>
+            <hr />
+            <a th:href="@{/profil/visi-misi}">Visi & Misi</a>
+            <a th:href="@{/profil/guru-tendik}">Guru & Tendik</a>
+            <a th:href="@{/profil/sarana-prasarana}">Sarana & Prasana</a>
+
         </div>
 
-        <!-- INFORMASI -->
         <div class="footer-column">
-            <h6>INFORMASI</h6>
-            <hr>
-            <a href="#">Berita</a>
-            <a href="#">PPDB</a>
+            <h6>Informasi</h6>
+            <hr />
+            <a th:href="@{/informasi/ppdb}">PPDB</a>
+            <a th:href="@{/informasi/berita}">Berita</a>
+            <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+
         </div>
 
-        <!-- KONTAK -->
         <div class="footer-column">
-            <h6>CONTACT</h6>
-            <hr>
-            <p><i class="fas fa-envelope"></i> info@example.com</p>
-            <p><i class="fas fa-phone"></i> +01 234 567 88</p>
-            <p><i class="fab fa-tiktok"></i> sdnporispelawad6</p>
-            <p><i class="fab fa-youtube"></i> sdnpppppppppppp</p>
-            <p><i class="fab fa-instagram"></i> sdnpppppppppppp</p>
+            <h6>Contact</h6>
+            <hr />
+            <p><i class="fas fa-envelope"></i> sdnporispelawa6@gmail.com</p>
+            <p><i class="fas fa-phone"></i> +62 8588 2135 213</p>
+            <P><i class="fab fa-tiktok"></i> sdnporispelawad6</P>
+            <P><i class="fab fa-youtube"></i> SDN PP6 CHANEL </P>
+            <P><i class="fab fa-instagram"></i> sdnporidpelawad6</P>
         </div>
 
-        <!-- ALAMAT SEKOLAH & MAP -->
         <div class="footer-column">
-            <h6>INFORMASI SEKOLAH</h6>
-            <hr>
-            <p>
-                SDN Poris Pelawad 6 - Kota Tangerang, Banten. <br>
-                Alamat: Jl. Panglima Polim Plawad No.Rt 02/02, RT.005/RW.002, Poris Plawad Utara,
-                Kec. Cipondoh, Kota Tangerang, Banten 15141.
-            </p>
+            <h6>Informasi Sekolah</h6>
+            <hr />
+            <p>SDN Poris Pelawad 6 - Kota Tangerang, Banten.<br>
+                Alamat: Jl. Panglima Polim Plawad No.Rt 02/02, RT.005/RW.002, Poris Plawad Utara, Kec. Cipondoh,<br>
+                Kota Tangerang, Banten 15141.</p>
+
             <div class="footer-map-inside">
                 <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6003677171193!2d106.66131747480286!3d-6.184204793803299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9004e6adedd%3A0x71d5332d19e1d1b2!2sSDN%20Poris%20Pelawad%206!5e0!3m2!1sid!2sid!4v1747975049123!5m2!1sid!2sid"
@@ -515,9 +525,10 @@ background-color: white;
         </div>
     </div>
 
-    <!-- Copyright -->
+    <!-- Footer Bottom -->
     <div class="footer-bottom">
         <p>© 2025 SDN Poris Pelawad 6. All Rights Reserved.</p>
+        <!-- Footer Bottom -->
     </div>
 </footer>
 </div>

@@ -21,7 +21,7 @@ public class WebMvcConfigure implements WebMvcConfigurer {
         // Konfigurasi untuk folder berita
         registry.addResourceHandler("/img/berita/**")
 
-                .addResourceLocations("file:C:/Tugas akhir/sekolah/sekolah/src/main/resources/static/img/berita/")
+                .addResourceLocations("file:C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/berita/")
 
                 .addResourceLocations("file:C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/berita/")
 

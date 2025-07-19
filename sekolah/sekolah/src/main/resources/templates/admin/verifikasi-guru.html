@@ -8,14 +8,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" th:href="@{/css/verifikasi-guru.css}" />
 </head>
+
 <body>
 
 <div class="navbar">
   <span class="menu-icon" onclick="toggleSidebar()">☰</span>
-  <div class="right-section">
-    <h1>SDN PORIS PLAWAD 6</h1>
-  </div>
+  <div class="logo-text">SDN PORIS PELAWAD 6</div>
 </div>
+
 
 <div class="sidebar" id="sidebar">
   <div class="admin-profile">
@@ -47,56 +47,59 @@
 <div class="main-content" id="content">
   <h1>Verifikasi Guru</h1>
 
-    <div class="top-bar-row">
-      <div class="search-container">
-        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama user">
-        <i class="fas fa-search search-icon"></i>
+  <div class="top-bar-row">
+    <div class="search-container">
+      <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari nama user">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  </div>
+
+  <div class="top-bar-row between">
+    <div class="filter-group">
+      <div class="filter-container">
+        <label for="keteranganFilter">Filter :</label>
+        <select id="keteranganFilter" onchange="filterByKet()">
+          <option value="">Semua</option>
+          <option value="Terverifikasi">Terverifikasi</option>
+          <option value="Belum diverifikasi">Belum diverifikasi</option>
+        </select>
       </div>
     </div>
-
-    <div class="top-bar-row between">
-      <div class="filter-group">
-        <div class="filter-container">
-          <label for="keteranganFilter">Filter :</label>
-          <select id="keteranganFilter" onchange="filterByKet()">
-            <option value="">Semua</option>
-            <option value="Terverifikasi">Terverifikasi</option>
-            <option value="Belum diverifikasi">Belum diverifikasi</option>
-          </select>
-
-  <table id="guruTable">
-    <thead>
-    <tr>
-      <th>No</th>
-      <th>Nama</th>
-      <th>Username</th>
-      <th>Email</th>
-      <th>Keterangan</th>
-      <th>Aksi</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user, iterStat : ${userList}">
-      <td th:text="${iterStat.index + 1}">1</td>
-      <td th:text="${user.name}">Nama Guru</td>
-      <td th:text="${user.username}">Username</td>
-      <td th:text="${user.email}">Email</td>
-      <td>
-        <span th:text="${user.verified ? 'Terverifikasi' : 'Belum diverifikasi'}"
-              th:classappend="${user.verified} ? 'status-terverifikasi' : 'status-belum'">
-        </span>
-      </td>
-      <td>
-        <form th:if="${!user.verified}" th:action="@{'/admin/verifikasi-guru/' + ${user.id}}" method="post">
-          <button type="submit" class="approve-btn">Verifikasi</button>
-        </form>
-        <span th:if="${user.verified}" class="verified-icon"><i class="fas fa-check-circle" style="color: green;"></i></span>
-      </td>
-    </tr>
-    </tbody>
-  </table>
   </div>
-  </div>
+
+  <div class="table-responsive">
+    <table id="guruTable">
+      <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Keterangan</th>
+        <th>Aksi</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user, iterStat : ${userList}">
+        <td th:text="${iterStat.index + 1}">1</td>
+        <td th:text="${user.name}">Nama Guru</td>
+        <td th:text="${user.username}">Username</td>
+        <td th:text="${user.email}">Email</td>
+        <td>
+            <span th:text="${user.verified ? 'Terverifikasi' : 'Belum diverifikasi'}"
+                  th:classappend="${user.verified} ? 'status-terverifikasi' : 'status-belum'"></span>
+        </td>
+        <td>
+          <form th:if="${!user.verified}" th:action="@{'/admin/verifikasi-guru/' + ${user.id}}" method="post">
+            <button type="submit" class="approve-btn">Verifikasi</button>
+          </form>
+          <span th:if="${user.verified}" class="verified-icon">
+              <i class="fas fa-check-circle" style="color: green;"></i>
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
@@ -107,6 +110,9 @@
       sidebar.classList.toggle("collapsed");
       content.classList.toggle("collapsed");
   }
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
 
   // Toggle submenu
   function toggleSubmenu(event) {
