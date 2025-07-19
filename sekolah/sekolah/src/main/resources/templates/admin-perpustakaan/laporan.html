@@ -144,31 +144,36 @@
     searchTable(); // digabung agar bekerja bersama pencarian
   }
 
-  // Export tabel ke CSV
-  function downloadTable() {
-    const table = document.getElementById("guruTable");
-    let csv = [];
-    const rows = table.querySelectorAll("tr");
+ // =======================
+// Export tabel ke CSV (Hanya baris terlihat)
+// =======================
+function downloadTable() {
+  const table = document.getElementById("guruTable");
+  let csv = [];
 
-    for (let row of rows) {
-      let cols = row.querySelectorAll("td, th");
-      let rowData = [];
-      for (let col of cols) {
-        let text = col.innerText.replace(/"/g, '""');
-        rowData.push(`"${text}"`);
-      }
-      csv.push(rowData.join(","));
+  // PERUBAHAN DIMULAI: Ambil hanya baris yang terlihat (tidak disembunyikan)
+  const rows = Array.from(table.querySelectorAll("tr")).filter(row => row.offsetParent !== null);
+  // PERUBAHAN SELESAI
+
+  for (let row of rows) {
+    let cols = row.querySelectorAll("td, th");
+    let rowData = [];
+    for (let col of cols) {
+      let text = col.innerText.replace(/"/g, '""');
+      rowData.push(`"${text}"`);
     }
-
-    const csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
-    const url = URL.createObjectURL(csvFile);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "laporan_buku.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    csv.push(rowData.join(","));
   }
+
+  const csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+  const url = URL.createObjectURL(csvFile);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "laporan_buku.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 
 function toggleSidebar() {
   document.getElementById("sidebar").classList.toggle("sidebar-hidden");

@@ -177,28 +177,34 @@
         }
     }
 
-    // =====================
-    // Download CSV Function
-    // =====================
-    function downloadTable() {
-        const table = document.getElementById("guruTable");
-        let csvContent = "data:text/csv;charset=utf-8,";
-        const rows = table.querySelectorAll("tr");
+// =====================
+// Download CSV Function
+// =====================
+function downloadTable() {
+    const table = document.getElementById("guruTable");
+    let csvContent = "data:text/csv;charset=utf-8,";
 
-        rows.forEach(row => {
-            const cols = row.querySelectorAll("td, th");
-            const rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
-            csvContent += rowData + "\r\n";
-        });
+    // Ambil hanya baris yang terlihat (tidak memiliki style display: none)
+    const visibleRows = Array.from(table.querySelectorAll("tr")).filter(row => {
+        return row.offsetParent !== null;
+    });
 
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "data_buku.csv");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }
+    // PERUBAHAN DIMULAI: Filter baris yang tampil saja (yang tidak disembunyikan oleh filter atau pencarian)
+    visibleRows.forEach(row => {
+        const cols = row.querySelectorAll("td, th");
+        const rowData = Array.from(cols).map(col => `"${col.innerText.replace(/"/g, '""')}"`).join(",");
+        csvContent += rowData + "\r\n";
+    });
+    // PERUBAHAN SELESAI
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data_buku.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
 
     // =====================
     // Logout Confirmation
