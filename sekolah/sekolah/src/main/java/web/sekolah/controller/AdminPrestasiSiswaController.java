@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/user-panel/siswa")
-public class PrestasiSiswaController {
+@RequestMapping("/admin/prestasi/siswa")
+public class AdminPrestasiSiswaController {
 
     @Autowired
     private PrestasiSiswaService prestasiSiswaService;
@@ -23,14 +23,14 @@ public class PrestasiSiswaController {
     @GetMapping("/dapres-siswa")
     public String listPrestasiSiswa(Model model) {
         model.addAttribute("daftarPrestasi", prestasiSiswaService.getAllPrestasiSiswa());
-        return "user-panel/siswa/dapres-siswa";
+        return "admin/prestasi/siswa/dapres-siswa";
     }
 
     // Form tambah data
     @GetMapping("/create-sipres")
     public String showFormTambah(Model model) {
         model.addAttribute("prestasiSiswa", new PrestasiSiswa());
-        return "user-panel/siswa/create-sipres";
+        return "admin/prestasi/siswa/create-sipres";
     }
 
     @PostMapping("/simpan")
@@ -61,7 +61,7 @@ public class PrestasiSiswaController {
 
         prestasiSiswaService.savePrestasiSiswa(prestasiSiswa);
         redirectAttributes.addAttribute("saved", "true");
-        return "redirect:/user-panel/siswa/dapres-siswa";
+        return "redirect:/admin/prestasi/siswa/dapres-siswa";
     }
 
     @GetMapping("/edit-sipres/{id}")
@@ -69,7 +69,7 @@ public class PrestasiSiswaController {
         PrestasiSiswa prestasiSiswa = prestasiSiswaService.getById(id);
         model.addAttribute("prestasiSiswa", prestasiSiswa);
         redirectAttributes.addAttribute("updated", "true");
-        return "user-panel/siswa/edit-sipres";
+        return "admin/prestasi/siswa/edit-sipres";
     }
 
 
@@ -77,6 +77,6 @@ public class PrestasiSiswaController {
     @GetMapping("/hapus/{id}")
     public String hapusPrestasi(@PathVariable Long id) {
         prestasiSiswaService.deletePrestasiSiswa(id);
-        return "redirect:/user-panel/siswa/dapres-siswa";
+        return "redirect:/admin/prestasi/siswa/dapres-siswa";
     }
 }

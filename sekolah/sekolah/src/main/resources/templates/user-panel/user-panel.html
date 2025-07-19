@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dashboard Guru - SDN Poris Pelawad 6</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" th:href="@{/css/admin-panel.css}">
+</head>
+
+<body>
+<div class="navbar">
+  <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+  <div class="right-section">
+    <h1>SDN PORIS PLAWAD 6</h1>
+  </div>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <div class="admin-profile">
+    <img src="/img/Logo.png" alt="Profil Admin" class="admin-image">
+    <p class="admin-name">ADMIN WEBSITE</p>
+  </div>
+  <ul class="menu-list">
+    <li><a th:href="@{/user-panel/user-panel}"><i class="fas fa-home"></i> Dashboard</a></li>
+    <li><a th:href="@{/user-panel/siswa/dapres-siswa}"><i class="fas fa-user-graduate"></i>Prestasi Siswa</a></li>
+    <li><a th:href="@{/user-panel/kelas/dapres-kelas}"><i class="fas fa-chalkboard"></i>Prestasi Kelas</a></li>
+    <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+  </ul>
+</div>
+
+<!-- Main Dashboard Content -->
+<div class="dashboard-main">
+    <div class="content" id="content">
+        <h1>Selamat Datang di Dashboard Admin <br>SDN Poris Pelawad 6</h1>
+        <p>
+            Terima kasih telah menjaga sistem informasi sekolah tetap berjalan dengan baik.<br>
+            Mari bersama membangun pendidikan yang lebih berkualitas!
+        </p>
+        <img src="/img/Logoo.png" alt="Logo Sekolah Adiwiyata" class="logo">
+    </div>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const content = document.getElementById("content");
+    sidebar.classList.toggle("sidebar-hidden");
+    content.classList.toggle("sidebar-collapsed");
+  }
+
+  function toggleSubmenu(event) {
+    event.preventDefault();
+    let submenuContainer = event.target.closest(".has-submenu");
+    let submenu = submenuContainer.querySelector(".submenu");
+    let icon = submenuContainer.querySelector(".submenu-toggle");
+    let isOpen = submenu.style.display === "block";
+
+    document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+    document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+    document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+    if (!isOpen) {
+      submenu.style.display = "block";
+      icon.style.transform = "rotate(90deg)";
+      submenuContainer.classList.add("submenu-open");
+    }
+  }
+
+  function confirmLogout() {
+      Swal.fire({
+        title: 'Yakin ingin logout?',
+        text: "Kamu akan keluar dari sistem.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, logout',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/login";
+        }
+      });
+    }
+
+  // Highlight menu saat diklik
+  document.querySelectorAll('.menu-list a').forEach(link => {
+    link.addEventListener('click', function (e) {
+      // Jika href # maka prevent default
+      if (this.getAttribute("href") === "#") {
+        e.preventDefault();
+      }
+
+      // Hapus semua active
+      document.querySelectorAll('.menu-list a').forEach(el => el.classList.remove('active'));
+      // Tambah active ke yang diklik
+      this.classList.add('active');
+    });
+  });
+
+</script>
+</body>
+</html>

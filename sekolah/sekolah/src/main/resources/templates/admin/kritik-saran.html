@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Guru</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<style>
+/* =======================
+   RESET & BASE STYLES
+========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+/* =======================
+   NAVBAR
+========================== */
+.navbar {
+  width: 100%;
+  height: 60px;
+  background: #1E2A38;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.menu-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.navbar i.user-icon {
+  font-size: 30px !important;
+}
+
+.navbar img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.navbar h1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* =======================
+   SIDEBAR
+========================== */
+.sidebar {
+  width: 250px;
+  background: #2F4050;
+  color: white;
+  height: 100vh;
+  padding-top: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+.sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 5px 0;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  padding: 12px 15px;
+  transition: background 0.3s;
+  gap: 10px;
+}
+
+.sidebar ul li a i {
+  font-size: 20px;
+  width: 30px;
+  text-align: center;
+}
+
+.sidebar ul li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.sidebar ul li a.active {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.has-submenu a {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.submenu-toggle {
+  transition: transform 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+.submenu-open .submenu-toggle {
+  transform: rotate(90deg);
+}
+
+.submenu {
+  display: none;
+  list-style: none;
+  padding-left: 45px;
+}
+
+.submenu li a {
+  font-size: 16px;
+  padding: 8px 20px;
+  display: block;
+}
+
+.submenu li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+/* =======================
+   ADMIN PROFILE (Sidebar)
+========================== */
+.admin-profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.admin-profile::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
+  margin-top: 10px;
+}
+
+.admin-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* =======================
+   MAIN CONTENT
+========================== */
+.main-content {
+  padding: 80px 20px 20px 20px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar.collapsed + .main-content {
+  margin-left: 0;
+}
+
+.main-content h1 {
+  text-align: center;
+  color: #1E2A38;
+  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.top-bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.top-bar-row.between {
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+/* =======================
+   SEARCH & FILTER
+========================== */
+.search-container {
+  position: relative;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-container input[type="text"] {
+  width: 100%;
+  height: 40px;
+  padding: 8px 36px 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.search-container .search-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-container label {
+  font-weight: 500;
+}
+
+.filter-container select {
+  height: 40px;
+  max-width: 300px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* =======================
+   BUTTONS
+========================== */
+.create-button {
+  background-color: #2F4050;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover {
+  background-color: #1E6FA3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.icon-button:hover {
+  background-color: #3e8e41;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+}
+
+.edit-btn, .delete-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.edit-btn {
+  color: blue;
+}
+
+.delete-btn {
+  color: red;
+}
+
+/* =======================
+   TABLE
+========================== */
+table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+  background: white;
+}
+
+th {
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+td {
+  text-align: justify;
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+td:nth-child(1),
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(5),
+td:nth-child(6) {
+  text-align: center;
+  vertical-align: middle;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+td img {
+  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.btn-toggle {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.tampilkan {
+  background-color: #28a745; /* Hijau */
+}
+
+.tampilkan:hover {
+  background-color: #218838;
+}
+
+.sembunyikan {
+  background-color: #dc3545; /* Merah */
+}
+
+.sembunyikan:hover {
+  background-color: #c82333;
+}
+
+
+/* =======================
+   RESPONSIVE DESIGN
+========================== */
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0 10px;
+  }
+
+  .navbar-right h1 {
+    font-size: 16px;
+  }
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .main-content {
+    margin-left: 220px;
+  }
+
+  .sidebar.collapsed + .main-content {
+    margin-left: 0;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .create-button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  .tampilkan {
+      background-color: #28a745;
+    }
+
+    .sembunyikan {
+      background-color: #dc3545;
+    }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar-right h1 {
+    font-size: 14px;
+  }
+
+  .menu-icon {
+    font-size: 20px;
+  }
+
+  .sidebar {
+    width: 200px;
+  }
+
+  .main-content {
+    margin-left: 200px;
+  }
+
+  .sidebar.collapsed + .main-content {
+    margin-left: 0;
+  }
+
+  .sidebar ul li a {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  th, td {
+    font-size: 14px;
+    padding: 5px;
+  }
+}
+</style>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <span class="menu-icon" onclick="toggleSidebar()">☰</span>
+    <div class="right-section">
+        <h1>SDN PORIS PLAWAD 6</h1>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <div class="admin-profile">
+        <img src="/img/Logo.png" alt="Profil Admin" class="admin-image">
+        <p class="admin-name">ADMIN WEBSITE</p>
+    </div>
+    <ul class="menu-list">
+        <li><a th:href="@{/admin/admin-panel}"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a th:href="@{/admin/guru/data-guru}"><i class="fas fa-chalkboard-teacher"></i> Data Guru</a></li>
+        <li class="has-submenu">
+            <a href="#" onclick="toggleSubmenu(event)">
+                <span><i class="fas fa-trophy"></i> Data Prestasi</span>
+                <i class="fas fa-chevron-left submenu-toggle"></i>
+            </a>
+            <ul class="submenu">
+                <li><a th:href="@{/admin/prestasi/guru/dapres-guru}">Prestasi Guru</a></li>
+                <li><a th:href="@{/admin/prestasi/siswa/dapres-siswa}">Prestasi Siswa</a></li>
+                <li><a th:href="@{/admin/prestasi/sekolah/dapres-sekolah}">Prestasi Sekolah</a></li>
+                <li><a th:href="@{/admin/prestasi/kelas/dapres-kelas}">Prestasi Kelas</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/admin/eskul/data-eskul}"><i class="fas fa-futbol"></i> Ekstrakurikuler</a></li>
+        <li><a th:href="@{/admin/berita/data-berita}"><i class="fas fa-newspaper"></i> Berita</a></li>
+        <li><a th:href="@{/admin/verifikasi-guru}"><i class="fas fa-chalkboard-teacher"></i> Verifikasi Guru</a></li>
+        <li><a th:href="@{/admin/guru/Kritik dan Saran}" class="active"><i class="fas fa-inbox"></i> Kritik dan Saran</a></li>
+        <li><a href="#" onclick="confirmLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+</div>
+
+!-- Konten -->
+<div class="main-content" id="content">
+  <h1>Kritik dan Saran</h1>
+
+  <!-- Filter Bintang -->
+  <div class="top-bar-row between">
+    <div class="filter-group">
+      <div class="filter-container">
+        <label for="filterRating">Filter Berdasarkan Bintang: </label>
+        <select id="filterRating" onchange="filterByRating()">
+          <option value="all">Semua</option>
+          <option value="5">5</option>
+          <option value="4">4</option>
+          <option value="3">3</option>
+          <option value="2">2</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabel Kritik dan Saran -->
+  <div class="table-responsive">
+    <table id="KritikTable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Email</th>
+          <th>Rating</th>
+          <th>Pesan</th>
+          <th>Status Tampil</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+        <tbody>
+        <tr th:each="s, iterStat : ${daftarSaran}">
+            <td th:text="${iterStat.index + 1}">1</td>
+            <td th:text="${s.nama}">Nama</td>
+            <td th:text="${s.email}">Email</td>
+            <td th:text="${s.rating}">Rating</td>
+            <td th:text="${s.pesan}">Pesan</td>
+            <td th:text="${s.tampil ? '✔' : '✖'}"></td>
+            <td>
+                <form th:action="@{'/admin/kritik-saran/tampil/' + ${s.id}}" method="post">
+                    <button type="submit">Verifikasi</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+        const saved = /*[[${param.saved}]]*/ false;
+        if (saved === 'true') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: 'Data berhasil disimpan!'
+            });
+        }
+    /*]]>*/
+</script>
+<script>
+    function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const content = document.getElementById("content");
+
+  sidebar.classList.toggle("collapsed");
+  content.classList.toggle("collapsed");
+}
+
+    function toggleSubmenu(event) {
+      event.preventDefault();
+      let submenuContainer = event.target.closest(".has-submenu");
+      let submenu = submenuContainer.querySelector(".submenu");
+      let icon = submenuContainer.querySelector(".submenu-toggle");
+      let isOpen = submenu.style.display === "block";
+
+      document.querySelectorAll(".submenu").forEach(s => s.style.display = "none");
+      document.querySelectorAll(".submenu-toggle").forEach(i => i.style.transform = "rotate(0deg)");
+      document.querySelectorAll(".has-submenu").forEach(hs => hs.classList.remove("submenu-open"));
+
+      if (!isOpen) {
+        submenu.style.display = "block";
+        icon.style.transform = "rotate(90deg)";
+        submenuContainer.classList.add("submenu-open");
+      }
+    }
+
+    function searchTable() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let rows = document.querySelectorAll("#guruTable tbody tr");
+
+      rows.forEach(row => {
+        const nama = row.cells[1].textContent.toLowerCase();
+        const ttl = row.cells[4].textContent.toLowerCase();
+        const match = nama.includes(input) || ttl.includes(input);
+        row.style.display = match ? "" : "none";
+      });
+    }
+
+function downloadTable() {
+    let table = document.getElementById("guruTable");
+    let rows = Array.from(table.rows);
+
+    // Ambil hanya baris yang terlihat (tidak disembunyikan oleh filter)
+    let visibleRows = rows.filter(row => {
+        return row.style.display !== "none" || row.rowIndex === 0; // Tetap ambil header (rowIndex 0)
+    });
+
+    let csv = visibleRows.map(row =>
+        Array.from(row.cells).map(cell => `"${cell.innerText}"`).join(",")
+    ).join("\n");
+
+    let blob = new Blob([csv], { type: "text/csv" });
+    let link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "data_guru.csv";
+    link.click();
+}
+
+    function confirmLogout() {
+      Swal.fire({
+        title: 'Yakin ingin logout?',
+        text: "Kamu akan keluar dari sistem.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, logout',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "/login";
+        }
+      });
+    }
+
+  function toggleStatus(id) {
+    const statusCell = document.getElementById(`status${id}`);
+    const button = statusCell.nextElementSibling.querySelector('button');
+    
+    if (statusCell.textContent === "Ditampilkan") {
+      statusCell.textContent = "Disembunyikan";
+      button.textContent = "Tampilkan";
+      button.classList.remove("sembunyikan");
+      button.classList.add("tampilkan");
+    } else {
+      statusCell.textContent = "Ditampilkan";
+      button.textContent = "Sembunyikan";
+      button.classList.remove("tampilkan");
+      button.classList.add("sembunyikan");
+    }
+  }
+
+  function filterByRating() {
+
+    const filterValue = document.getElementById("filterRating").value;
+    const rows = document.querySelectorAll("#KritikTable tbody tr");
+    rows.forEach(row => {
+      const rating = row.cells[3].textContent.trim();
+      row.style.display = (filterValue === "all" || rating === filterValue) ? "" : "none";
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -9,8 +9,8 @@ import web.sekolah.model.PrestasiKelas;
 import web.sekolah.service.PrestasiKelasService;
 
 @Controller
-@RequestMapping("/user-panel/kelas")
-public class PrestasiKelasController {
+@RequestMapping("/admin/prestasi/kelas")
+public class AdminPrestasiKelasController {
 
     @Autowired
     private PrestasiKelasService prestasiKelasService;
@@ -19,14 +19,14 @@ public class PrestasiKelasController {
     @GetMapping("/dapres-kelas")
     public String listPrestasiKelas(Model model, RedirectAttributes redirectAttributes) {
         model.addAttribute("daftarPrestasi", prestasiKelasService.getAllPrestasiKelas());
-        return "user-panel/kelas/dapres-kelas";
+        return "admin/prestasi/kelas/dapres-kelas";
     }
 
     // Form tambah data
     @GetMapping("/create-kepres")
     public String showFormTambah(Model model) {
         model.addAttribute("prestasiKelas", new PrestasiKelas());
-        return "user-panel/kelas/create-kepres";
+        return "admin/prestasi/kelas/create-kepres";
     }
 
     @PostMapping("/simpan")
@@ -34,7 +34,7 @@ public class PrestasiKelasController {
 
         prestasiKelasService.savePrestasiKelas(prestasiKelas);
         redirectAttributes.addAttribute("saved", "true");
-        return "redirect:/user-panel/kelas/dapres-kelas";
+        return "redirect:/admin/prestasi/kelas/dapres-kelas";
     }
 
     @GetMapping("/edit-kepres/{id}")
@@ -42,7 +42,7 @@ public class PrestasiKelasController {
         PrestasiKelas prestasiKelas = prestasiKelasService.getById(id);
         model.addAttribute("prestasiKelas", prestasiKelas);
         redirectAttributes.addAttribute("updated", "true");
-        return "user-panel/kelas/edit-kepres";
+        return "admin/prestasi/kelas/edit-kepres";
     }
 
 
@@ -50,6 +50,6 @@ public class PrestasiKelasController {
     @GetMapping("/hapus/{id}")
     public String hapusPrestasi(@PathVariable Long id) {
         prestasiKelasService.deletePrestasiKelas(id);
-        return "redirect:/user-panel/kelas/dapres-kelas";
+        return "redirect:/admin/prestasi/kelas/dapres-kelas";
     }
 }

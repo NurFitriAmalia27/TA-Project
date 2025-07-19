@@ -23,7 +23,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             response.sendRedirect("/admin-perpustakaan/perpus-panel");
 
         } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("guru"))) {
-            response.sendRedirect("/admin/user-panel");
+            response.sendRedirect("/user-panel/user-panel");
 
         } else {
             response.sendRedirect("/login?error=true"); // fallback

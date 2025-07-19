@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import web.sekolah.model.Berita;
+import web.sekolah.model.Saran;
 import web.sekolah.model.User;
 import web.sekolah.repository.BeritaRepository;
 import web.sekolah.repository.UserRepository;
