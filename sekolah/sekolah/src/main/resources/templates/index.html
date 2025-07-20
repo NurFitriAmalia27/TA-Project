@@ -159,6 +159,7 @@
     </div>
 </section>
 
+<div class="divider-line"></div>
 <div class="section">
     <h2>Berita Terbaru</h2>
     <div class="news-container">
@@ -202,6 +203,23 @@
     </div>
 </section>
 
+<div class="divider-line"></div>
+<div class="section">
+    <div class="ulasan-container">
+        <h2>Ulasan Terbaru</h2>
+        <div class="ulasan-cards-scroll">
+            <div th:each="s : ${ulasanTerbaru}" class="ulasan-card">
+                <div class="ulasan-header">
+                    <strong th:text="${s.nama}">Nama</strong>
+                    <span class="rating" th:utext="${#strings.repeat('&#9733;', s.rating)}">★★★★★</span>
+                </div>
+                <p class="ulasan-pesan" th:text="${s.pesan}">Pesan</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider-line"></div>
 <section class="section">
     <h2>Video Kegiatan</h2>
     <div class="gallery-wrapper">

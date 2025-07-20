@@ -1,4 +1,4 @@
-          /* Global Styles */
+/* Global Styles */
          * {
     margin: 0;
     padding: 0;
@@ -9,6 +9,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     color: #333;
+    padding-top: 50px;
 }
 .wrapper {
     flex: 1;
@@ -16,6 +17,10 @@ body {
 
 /* Navbar */
 .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: #708e7a;
     font-family: 'Arial', sans-serif;
     color: white;
@@ -23,9 +28,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem; /* Mengurangi padding */
-    position: relative;
 }
-
 
 .logo-container {
     display: flex;

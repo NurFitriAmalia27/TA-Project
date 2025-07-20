@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ekstrakurikuler - SDN PORIS PELAWAD 6</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/ipmlh.css">
+    <link rel="stylesheet" th:href="@{/ipmlh.css}">
 </head>
 
 <body>
@@ -324,78 +324,73 @@
             </div>
         <p>&copy; 2024 SDN Poris Pelawad 06. All rights reserved.</p>
     </footer>
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
+<script>
+    // Toggle hamburger menu (dengan pengecekan)
+    function toggleMenu() {
+        const navLinks = document.getElementById('nav-links');
+        if (navLinks) {
             navLinks.classList.toggle('active');
         }
-    
-        // JavaScript untuk memungkinkan geser horizontal pada carousel di mobile
-        const carousel = document.querySelector('.carousel');
-    
+    }
+
+    // Geser horizontal untuk carousel
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
         let isDown = false;
         let startX;
         let scrollLeft;
-    
+
         carousel.addEventListener('mousedown', (e) => {
             isDown = true;
             carousel.classList.add('active');
             startX = e.pageX - carousel.offsetLeft;
             scrollLeft = carousel.scrollLeft;
         });
-    
+
         carousel.addEventListener('mouseleave', () => {
             isDown = false;
             carousel.classList.remove('active');
         });
-    
+
         carousel.addEventListener('mouseup', () => {
             isDown = false;
             carousel.classList.remove('active');
         });
-    
+
         carousel.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2; // Kecepatan scroll
+            const walk = (x - startX) * 2;
             carousel.scrollLeft = scrollLeft - walk;
         });
-    
-        // Mendukung touch event untuk perangkat mobile
+
+        // Touch event untuk perangkat mobile
         carousel.addEventListener('touchstart', (e) => {
             startX = e.touches[0].pageX - carousel.offsetLeft;
             scrollLeft = carousel.scrollLeft;
         });
-    
+
         carousel.addEventListener('touchmove', (e) => {
             const x = e.touches[0].pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2; // Kecepatan scroll
+            const walk = (x - startX) * 2;
             carousel.scrollLeft = scrollLeft - walk;
         });
-        // JavaScript to show content based on selection
-    function showContent(contentId) {
-      const contents = document.querySelectorAll('.content');
-      contents.forEach(content => content.classList.remove('active'));
-      document.getElementById(contentId).classList.add('active');
     }
+
+    // Fungsi untuk menampilkan konten berdasarkan id
     function showContent(id) {
-  // Sembunyikan semua konten
-  const allContent = document.querySelectorAll(".content");
-  allContent.forEach(content => {
-    content.style.display = "none"; // Semua konten disembunyikan
-  });
+        const allContent = document.querySelectorAll(".content");
+        allContent.forEach(content => {
+            content.style.display = "none";
+        });
 
-  // Tampilkan konten yang dipilih
-  const selectedContent = document.getElementById(id);
-  if (selectedContent) {
-    selectedContent.style.display = "block"; // Tampilkan konten terpilih
-  }
-}
-
-
-
-    </script>
+        const selectedContent = document.getElementById(id);
+        if (selectedContent) {
+            selectedContent.style.display = "block";
+        }
+    }
+</script>
 
 </body>
 </html>

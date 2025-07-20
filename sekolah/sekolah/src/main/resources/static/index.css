@@ -6,16 +6,22 @@ box-sizing: border-box;
 }
 
 body {
-font-family: Arial, sans-serif;
+font-family: Popins, sans-serif;
 background-color: #ffffff;
 color: #333;
+padding-top: 50px;
 }
+
 .wrapper {
 flex: 1;
 }
 
 /* Navbar */
 .navbar {
+position: fixed;
+top: 0;
+width: 100%;
+z-index: 999;
 background-color: #708e7a;
 font-family: 'Arial', sans-serif;
 color: white;
@@ -23,7 +29,6 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 padding: 0.5rem 1rem; /* Mengurangi padding */
-position: relative;
 }
 
 
@@ -551,6 +556,56 @@ margin: 20px 0; /* Jarak atas dan bawah */
       border-radius: 8px;
       cursor: pointer;
   }
+
+  .ulasan-container {
+      margin-top: 30px;
+      padding: 10px 0;
+  }
+
+  .ulasan-cards-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 16px;
+      padding-bottom: 10px;
+      scroll-behavior: smooth;
+  }
+
+  .ulasan-card {
+      flex: 0 0 auto;
+      width: 220px;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+  }
+
+  .ulasan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+  }
+
+  .rating {
+      color: #FFD700; /* warna bintang emas */
+      font-size: 14px;
+  }
+
+  .ulasan-pesan {
+      font-size: 14px;
+      color: #333;
+  }
+
+  .ulasan-container::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .ulasan-container::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+  }
+
 
 /* Footer Styling */
 footer {

@@ -31,6 +31,10 @@ public class SaranService {
         return saranRepository.findByTampilTrue();
     }
 
+    public List<Saran> getTop5UlasanTampil() {
+        return saranRepository.findTop5ByTampilTrueOrderByIdDesc();
+    }
+
     // Verifikasi saran (ubah status verifikasi jadi true)
     public void verifikasiKritikSaran(Long id) {
         Optional<Saran> optional = saranRepository.findById(id);

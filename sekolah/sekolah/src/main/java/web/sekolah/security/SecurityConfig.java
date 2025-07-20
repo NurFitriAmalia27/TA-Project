@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .requestMatchers("/guru-tendik.css", "/admin-panel.css", "/berita.css", "/dokumentasi-adiwiyata.css",
                                 "/ekstrakurikuler.css", "/index.css", "/ipmlh.css", "/prestasi-guru.css", "/prestasi-sekolah.css",
                                 "/prestasi-siswa.css", "/program-adiwiyata.css", "/sarana-prasarana.css", "/struktur-adiwiyata.css",
-                                "/sub-berita.css", "/tata-tertib.css", "/visi-misi.css", "/visi-misi-adiwiyata.css").permitAll()
+                                "/sub-berita.css", "/tata-tertib.css", "/visi-misi.css", "/kritik.css", "/visi-misi-adiwiyata.css").permitAll()
 
                         // Login dan API publik
                         .requestMatchers("/admin/guru/api/guru/**", "/informasi/sub-berita/**", "api/chat", "api/saran").permitAll()

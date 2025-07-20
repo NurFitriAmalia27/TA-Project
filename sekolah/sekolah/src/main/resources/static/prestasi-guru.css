@@ -9,6 +9,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #ffffff;
     color: #333;
+    padding-top: 50px;
 }
 
 .wrapper {
@@ -17,6 +18,10 @@ body {
 
 /* Navbar */
 .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
     background-color: #708e7a;
     font-family: 'Arial', sans-serif;
     color: white;
@@ -25,7 +30,6 @@ body {
     align-items: center;
     padding: 0.5rem 1rem; /* Mengurangi padding */
     overflow: visible; /* Pastikan dropdown tidak terpotong */
-    position: relative; /* Tetap untuk positioning dropdown */
 }
 
 /* Logo */

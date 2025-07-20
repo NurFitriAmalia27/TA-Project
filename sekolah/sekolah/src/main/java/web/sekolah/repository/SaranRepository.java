@@ -14,4 +14,6 @@ public interface SaranRepository extends JpaRepository<Saran, Long> {
 
     // Untuk admin (semua data)
     List<Saran> findAllByOrderByIdDesc();
+
+    List<Saran> findTop5ByTampilTrueOrderByIdDesc();
 }

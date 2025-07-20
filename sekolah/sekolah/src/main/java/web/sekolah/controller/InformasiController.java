@@ -22,6 +22,8 @@ public class InformasiController {
 
     @Autowired
     private SaranService saranService;
+
+    @Autowired
     private BeritaService beritaService;
 
     @Autowired
