@@ -1,7 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="eba32245-68a1-4eda-9c3a-7129ff24e414" name="Changes" comment="" />
+    <list default="true" id="eba32245-68a1-4eda-9c3a-7129ff24e414" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/BukuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/BukuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/GuruController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/GuruController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/LaporanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/LaporanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/PrestasiGuruController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/PrestasiGuruController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/PrestasiSekolahController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/PrestasiSekolahController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/PrestasiSiswaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/PrestasiSiswaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/WebMvcConfigure.java" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/java/web/sekolah/controller/WebMvcConfigure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/berita.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/berita.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/dokumentasi-adiwiyata.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/dokumentasi-adiwiyata.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/ekstrakurikuler.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/ekstrakurikuler.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/guru-tendik.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/guru-tendik.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/ipmlh.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/ipmlh.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/prestasi-guru.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/prestasi-guru.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/prestasi-sekolah.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/prestasi-sekolah.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/prestasi-siswa.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/prestasi-siswa.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/program-adiwiyata.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/program-adiwiyata.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/sarana-prasarana.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/sarana-prasarana.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/struktur-adiwiyata.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/struktur-adiwiyata.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/tata-tertib.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/tata-tertib.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/visi-misi-adiwiyata.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/visi-misi-adiwiyata.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/visi-misi.css" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/static/visi-misi.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/Ipmlh.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/Ipmlh.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/dokumentasi-adiwiyata.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/dokumentasi-adiwiyata.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/program-adiwiyata.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/program-adiwiyata.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/struktur-adiwiyata.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/struktur-adiwiyata.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/visi-misi-adiwiyata.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/adiwiyata/visi-misi-adiwiyata.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/informasi/berita.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/informasi/berita.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/informasi/perpustakaan.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/informasi/perpustakaan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/informasi/ppdb.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/informasi/ppdb.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/kesiswaan/ekstrakurikuler.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/kesiswaan/ekstrakurikuler.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/kesiswaan/tata-tertib.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/kesiswaan/tata-tertib.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-guru.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-guru.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-kelas.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-kelas.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-murid.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-murid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-sekolah.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/prestasi/prestasi-sekolah.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/profil/guru-tendik.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/profil/guru-tendik.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/profil/sarana-prasarana.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/profil/sarana-prasarana.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/profil/visi-misi.html" beforeDir="false" afterPath="$PROJECT_DIR$/sekolah/sekolah/src/main/resources/templates/profil/visi-misi.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -10,22 +56,23 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="2xqp9K6DWIL6nxCugjsLqn39gyE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/SpringBoot-TA/sekolah&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

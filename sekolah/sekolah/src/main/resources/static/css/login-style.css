@@ -17,7 +17,7 @@ body, html {
 
 .left {
   flex: 1;
-  background: url('/img/LAPANGAN.jpg') no-repeat center center;
+  background: url('/img/loginadmin.jpeg') no-repeat center center;
   background-size: cover;
   display: none;
 }

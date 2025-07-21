@@ -59,6 +59,10 @@
                         <a th:href="@{/informasi/ppdb}">PPDB</a>
                         <a th:href="@{/informasi/berita}">Berita</a>
                         <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+                        <a href="https://nisn.data.kemdikbud.go.id/">Cek Data Siswa</a>
+                        <a href="https://dapo.kemendikdasmen.go.id/sekolah/905EEF46AC7DFCF45E54">Profil Sekolah Dapodik</a>
+                        <a href="https://sekolah.penggerak.kemendikdasmen.go.id/gurupenggerak/">Guru Penggerak</a>
+                        <a th:href="@{/informasi/kritik-saran}">Ulasan</a>
                     </div>
                 </li>
             </ul>
@@ -71,83 +75,142 @@
     </div>
 </header>
 
-    <section class="hero">
-        <h2></h2>
-    </section>
+<section class="hero">
+    <h2></h2>
+</section>
 
-    <div class="container">
-        <div class="title-section">
-            <h2>TATA TERTIB BERPAKAIAN</h2>
+<div class="container">
+    <div class="title-section">
+        <h2>TATA TERTIB BERPAKAIAN</h2>
+    </div>
+    <ul class="rules">
+        <li><span>1. Seragam Sekolah</span><br>
+            Siswa wajib mengenakan seragam sekolah sesuai ketentuan hari yang telah ditetapkan.</li>
+        <li><span>2. Kerapihan dan Kebersihan</span><br>
+            Siswa diharuskan menjaga kerapihan pakaian, dengan baju dimasukkan dan sepatu hitam yang bersih.</li>
+        <li><span>3. Aksesoris</span><br>
+            Siswa dilarang mengenakan aksesoris berlebihan yang tidak sesuai dengan seragam sekolah.</li>
+        <li><span>4. Rambut dan Penampilan</span><br>
+            Rambut harus rapi; bagi siswa laki-laki tidak boleh terlalu panjang, dan siswa perempuan harus merapikan rambut sesuai aturan sekolah.</li>
+    </ul>
+
+    <div class="image-grid" id="imageGrid">
+        <div>
+            <img src="/img/PUTIH HITAM.png" alt="Image Senin" id="slideshowImage">
+            <div class="day-label" id="dayLabel">PUTIH HITAM</div>
         </div>
-        <ul class="rules">
-            <li><span>1. Seragam Sekolah</span><br>
-                Siswa wajib mengenakan seragam sekolah sesuai ketentuan hari yang telah ditetapkan.</li>
-            <li><span>2. Kerapihan dan Kebersihan</span><br>
-                Siswa diharuskan menjaga kerapihan pakaian, dengan baju dimasukkan dan sepatu hitam yang bersih.</li>
-            <li><span>3. Aksesoris</span><br>
-                Siswa dilarang mengenakan aksesoris berlebihan yang tidak sesuai dengan seragam sekolah.</li>
-            <li><span>4. Rambut dan Penampilan</span><br>
-                Rambut harus rapi; bagi siswa laki-laki tidak boleh terlalu panjang, dan siswa perempuan harus merapikan rambut sesuai aturan sekolah.</li>
-        </ul>
+    </div>
+</div>
 
-        <div class="image-grid" id="imageGrid">
-            <div>
-                <img src="/img/PUTIH HITAM.png" alt="Image Senin" id="slideshowImage">
-                <div class="day-label" id="dayLabel">PUTIH HITAM</div>
+<!-- Footer -->
+<footer class="footer-full">
+    <!-- Social Media Section -->
+    <div class="footer-social">
+        <span>Get connected with us on social networks:</span>
+        <div class="footer-icons">
+            <a href="https://www.instagram.com/sdnporispelawad6?igsh=MXN5c2VzZWZ4cnMxdg=="><i class="fab fa-instagram"></i></a>
+            <a href="https://youtu.be/im_xHigWPKI?si=kmsYu0pTS_aeQArx"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@sdnporispelawad6?_t=ZS-8xrILfNUF98&_r=1v"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+
+    <!-- Footer Content -->
+    <div class="footer-content">
+        <div class="footer-column">
+            <h6>Profil Sekolah</h6>
+            <hr />
+            <a th:href="@{/profil/visi-misi}">Visi & Misi</a>
+            <a th:href="@{/profil/guru-tendik}">Guru & Tendik</a>
+            <a th:href="@{/profil/sarana-prasarana}">Sarana & Prasana</a>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi</h6>
+            <hr />
+            <a th:href="@{/informasi/ppdb}">PPDB</a>
+            <a th:href="@{/informasi/berita}">Berita</a>
+            <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Contact</h6>
+            <hr />
+            <p><i class="fas fa-envelope"></i> sdnporispelawa6@gmail.com</p>
+            <p><i class="fas fa-phone"></i> +62 8588 2135 213</p>
+            <P><i class="fab fa-tiktok"></i> sdnporispelawad6</P>
+            <P><i class="fab fa-youtube"></i> SDN PP6 CHANEL </P>
+            <P><i class="fab fa-instagram"></i> sdnporidpelawad6</P>
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi Sekolah</h6>
+            <hr />
+            <p>SDN Poris Pelawad 6 - Kota Tangerang, Banten.<br>
+                Alamat: Jl. Panglima Polim Plawad No.Rt 02/02, RT.005/RW.002, Poris Plawad Utara, Kec. Cipondoh,<br>
+                Kota Tangerang, Banten 15141.</p>
+
+            <div class="footer-map-inside">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6003677171193!2d106.66131747480286!3d-6.184204793803299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9004e6adedd%3A0x71d5332d19e1d1b2!2sSDN%20Poris%20Pelawad%206!5e0!3m2!1sid!2sid!4v1747975049123!5m2!1sid!2sid"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </div>
 
-    <footer>
-            <div class="social-media">
-                <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://youtube.com/@sdnpp6channel80?feature=shared" class="social-link"><i class="fab fa-youtube"></i> Youtube</a>
-            </div>
-            <p>&copy; 2024 SDN Poris Pelawad 06. All rights reserved.</p>
-        </footer>
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <p>© 2025 SDN Poris Pelawad 6. All Rights Reserved.</p>
+        <!-- Footer Bottom -->
+    </div>
+</footer>
 
-    <script>
-        let currentImageIndex = 0;
-    const images = ["/img/tatatertibb.png", "/img/tatatertibbb.png",]; // Tambahkan path gambar lainnya
+<script>
+    let currentImageIndex = 0;
+const images = ["/img/tatatertibb.png", "/img/tatatertibbb.png",]; // Tambahkan path gambar lainnya
 
-    // Function untuk mengganti background
-    function changeBackground() {
-        document.querySelector(".hero").style.backgroundImage = `url(${images[currentImageIndex]})`;
-        currentImageIndex = (currentImageIndex + 1) % images.length; // Loop kembali ke gambar pertama
+// Function untuk mengganti background
+function changeBackground() {
+    document.querySelector(".hero").style.backgroundImage = `url(${images[currentImageIndex]})`;
+    currentImageIndex = (currentImageIndex + 1) % images.length; // Loop kembali ke gambar pertama
+}
+
+// Set interval untuk pergantian background (misal, 5 detik)
+setInterval(changeBackground, 4000);
+
+    // Gambar dan hari-hari untuk slideshow
+    const slides = [
+        { src: '/img/MERAH PUTIH.png', day: 'PUTIH MERAH' },
+        { src: '/img/PUTIH HITAM.png', day: 'PUTIH HITAM' }
+    ];
+
+    let currentSlide = 0; // Indeks slide yang sedang ditampilkan
+
+    function showSlide(index) {
+        const slideshowImage = document.getElementById('slideshowImage');
+        const dayLabel = document.getElementById('dayLabel');
+
+        // Ubah sumber gambar dan teks hari
+        slideshowImage.src = slides[index].src;
+        dayLabel.textContent = slides[index].day;
     }
 
-    // Set interval untuk pergantian background (misal, 5 detik)
-    setInterval(changeBackground, 4000);
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length; // Pindah ke slide berikutnya
+        showSlide(currentSlide);
+    }
 
-        // Gambar dan hari-hari untuk slideshow
-        const slides = [
-            { src: '/img/MERAH PUTIH.png', day: 'PUTIH MERAH' },
-            { src: '/img/PUTIH HITAM.png', day: 'PUTIH HITAM' }
-        ];
-        
-        let currentSlide = 0; // Indeks slide yang sedang ditampilkan
+    // Mulai slideshow otomatis setiap 3 detik
+    setInterval(nextSlide, 3000);
 
-        function showSlide(index) {
-            const slideshowImage = document.getElementById('slideshowImage');
-            const dayLabel = document.getElementById('dayLabel');
-            
-            // Ubah sumber gambar dan teks hari
-            slideshowImage.src = slides[index].src;
-            dayLabel.textContent = slides[index].day;
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length; // Pindah ke slide berikutnya
-            showSlide(currentSlide);
-        }
-
-        // Mulai slideshow otomatis setiap 3 detik
-        setInterval(nextSlide, 3000);
-
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
-    </script>
+    function toggleMenu() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('active');
+    }
+</script>
 </body>
 </html>

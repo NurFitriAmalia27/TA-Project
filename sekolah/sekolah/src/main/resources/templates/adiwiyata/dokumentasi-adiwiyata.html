@@ -59,6 +59,10 @@
                         <a th:href="@{/informasi/ppdb}">PPDB</a>
                         <a th:href="@{/informasi/berita}">Berita</a>
                         <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+                        <a href="https://nisn.data.kemdikbud.go.id/">Cek Data Siswa</a>
+                        <a href="https://dapo.kemendikdasmen.go.id/sekolah/905EEF46AC7DFCF45E54">Profil Sekolah Dapodik</a>
+                        <a href="https://sekolah.penggerak.kemendikdasmen.go.id/gurupenggerak/">Guru Penggerak</a>
+                        <a th:href="@{/informasi/kritik-saran}">Ulasan</a>
                     </div>
                 </li>
             </ul>
@@ -71,197 +75,255 @@
     </div>
 </header>
 
-    <section class="hero">
-        <h1></h1>
-    </section>
-    
-    <div class="container">
-        <!-- Item List -->
-        <div class="item-list">
-          <div class="item" onclick="showGallery('gallery1')">
-                <img src="/img/konservasi air.jpeg" alt="Kebersihan">
-                <h3>KEBERSIHAN,FUNGSI SANITASI,dan DRAINASE SEKOLAH</h3>
-              </div>
-          <div class="item" onclick="showGallery('gallery2')">
+<section class="hero">
+    <h1></h1>
+</section>
+
+<div class="container">
+    <!-- Item List -->
+    <div class="item-list">
+        <div class="item" onclick="showGallery('gallery1')">
+            <img src="/img/konservasi air.jpeg" alt="Kebersihan">
+            <h3>KEBERSIHAN,FUNGSI SANITASI,dan DRAINASE SEKOLAH</h3>
+        </div>
+        <div class="item" onclick="showGallery('gallery2')">
             <img src="/img/pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
             <h3>PENGELOLAAN SAMPAH</h3>
-          </div>
-          <div class="item" onclick="showGallery('gallery3')">
+        </div>
+        <div class="item" onclick="showGallery('gallery3')">
             <img src="/img/penghijauan.jpeg" alt="Penanaman Pohon">
             <h3>PENANAMAN DAN PEMELIHARAAN POHON/TANAMAN</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery4')">
+        </div>
+        <div class="item" onclick="showGallery('gallery4')">
             <img src="/img/konservasi air.jpeg" alt="Konservasi Air">
             <h3>KONSERVASI AIR</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery5')">
+        </div>
+        <div class="item" onclick="showGallery('gallery5')">
             <img src="/img/konservasi energi.jpeg" alt="Konservasi Energi">
             <h3>KONSERVASI ENERGI</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery6')">
+        </div>
+        <div class="item" onclick="showGallery('gallery6')">
             <img src="/img/anak sd.png" alt="Inovasi PRLH">
             <h3>INOVASI PENERAPAN PERILAKU RAMAH LINGKUNGAN</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery7')">
-           <img src="/img/KOMUNIKASI.jpeg" alt="Pembentukan Jejaring Kerja dan Komunikasi">
+        </div>
+        <div class="item" onclick="showGallery('gallery7')">
+            <img src="/img/KOMUNIKASI.jpeg" alt="Pembentukan Jejaring Kerja dan Komunikasi">
             <h3>PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery8')">
+        </div>
+        <div class="item" onclick="showGallery('gallery8')">
             <img src="/img/PRLH.jpeg" alt="Penerapan PRLH">
             <h3>PENERAPAN PERILAKU RAMAH LINGKUNGAN HIDUP ( PRLH )</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery9')">
+        </div>
+        <div class="item" onclick="showGallery('gallery9')">
             <img src="/img/GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
             <h3>KEGIATAN KAMPANYE dan PUBLIKASI GPBLHS</h3>
-          </div>
-           <div class="item" onclick="showGallery('gallery10')">
-             <img src="/img/KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
-            <h3>KADER ADIWIYATA</h3>
-          </div>
         </div>
-      </div>
-    
-      <!-- Background Overlay -->
-      <div class="overlay" id="overlay" onclick="hideGallery()"></div>
-    
-      <!-- Popup Galleries -->
-      <div id="gallery1" class="popup-gallery">
-        <img src="/img/kebersihan1.jpg" alt="Kebersihan">
-        <img src="/img/kebersihan2.jpg" alt="Kebersihan">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-      <div id="gallery2" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-      <div id="gallery3" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\penghijauan.jpeg" alt="Penanaman Pohon ">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\penghijauan.jpeg" alt="Penanaman Pohon ">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\penghijauan.jpeg" alt="Penanaman Pohon ">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-      <div id="gallery4" class="popup-gallery">
-        <img src="/img/konsevasi air1.jpg" alt="Konservasi Air">
-        <img src="/img/konservasi air2.jpg" alt="Konservasi Air">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-    
-      <div id="gallery5" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\konservasi energi.jpeg" alt="konservasi energi">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\konservasi energi.jpeg" alt="konservasi energi">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\konservasi energi.jpeg" alt="konservasi energi">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-      <div id="gallery6" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\anak sd.png" alt="INOVASI PRLH">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\anak sd.png" alt="INOVASI PRLH">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\anak sd.png"   alt="INOVASI PRLH">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-      <div id="gallery7" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KOMUNIKASI.jpeg" alt="PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KOMUNIKASI.jpeg" alt="PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KOMUNIKASI.jpeg" alt="PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-      <div id="gallery8" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\PRLH.jpeg" alt="PENERAPAN PRLH">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\PRLH.jpeg" alt="PENERAPAN PRLH">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\PRLH.jpeg" alt="PENERAPAN PRLH">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-    
-      <div id="gallery9" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
-    
-      <div id="gallery10" class="popup-gallery">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
-        <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
-        <button class="back-button" onclick="hideGallery()">Kembali</button>
-      </div>
+        <div class="item" onclick="showGallery('gallery10')">
+            <img src="/img/KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
+            <h3>KADER ADIWIYATA</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Background Overlay -->
+<div class="overlay" id="overlay" onclick="hideGallery()"></div>
+
+<!-- Popup Galleries -->
+<div id="gallery1" class="popup-gallery">
+    <img src="/img/kebersihan1.jpg" alt="Kebersihan">
+    <img src="/img/kebersihan2.jpg" alt="Kebersihan">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+<div id="gallery2" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\pengelolaan sampah.jpeg" alt="Pengelolaan Sampah">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+<div id="gallery3" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\penghijauan.jpeg" alt="Penanaman Pohon ">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\penghijauan.jpeg" alt="Penanaman Pohon ">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\penghijauan.jpeg" alt="Penanaman Pohon ">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+<div id="gallery4" class="popup-gallery">
+    <img src="/img/konsevasi air1.jpg" alt="Konservasi Air">
+    <img src="/img/konservasi air2.jpg" alt="Konservasi Air">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+
+<div id="gallery5" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\konservasi energi.jpeg" alt="konservasi energi">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\konservasi energi.jpeg" alt="konservasi energi">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\konservasi energi.jpeg" alt="konservasi energi">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+<div id="gallery6" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\anak sd.png" alt="INOVASI PRLH">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\anak sd.png" alt="INOVASI PRLH">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\anak sd.png"   alt="INOVASI PRLH">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+<div id="gallery7" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KOMUNIKASI.jpeg" alt="PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KOMUNIKASI.jpeg" alt="PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KOMUNIKASI.jpeg" alt="PEMBENTUKAN JEJARING KERJA dan KOMUNIKASI">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+<div id="gallery8" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\PRLH.jpeg" alt="PENERAPAN PRLH">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\PRLH.jpeg" alt="PENERAPAN PRLH">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\PRLH.jpeg" alt="PENERAPAN PRLH">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+
+<div id="gallery9" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\GPBLHS.jpeg" alt="KAMPANYE & GPBLHS">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
+
+<div id="gallery10" class="popup-gallery">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
+    <img src="C:\Tugas Akhir\sekolah\sekolah\src\main\resources\static\img\KADER ADIWIYATA.jpeg" alt="Kader Adiwiyata">
+    <button class="back-button" onclick="hideGallery()">Kembali</button>
+</div>
 
 
-    <footer>
-        <div class="social-media">
-                <a href="https://www.instagram.com/sdnporispelawad6?igsh=NXExNnVwcHpuNWh3" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://youtube.com/@sdnpp6channel80?feature=shared" class="social-link"><i class="fab fa-youtube"></i> Youtube</a>
+<!-- Footer -->
+<footer class="footer-full">
+    <!-- Social Media Section -->
+    <div class="footer-social">
+        <span>Get connected with us on social networks:</span>
+        <div class="footer-icons">
+            <a href="https://www.instagram.com/sdnporispelawad6?igsh=MXN5c2VzZWZ4cnMxdg=="><i class="fab fa-instagram"></i></a>
+            <a href="https://youtu.be/im_xHigWPKI?si=kmsYu0pTS_aeQArx"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@sdnporispelawad6?_t=ZS-8xrILfNUF98&_r=1v"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </div>
+
+    <!-- Footer Content -->
+    <div class="footer-content">
+        <div class="footer-column">
+            <h6>Profil Sekolah</h6>
+            <hr />
+            <a th:href="@{/profil/visi-misi}">Visi & Misi</a>
+            <a th:href="@{/profil/guru-tendik}">Guru & Tendik</a>
+            <a th:href="@{/profil/sarana-prasarana}">Sarana & Prasana</a>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi</h6>
+            <hr />
+            <a th:href="@{/informasi/ppdb}">PPDB</a>
+            <a th:href="@{/informasi/berita}">Berita</a>
+            <a th:href="@{/informasi/perpustakaan}">Perpustakaan</a>
+
+        </div>
+
+        <div class="footer-column">
+            <h6>Contact</h6>
+            <hr />
+            <p><i class="fas fa-envelope"></i> sdnporispelawa6@gmail.com</p>
+            <p><i class="fas fa-phone"></i> +62 8588 2135 213</p>
+            <P><i class="fab fa-tiktok"></i> sdnporispelawad6</P>
+            <P><i class="fab fa-youtube"></i> SDN PP6 CHANEL </P>
+            <P><i class="fab fa-instagram"></i> sdnporidpelawad6</P>
+        </div>
+
+        <div class="footer-column">
+            <h6>Informasi Sekolah</h6>
+            <hr />
+            <p>SDN Poris Pelawad 6 - Kota Tangerang, Banten.<br>
+                Alamat: Jl. Panglima Polim Plawad No.Rt 02/02, RT.005/RW.002, Poris Plawad Utara, Kec. Cipondoh,<br>
+                Kota Tangerang, Banten 15141.</p>
+
+            <div class="footer-map-inside">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6003677171193!2d106.66131747480286!3d-6.184204793803299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f9004e6adedd%3A0x71d5332d19e1d1b2!2sSDN%20Poris%20Pelawad%206!5e0!3m2!1sid!2sid!4v1747975049123!5m2!1sid!2sid"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
-        <p>&copy; 2024 SDN Poris Pelawad 06. All rights reserved.</p>
-    </footer>
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('nav-links');
-            navLinks.classList.toggle('active');
-        }
-    
-        // JavaScript untuk memungkinkan geser horizontal pada carousel di mobile
-        const carousel = document.querySelector('.carousel');
-    
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-    
-        carousel.addEventListener('mousedown', (e) => {
-            isDown = true;
-            carousel.classList.add('active');
-            startX = e.pageX - carousel.offsetLeft;
-            scrollLeft = carousel.scrollLeft;
-        });
-    
-        carousel.addEventListener('mouseleave', () => {
-            isDown = false;
-            carousel.classList.remove('active');
-        });
-    
-        carousel.addEventListener('mouseup', () => {
-            isDown = false;
-            carousel.classList.remove('active');
-        });
-    
-        carousel.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2; // Kecepatan scroll
-            carousel.scrollLeft = scrollLeft - walk;
-        });
-    
-        // Mendukung touch event untuk perangkat mobile
-        carousel.addEventListener('touchstart', (e) => {
-            startX = e.touches[0].pageX - carousel.offsetLeft;
-            scrollLeft = carousel.scrollLeft;
-        });
-    
-        carousel.addEventListener('touchmove', (e) => {
-            const x = e.touches[0].pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2; // Kecepatan scroll
-            carousel.scrollLeft = scrollLeft - walk;
-        });
+        </div>
+    </div>
 
-        function showGallery(galleryId) {
-      // Hide all galleries
-      const galleries = document.querySelectorAll('.popup-gallery');
-      galleries.forEach(gallery => gallery.classList.remove('active'));
-
-      // Show the selected gallery and the overlay
-      document.getElementById(galleryId).classList.add('active');
-      document.getElementById('overlay').classList.add('active');
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <p>© 2025 SDN Poris Pelawad 6. All Rights Reserved.</p>
+        <!-- Footer Bottom -->
+    </div>
+</footer>
+<script>
+    function toggleMenu() {
+        const navLinks = document.getElementById('nav-links');
+        navLinks.classList.toggle('active');
     }
 
-    function hideGallery() {
-      // Hide all galleries and the overlay
-      const galleries = document.querySelectorAll('.popup-gallery');
-      galleries.forEach(gallery => gallery.classList.remove('active'));
-      document.getElementById('overlay').classList.remove('active');
-    }
-    </script>
+    // JavaScript untuk memungkinkan geser horizontal pada carousel di mobile
+    const carousel = document.querySelector('.carousel');
 
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener('mousedown', (e) => {
+        isDown = true;
+        carousel.classList.add('active');
+        startX = e.pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        isDown = false;
+        carousel.classList.remove('active');
+    });
+
+    carousel.addEventListener('mouseup', () => {
+        isDown = false;
+        carousel.classList.remove('active');
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2; // Kecepatan scroll
+        carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    // Mendukung touch event untuk perangkat mobile
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX - carousel.offsetLeft;
+        scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        const x = e.touches[0].pageX - carousel.offsetLeft;
+        const walk = (x - startX) * 2; // Kecepatan scroll
+        carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    function showGallery(galleryId) {
+  // Hide all galleries
+  const galleries = document.querySelectorAll('.popup-gallery');
+  galleries.forEach(gallery => gallery.classList.remove('active'));
+
+  // Show the selected gallery and the overlay
+  document.getElementById(galleryId).classList.add('active');
+  document.getElementById('overlay').classList.add('active');
+}
+
+function hideGallery() {
+  // Hide all galleries and the overlay
+  const galleries = document.querySelectorAll('.popup-gallery');
+  galleries.forEach(gallery => gallery.classList.remove('active'));
+  document.getElementById('overlay').classList.remove('active');
+}
+</script>
 </body>
 </html>
