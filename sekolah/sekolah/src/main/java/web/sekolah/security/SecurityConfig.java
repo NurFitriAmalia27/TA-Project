@@ -41,7 +41,9 @@ public class SecurityConfig {
                                 "/prestasi/prestasi-guru", "/prestasi/prestasi-kelas", "/prestasi/prestasi-murid", "/prestasi/prestasi-sekolah",
                                 "/adiwiyata/dokumentasi-adiwiyata", "/adiwiyata/ipmlh", "/adiwiyata/program-adiwiyata", "/adiwiyata/struktur-adiwiyata", "/adiwiyata/visi-misi-adiwiyata",
                                 "/informasi/berita", "/informasi/perpustakaan", "/informasi/ppdb", "/informasi/sub-berita",
-                                "/kesiswaan/ekstrakurikuler", "/kesiswaan/tata-tertib", "/informasi/kritik-saran", "/admin/kritik-saran").permitAll()
+                                "/kesiswaan/ekstrakurikuler", "/kesiswaan/tata-tertib", "/informasi/kritik-saran", "/admin/kritik-saran",
+                                "/favicon.ico", "/img/**" // ← tambahan agar gambar bisa diakses publik
+                        ).permitAll()
 
                         // Static resources
                         .requestMatchers("/static/**", "/css/**", "/js/**", "/img/**", "/simpanSaran").permitAll()
