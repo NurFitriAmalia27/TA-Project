@@ -41,7 +41,7 @@ public class PrestasiSekolahController {
         if (!file.isEmpty()) {
             try {
                 String namaFile = file.getOriginalFilename();
-                String pathUpload = "C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/prestasi-sekolah";
+                String pathUpload = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-sekolah";
                 File folder = new File(pathUpload);
                 if (!folder.exists()) {
                     folder.mkdirs(); // Membuat folder jika belum ada

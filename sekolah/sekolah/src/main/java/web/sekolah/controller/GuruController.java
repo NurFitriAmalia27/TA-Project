@@ -70,7 +70,7 @@ public class GuruController {
 
         if (!fotoFile.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + fotoFile.getOriginalFilename();
-            Path path = Paths.get("C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/guru/" + fileName);
+            Path path = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/guru/" + fileName);
             Files.write(path, fotoFile.getBytes());
             guru.setFoto(fileName);  // Set nama file (path relatif) ke field foto
         } else {

@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class BeritaService {
 
-    private final String uploadDir = "C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/berita/";
+    private final String uploadDir = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/";
 
     @Autowired
     private BeritaRepository beritaRepository;

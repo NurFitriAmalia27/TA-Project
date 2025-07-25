@@ -17,7 +17,7 @@ public class EkstrakurikulerService {
     @Autowired
     private EkstrakurikulerRepository repository;
 
-    private final String uploadDir = "C:/Tugas Akhir/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler/";
+    private final String uploadDir = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler/";
 
     public void save(Ekstrakurikuler eskul, MultipartFile fotoFile) {
         try {

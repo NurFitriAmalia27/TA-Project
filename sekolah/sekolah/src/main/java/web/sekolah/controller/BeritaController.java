@@ -79,7 +79,7 @@ public class BeritaController {
         // Jika ada foto baru yang diupload
         if (!fotoFile.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + fotoFile.getOriginalFilename();
-            Path path = Paths.get("C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/berita/" + fileName);
+            Path path = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/" + fileName);
             Files.write(path, fotoFile.getBytes());
             berita.setFoto(fileName);
         } else {
@@ -118,7 +118,7 @@ public class BeritaController {
         if (!file.isEmpty()) {
             String fileName = file.getOriginalFilename();
             try {
-                String uploadDir = "C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/berita/";
+                String uploadDir = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/";
                 Path uploadPath = Paths.get(uploadDir);
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
@@ -165,7 +165,7 @@ public class BeritaController {
         // Jika ada foto baru yang diupload, proses foto baru
         if (foto != null && !foto.isEmpty()) {
             String fotoPath = System.currentTimeMillis() + "_" + foto.getOriginalFilename(); // Ganti nama file untuk menghindari duplikasi
-            File destinationFile = new File("C:/SpringBoot-TA/sekolah/sekolah/src/main/resources/static/img/berita/" + fotoPath);
+            File destinationFile = new File("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/" + fotoPath);
 
             try {
                 // Pastikan direktori ada
