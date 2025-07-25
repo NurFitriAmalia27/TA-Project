@@ -37,7 +37,7 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         // Halaman publik
-                        .requestMatchers("/", "/login", "/register", "/index", "/user-panel", "/chatbot", "/confirm-logout", "/profil/visi-misi", "profil/sarana-prasarana", "profil/guru-tendik",
+                        .requestMatchers("/", "/login", "/register", "/index", "/user-panel", "/chatbot", "/confirm-logout", "/profil/visi-misi", "/profil/sarana-prasarana", "/profil/guru-tendik",
                                 "/prestasi/prestasi-guru", "/prestasi/prestasi-kelas", "/prestasi/prestasi-murid", "/prestasi/prestasi-sekolah",
                                 "/adiwiyata/dokumentasi-adiwiyata", "/adiwiyata/ipmlh", "/adiwiyata/program-adiwiyata", "/adiwiyata/struktur-adiwiyata", "/adiwiyata/visi-misi-adiwiyata",
                                 "/informasi/berita", "/informasi/perpustakaan", "/informasi/ppdb", "/informasi/sub-berita",

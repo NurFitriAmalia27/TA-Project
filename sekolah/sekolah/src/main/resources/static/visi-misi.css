@@ -37,65 +37,70 @@ box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* opsional: efek bayangan */
 }
 
 .logo-container {
-display: flex;
-align-items: center;
-gap: 0.5rem;
-margin-left: 5px; /* Jarak dari tepi kiri */
-}
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ margin-left: 5px; /* Jarak dari tepi kiri */
+ }
 
-.logo-img {
-width: 40px;
-height: 40px;
-border-radius: 50%;
-object-fit: cover;
-}
+ .logo-img {
+ width: 40px;
+ height: 40px;
+ border-radius: 50%;
+ object-fit: cover;
+ }
 
-.logo-text {
-font-size: 1.4rem; /* Ukuran yang sedikit lebih besar */
-font-weight: bold;
-color: white;
-white-space: nowrap; /* Memastikan teks tetap satu baris */
-}
+ .logo-text {
+ font-size: 1.4rem; /* Ukuran yang sedikit lebih besar */
+ font-weight: bold;
+ color: white;
+ white-space: nowrap; /* Memastikan teks tetap satu baris */
+ }
 
-/* Navigation Links */
-.nav-links {
-list-style: none;
-display: flex;
-gap: 1rem;
-}
+ /* Navigation Links */
+ .nav-links {
+ list-style: none;
+ display: flex;
+ gap: 1rem;
+ }
 
-.nav-links a {
-color: white;
-text-decoration: none;
-font-weight: 500;
-font-size: 14px; /* Ubah ukuran font jadi sedikit lebih besar */
-}
+ .nav-links li:last-child .dropdown-content {
+     right: 0;
+     left: auto;
+ }
 
-.nav-links a:hover {
-text-decoration: underline;
-}
+ .nav-links a {
+ color: white;
+ text-decoration: none;
+ font-weight: 500;
+ font-size: 14px; /* Ubah ukuran font jadi sedikit lebih besar */
+ }
 
-/* Dropdown Styles */
-.dropdown-content {
-display: none;
-position: absolute;
-background-color: white;
-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-z-index: 999;
-}
+ .nav-links a:hover {
+ text-decoration: underline;
+ }
 
-.dropdown:hover .dropdown-content {
-display: block;
-}
+ /* Dropdown Styles */
+ .dropdown-content {
+ display: none;
+ position: absolute;
+ background-color: white;
+ box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+ z-index: 999;
+ }
 
-.dropdown-content a {
-color: #111;
-padding: 10px 15px;
-display: block;
-}
-.dropdown-content a:hover {
-   background-color: #f0f0f0;
-}
+ .dropdown:hover .dropdown-content {
+ display: block;
+ }
+
+ .dropdown-content a {
+ color: #111;
+ padding: 10px 15px;
+ display: block;
+ }
+ .dropdown-content a:hover {
+    background-color: #f0f0f0;
+ }
 
 .hamburger {
 display: none;
@@ -119,8 +124,6 @@ position: relative;
 overflow: hidden;
 width: 100%;
 }
-
-
 
 .hero::before {
 content: "";
