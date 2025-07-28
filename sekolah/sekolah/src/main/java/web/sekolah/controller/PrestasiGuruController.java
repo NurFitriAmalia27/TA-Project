@@ -24,7 +24,7 @@ public class PrestasiGuruController {
     private PrestasiGuruService prestasiGuruService;
 
     // ✅ Ubah path lokal ke path dinamis
-    private final String uploadDir = Paths.get("src/main/resources/static/img/prestasi-guru").toAbsolutePath().toString();
+    private final String uploadDir = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-guru").toAbsolutePath().toString();
 
     // Menampilkan semua data
     @GetMapping("/dapres-guru")

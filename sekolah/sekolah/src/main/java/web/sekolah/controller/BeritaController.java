@@ -27,7 +27,7 @@ public class BeritaController {
     private BeritaService beritaService;
 
     // ✅ Path upload dinamis
-    private static final String UPLOAD_DIR = Paths.get("src/main/resources/static/img/berita").toAbsolutePath().toString();
+    private static final String UPLOAD_DIR = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita").toAbsolutePath().toString();
 
     @GetMapping("/data-berita")
     public String showAll(Model model) {
