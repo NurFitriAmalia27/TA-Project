@@ -23,6 +23,9 @@ public class PrestasiGuruController {
     @Autowired
     private PrestasiGuruService prestasiGuruService;
 
+    // ✅ Ubah path lokal ke path dinamis
+    private final String uploadDir = Paths.get("src/main/resources/static/img/prestasi-guru").toAbsolutePath().toString();
+
     // Menampilkan semua data
     @GetMapping("/dapres-guru")
     public String listPrestasiGuru(Model model) {
@@ -45,12 +48,15 @@ public class PrestasiGuruController {
         if (!file.isEmpty()) {
             try {
                 String namaFile = file.getOriginalFilename();
-                String pathUpload = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-guru";
-                File folder = new File(pathUpload);
+
+                // ✅ Buat folder jika belum ada
+                File folder = new File(uploadDir);
                 if (!folder.exists()) {
-                    folder.mkdirs(); // Membuat folder jika belum ada
+                    folder.mkdirs();
                 }
-                file.transferTo(new File(pathUpload + "/" + namaFile));
+
+                // ✅ Simpan file ke path dinamis
+                file.transferTo(new File(uploadDir + File.separator + namaFile));
                 prestasiGuru.setFoto(namaFile);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -75,7 +81,6 @@ public class PrestasiGuruController {
         redirectAttributes.addAttribute("updated", "true");
         return "admin/prestasi/guru/edit-gupres";
     }
-
 
     // Hapus data
     @GetMapping("/hapus/{id}")

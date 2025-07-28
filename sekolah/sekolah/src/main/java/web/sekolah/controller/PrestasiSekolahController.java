@@ -11,6 +11,8 @@ import web.sekolah.service.PrestasiSekolahService;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths; // ✅ Tambahan
+import java.nio.file.Path;  // ✅ Tambahan
 
 @Controller
 @RequestMapping("/admin/prestasi/sekolah")
@@ -18,6 +20,9 @@ public class PrestasiSekolahController {
 
     @Autowired
     private PrestasiSekolahService prestasiSekolahService;
+
+    // ✅ Ganti path hardcoded dengan path dinamis
+    private final String uploadDir = Paths.get("src/main/resources/static/img/prestasi-sekolah").toAbsolutePath().toString();
 
     // Menampilkan semua data
     @GetMapping("/dapres-sekolah")
@@ -41,12 +46,14 @@ public class PrestasiSekolahController {
         if (!file.isEmpty()) {
             try {
                 String namaFile = file.getOriginalFilename();
-                String pathUpload = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-sekolah";
-                File folder = new File(pathUpload);
+
+                // ✅ Gunakan folder path yang dinamis
+                File folder = new File(uploadDir);
                 if (!folder.exists()) {
                     folder.mkdirs(); // Membuat folder jika belum ada
                 }
-                file.transferTo(new File(pathUpload + "/" + namaFile));
+
+                file.transferTo(new File(uploadDir + File.separator + namaFile));
                 prestasiSekolah.setFoto(namaFile);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -71,7 +78,6 @@ public class PrestasiSekolahController {
         redirectAttributes.addAttribute("updated", "true");
         return "admin/prestasi/sekolah/edit-sepres";
     }
-
 
     // Hapus data
     @GetMapping("/hapus/{id}")

@@ -5,12 +5,13 @@ import org.springframework.stereotype.Service;
 import web.sekolah.model.Berita;
 import web.sekolah.repository.BeritaRepository;
 
+import java.io.File; // ✅ Tambahkan baris ini
 import java.util.List;
 
 @Service
 public class BeritaService {
 
-    private final String uploadDir = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/";
+    private final String uploadDir = new File("src/main/resources/static/img/berita").getAbsolutePath();
 
     @Autowired
     private BeritaRepository beritaRepository;

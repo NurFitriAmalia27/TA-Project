@@ -13,13 +13,10 @@ import web.sekolah.model.Guru;
 import web.sekolah.repository.GuruRepository;
 import web.sekolah.service.GuruService;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -28,10 +25,11 @@ public class GuruController {
 
     private final GuruService guruService;
 
-    // Constructor injection (disarankan)
     @Autowired
     private GuruRepository guruRepository;
-    private static final String UPLOAD_DIR = "src/main/resources/static/img/guru/";
+
+    // ✅ Modifikasi: Ganti path lokal dengan path dinamis
+    private static final String UPLOAD_DIR = Paths.get("src/main/resources/static/img/guru").toAbsolutePath().toString();
 
     public GuruController(GuruService guruService) {
         this.guruService = guruService;
@@ -64,27 +62,33 @@ public class GuruController {
                            @RequestParam("foto") MultipartFile fotoFile,
                            RedirectAttributes redirectAttributes) throws IOException {
         if (result.hasErrors()) {
-            // Jika ada error validasi, tampilkan kembali form dengan pesan error
-            return "admin/guru/create-guru";  // Atau halaman edit-guru
+            return "admin/guru/create-guru";
         }
 
         if (!fotoFile.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + fotoFile.getOriginalFilename();
-            Path path = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/guru/" + fileName);
-            Files.write(path, fotoFile.getBytes());
-            guru.setFoto(fileName);  // Set nama file (path relatif) ke field foto
+            Path uploadPath = Paths.get(UPLOAD_DIR);
+
+            // ✅ Pastikan folder ada
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
+
+            // ✅ Simpan file ke path
+            Files.write(uploadPath.resolve(fileName), fotoFile.getBytes());
+            guru.setFoto(fileName);
         } else {
             if (guru.getId() != null) {
                 Guru existing = guruRepository.findById(guru.getId()).orElse(null);
                 if (existing != null) {
-                    guru.setFoto(existing.getFoto());  // Gunakan foto lama
+                    guru.setFoto(existing.getFoto());
                 }
             }
         }
 
         guruRepository.save(guru);
         redirectAttributes.addAttribute("saved", "true");
-        return "redirect:/admin/guru/data-guru";  // Redirect ke halaman data guru
+        return "redirect:/admin/guru/data-guru";
     }
 
     @GetMapping("/delete/{id}")
@@ -95,8 +99,6 @@ public class GuruController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.setDisallowedFields("foto"); // Mencegah binding MultipartFile ke field 'foto' di model
+        binder.setDisallowedFields("foto");
     }
-
-
 }

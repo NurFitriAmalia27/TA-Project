@@ -25,13 +25,15 @@ public class BeritaController {
 
     @Autowired
     private BeritaService beritaService;
-    private static final String UPLOAD_DIR = "src/main/resources/static/img/berita/";
+
+    // ✅ Path upload dinamis
+    private static final String UPLOAD_DIR = Paths.get("src/main/resources/static/img/berita").toAbsolutePath().toString();
 
     @GetMapping("/data-berita")
     public String showAll(Model model) {
         List<Berita> listBerita = beritaService.getAll();
         model.addAttribute("listBerita", listBerita);
-        return "admin/berita/data-berita"; // tampilkan daftar berita
+        return "admin/berita/data-berita";
     }
 
     @GetMapping("/create-berita")
@@ -56,18 +58,10 @@ public class BeritaController {
                              RedirectAttributes redirectAttributes) throws IOException {
 
         LocalDate localDate = LocalDate.parse(tanggal);
+        Berita berita = (id != null) ? beritaService.findById(id) : new Berita();
 
-        Berita berita;
-
-        if (id != null) {
-            // Update data lama
-            berita = beritaService.findById(id);
-            if (berita == null) {
-                throw new IllegalArgumentException("Berita dengan ID " + id + " tidak ditemukan");
-            }
-        } else {
-            // Buat berita baru
-            berita = new Berita();
+        if (berita == null) {
+            throw new IllegalArgumentException("Berita dengan ID " + id + " tidak ditemukan");
         }
 
         berita.setJudul(judul);
@@ -76,36 +70,31 @@ public class BeritaController {
         berita.setTanggal(localDate);
         berita.setPenulis(penulis);
 
-        // Jika ada foto baru yang diupload
         if (!fotoFile.isEmpty()) {
             String fileName = System.currentTimeMillis() + "_" + fotoFile.getOriginalFilename();
-            Path path = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/" + fileName);
+            Path path = Paths.get(UPLOAD_DIR, fileName);
             Files.write(path, fotoFile.getBytes());
             berita.setFoto(fileName);
-        } else {
-            // Jika tidak ada foto baru, gunakan foto lama jika ada
-            if (berita.getId() != null) {
-                Berita existing = beritaService.findById(berita.getId());
-                if (existing != null) {
-                    berita.setFoto(existing.getFoto());  // Gunakan foto lama
-                }
+        } else if (berita.getId() != null) {
+            Berita existing = beritaService.findById(berita.getId());
+            if (existing != null) {
+                berita.setFoto(existing.getFoto());
             }
         }
 
-        // Simpan berita
         beritaService.save(berita);
         redirectAttributes.addAttribute("saved", "true");
-        return "redirect:/admin/berita/data-berita";  // Redirect ke halaman data berita
+        return "redirect:/admin/berita/data-berita";
     }
 
     @GetMapping("/edit/{id}")
     public String editBerita(@PathVariable("id") Long id, Model model) {
         Berita berita = beritaService.findById(id);
         if (berita == null) {
-            return "redirect:/admin/berita/data-berita"; // kalau data tidak ditemukan
+            return "redirect:/admin/berita/data-berita";
         }
         model.addAttribute("berita", berita);
-        return "admin/berita/edit-berita"; // pastikan file HTML-nya ada
+        return "admin/berita/edit-berita";
     }
 
     @PostMapping("/edit/{id}")
@@ -118,25 +107,24 @@ public class BeritaController {
         if (!file.isEmpty()) {
             String fileName = file.getOriginalFilename();
             try {
-                String uploadDir = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/";
-                Path uploadPath = Paths.get(uploadDir);
+                Path uploadPath = Paths.get(UPLOAD_DIR);
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                 }
                 InputStream inputStream = file.getInputStream();
                 Path filePath = uploadPath.resolve(fileName);
                 Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-                berita.setFoto(fileName); // Foto baru
+                berita.setFoto(fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            berita.setFoto(fotoLama); // Pertahankan foto lama
+            berita.setFoto(fotoLama);
         }
 
         beritaService.save(berita);
         redirectAttributes.addAttribute("updated", "true");
-        return "redirect:/admin/berita/data-berita"; // Redirect sesuai kebutuhan
+        return "redirect:/admin/berita/data-berita";
     }
 
     @PostMapping("/update")
@@ -149,48 +137,33 @@ public class BeritaController {
                                @RequestParam(value = "foto", required = false) MultipartFile foto,
                                RedirectAttributes redirectAttributes) {
 
-        // Ambil berita berdasarkan ID
         Berita berita = beritaService.findById(id);
         if (berita == null) {
-            return "redirect:/admin/berita/data-berita"; // Jika tidak ditemukan
+            return "redirect:/admin/berita/data-berita";
         }
 
-        // Set data lainnya (judul, deskripsi, dll)
         berita.setJudul(judul);
         berita.setSubjudul(subjudul);
         berita.setDeskripsi(deskripsi);
         berita.setTanggal(LocalDate.parse(tanggal));
         berita.setPenulis(penulis);
 
-        // Jika ada foto baru yang diupload, proses foto baru
         if (foto != null && !foto.isEmpty()) {
-            String fotoPath = System.currentTimeMillis() + "_" + foto.getOriginalFilename(); // Ganti nama file untuk menghindari duplikasi
-            File destinationFile = new File("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/" + fotoPath);
+            String fotoPath = System.currentTimeMillis() + "_" + foto.getOriginalFilename();
+            File destinationFile = new File(Paths.get(UPLOAD_DIR, fotoPath).toString());
 
             try {
-                // Pastikan direktori ada
                 destinationFile.getParentFile().mkdirs();
-
-                // Transfer file ke lokasi tujuan
                 foto.transferTo(destinationFile);
-
-                // Set path relatif untuk foto di database (gunakan path relatif)
                 berita.setFoto("img/berita/" + fotoPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            // Jika tidak ada foto baru, gunakan foto lama
-            if (berita.getFoto() != null) {
-                // Foto lama tetap dipertahankan
-                berita.setFoto(berita.getFoto());
-            }
         }
 
-        // Simpan berita yang telah diperbarui
         beritaService.save(berita);
         redirectAttributes.addAttribute("updated", "true");
-        return "redirect:/admin/berita/data-berita"; // Redirect ke halaman data berita
+        return "redirect:/admin/berita/data-berita";
     }
 
     @GetMapping("/delete/{id}")
@@ -199,4 +172,3 @@ public class BeritaController {
         return "redirect:/admin/berita/data-berita";
     }
 }
-

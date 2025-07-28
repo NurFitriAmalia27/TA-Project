@@ -20,8 +20,8 @@ public class LaporanController {
     @Autowired
     private LaporanService laporanService;
 
-    // Sesuaikan folder upload untuk foto buku
-    private final String UPLOAD_DIR = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/laporanbuku";
+    // ✅ Modifikasi path agar tidak hardcoded
+    private final String UPLOAD_DIR = Paths.get("src/main/resources/static/img/laporanbuku").toAbsolutePath().toString();
 
     @GetMapping("/laporan")
     public String listLaporan(Model model) {

@@ -19,6 +19,9 @@ public class AdminPrestasiSiswaController {
     @Autowired
     private PrestasiSiswaService prestasiSiswaService;
 
+    // ✅ Ganti hardcoded path dengan path relatif
+    private final String uploadDir = new File("src/main/resources/static/img/prestasi-siswa").getAbsolutePath();
+
     // Menampilkan semua data
     @GetMapping("/dapres-siswa")
     public String listPrestasiSiswa(Model model) {
@@ -41,12 +44,17 @@ public class AdminPrestasiSiswaController {
         if (!file.isEmpty()) {
             try {
                 String namaFile = file.getOriginalFilename();
-                String pathUpload = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-siswa";
-                File folder = new File(pathUpload);
+
+                // ✅ Buat folder jika belum ada
+                File folder = new File(uploadDir);
                 if (!folder.exists()) {
-                    folder.mkdirs(); // Membuat folder jika belum ada
+                    folder.mkdirs();
                 }
-                file.transferTo(new File(pathUpload + "/" + namaFile));
+
+                // ✅ Simpan file ke direktori yang sudah ditentukan
+                file.transferTo(new File(uploadDir + File.separator + namaFile));
+
+                // ✅ Simpan nama file ke dalam entitas
                 prestasiSiswa.setFoto(namaFile);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -71,7 +79,6 @@ public class AdminPrestasiSiswaController {
         redirectAttributes.addAttribute("updated", "true");
         return "admin/prestasi/siswa/edit-sipres";
     }
-
 
     // Hapus data
     @GetMapping("/hapus/{id}")

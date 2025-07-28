@@ -17,15 +17,21 @@ public class EkstrakurikulerService {
     @Autowired
     private EkstrakurikulerRepository repository;
 
-    private final String uploadDir = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler/";
+    // ✅ Gunakan path relatif agar bisa dipakai di Railway dan lokal
+    private final String uploadDir = new File("src/main/resources/static/img/ekstrakurikuler").getAbsolutePath();
 
     public void save(Ekstrakurikuler eskul, MultipartFile fotoFile) {
         try {
             if (!fotoFile.isEmpty()) {
                 String fileName = fotoFile.getOriginalFilename();
                 Path filePath = Paths.get(uploadDir, fileName);
+
+                // ✅ Buat folder jika belum ada
                 Files.createDirectories(filePath.getParent());
+
+                // ✅ Simpan file ke direktori tujuan
                 Files.copy(fotoFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
                 eskul.setFoto(fileName);
             }
             repository.save(eskul);
@@ -55,8 +61,11 @@ public class EkstrakurikulerService {
 
             if (!fotoFile.isEmpty()) {
                 String fileName = fotoFile.getOriginalFilename();
+                Path filePath = Paths.get(uploadDir, fileName);
+
                 try {
-                    fotoFile.transferTo(new File(uploadDir + fileName));
+                    Files.createDirectories(filePath.getParent());
+                    Files.copy(fotoFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
                     existingEskul.setFoto(fileName);
                 } catch (IOException e) {
                     e.printStackTrace();
