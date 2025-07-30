@@ -37,8 +37,8 @@ public class PeminjamanService {
                 // SET DATA LENGKAP
                 peminjaman.setBuku(buku);
                 peminjaman.setStatus("Dipinjam");
-                peminjaman.setTglPinjam(LocalDate.now());
-                peminjaman.setTglKembali(LocalDate.now().plusDays(7)); // contoh: 7 hari
+                //peminjaman.setTglPinjam(LocalDate.now());
+                //peminjaman.setTglKembali(LocalDate.now().plusDays(7)); // contoh: 7 hari
 
                 peminjamanRepository.save(peminjaman);
             } else {

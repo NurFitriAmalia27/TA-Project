@@ -27,7 +27,7 @@ public class BukuController {
     private BukuService bukuService;
 
     // ✅ Sudah dimodifikasi agar tidak hardcoded ke path lokal
-    private final String UPLOAD_DIR = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/buku").toAbsolutePath().toString();
+    private final String UPLOAD_DIR = Paths.get("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/buku/").toAbsolutePath().toString();
 
     // Daftar kategori default
     private List<String> kategoriList() {

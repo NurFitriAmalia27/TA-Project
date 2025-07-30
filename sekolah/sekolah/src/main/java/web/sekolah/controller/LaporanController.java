@@ -21,7 +21,7 @@ public class LaporanController {
     private LaporanService laporanService;
 
     // ✅ Modifikasi path agar tidak hardcoded
-    private final String UPLOAD_DIR = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/laporanbuku").toAbsolutePath().toString();
+    private final String UPLOAD_DIR = Paths.get("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/laporanbuku/").toAbsolutePath().toString();
 
     @GetMapping("/laporan")
     public String listLaporan(Model model) {

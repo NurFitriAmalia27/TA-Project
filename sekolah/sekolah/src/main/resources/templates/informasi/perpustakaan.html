@@ -171,7 +171,32 @@ background-color: white;
   max-width: calc(33.333% - 1rem);
   box-sizing: border-box;
 }
+/* Atur agar semua kartu memiliki tinggi sama */
+.kartu-buku {
+    display: flex;
+}
 
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Deskripsi dipotong jika terlalu panjang */
+.card-text:last-of-type {
+    margin-top: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Batasi 4 baris */
+    -webkit-box-orient: vertical;
+}
     .card-text {
   font-size: 0.95rem;
   margin-bottom: 0.8rem; /* Tambah jarak antar paragraf */

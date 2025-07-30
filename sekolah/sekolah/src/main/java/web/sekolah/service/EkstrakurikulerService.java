@@ -18,7 +18,7 @@ public class EkstrakurikulerService {
     private EkstrakurikulerRepository repository;
 
     // ✅ Gunakan path relatif agar bisa dipakai di Railway dan lokal
-    private final String uploadDir = new File("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler").getAbsolutePath();
+    private final String uploadDir = new File("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/ekstrakurikuler").getAbsolutePath();
 
     public void save(Ekstrakurikuler eskul, MultipartFile fotoFile) {
         try {

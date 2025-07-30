@@ -29,7 +29,7 @@ public class GuruController {
     private GuruRepository guruRepository;
 
     // ✅ Modifikasi: Ganti path lokal dengan path dinamis
-    private static final String UPLOAD_DIR = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/guru").toAbsolutePath().toString();
+    private static final String UPLOAD_DIR = Paths.get("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/guru/").toAbsolutePath().toString();
 
     public GuruController(GuruService guruService) {
         this.guruService = guruService;

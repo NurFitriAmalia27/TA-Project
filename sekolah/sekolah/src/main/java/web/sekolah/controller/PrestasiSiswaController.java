@@ -21,7 +21,7 @@ public class PrestasiSiswaController {
     private PrestasiSiswaService prestasiSiswaService;
 
     // ✅ Ganti path lokal dengan path dinamis
-    private final String uploadDir = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-siswa").toAbsolutePath().toString();
+    private final String uploadDir = Paths.get("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-siswa/").toAbsolutePath().toString();
 
     // Menampilkan semua data
     @GetMapping("/dapres-siswa")

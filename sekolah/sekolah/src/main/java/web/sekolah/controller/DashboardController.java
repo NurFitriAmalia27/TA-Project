@@ -24,7 +24,7 @@ public class DashboardController {
     @Autowired
     private SaranService saranService;
 
-    private static final String UPLOAD_DIR = "C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/";
+    private static final String UPLOAD_DIR = "C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita/";
 
     @GetMapping("/")
     public String dashboard(Model model) {

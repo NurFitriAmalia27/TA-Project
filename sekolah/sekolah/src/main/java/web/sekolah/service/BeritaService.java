@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class BeritaService {
 
-    private final String uploadDir = new File("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita").getAbsolutePath();
+    private final String uploadDir = new File("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/berita").getAbsolutePath();
 
     @Autowired
     private BeritaRepository beritaRepository;

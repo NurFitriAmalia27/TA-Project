@@ -22,7 +22,7 @@ public class PrestasiSekolahController {
     private PrestasiSekolahService prestasiSekolahService;
 
     // ✅ Ganti path hardcoded dengan path dinamis
-    private final String uploadDir = Paths.get("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-sekolah").toAbsolutePath().toString();
+    private final String uploadDir = Paths.get("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-sekolah/").toAbsolutePath().toString();
 
     // Menampilkan semua data
     @GetMapping("/dapres-sekolah")

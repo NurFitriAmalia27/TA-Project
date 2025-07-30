@@ -20,7 +20,7 @@ public class AdminPrestasiSiswaController {
     private PrestasiSiswaService prestasiSiswaService;
 
     // ✅ Ganti hardcoded path dengan path relatif
-    private final String uploadDir = new File("C:/Users/Asus/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-siswa").getAbsolutePath();
+    private final String uploadDir = new File("C:/Users/Nur Fitri Amalia/TA-Project/sekolah/sekolah/src/main/resources/static/img/prestasi-siswa/").getAbsolutePath();
 
     // Menampilkan semua data
     @GetMapping("/dapres-siswa")
